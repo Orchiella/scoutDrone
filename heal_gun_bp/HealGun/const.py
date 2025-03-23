@@ -14,4 +14,4 @@ HOLDING_POS_FOR_PAD = (-7.0, 10.5, -15.0)
 BULLET_ENTITY_TYPE_DICT = {"orchiella:heal_bullet_entity": {"type": "heal", "effect": "regeneration"},
                            "orchiella:slow_bullet_entity": {"type": "slow", "effect": "slowness"},
                            "orchiella:poison_bullet_entity": {"type": "poison", "effect": "poison"}}
-BULLET_COLOR_DICT = {"heal": (0.8, 0.4, 0.2), "slow": (0.4, 0.4, 0.6), "poison": (0.4, 1, 0)}
+BULLET_COLOR_DICT = {"heal": (0.804, 0.361, 0.671), "slow": (0.545, 0.686, 0.878), "poison": (0.529, 0.639, 0.388)}

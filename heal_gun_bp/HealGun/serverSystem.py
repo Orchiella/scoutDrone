@@ -137,11 +137,18 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 if CF.CreateEngineType(nearEntityId).GetEngineTypeStr() in SPECIAL_ENTITIES:
                     continue
                 effectComp = CF.CreateEffect(nearEntityId)
-                if effectComp.HasEffect("regeneration"):
-                    continue
-                effectComp.AddEffectToEntity(
-                    "regeneration", 1,
-                    DataManager.Get(launcherId, "func_launch_bomb_amplifier"), True)
+                if not effectComp.HasEffect("regeneration") and DataManager.Get(launcherId,
+                                                                                "func_launch_bomb_heal_amplifier") != 0:
+                    effectComp.AddEffectToEntity("regeneration", 1,
+                                                 DataManager.Get(launcherId, "func_launch_bomb_heal_amplifier"), True)
+                if not effectComp.HasEffect("speed") and DataManager.Get(launcherId,
+                                                                         "func_launch_bomb_speed_amplifier") != 0:
+                    effectComp.AddEffectToEntity("speed", 1,
+                                                 DataManager.Get(launcherId, "func_launch_bomb_speed_amplifier"), True)
+                if not effectComp.HasEffect("jump_boost") and DataManager.Get(launcherId,
+                                                                              "func_launch_bomb_jump_amplifier") != 0:
+                    effectComp.AddEffectToEntity("jump_boost", 1,
+                                                 DataManager.Get(launcherId, "func_launch_bomb_jump_amplifier"), True)
 
     def SearchForLocking(self):
         for playerId in serverApi.GetPlayerList():

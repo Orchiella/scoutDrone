@@ -26,7 +26,7 @@ class HealGunFunctions(ScreenNode):
 
         self.func_def = {
             "shoot": {"name": "发射({rem}/{max})", "type": "shoot"},
-            "self_heal": {"name": "§{color}自我治疗{cd}", "type": "skill"},
+            "self_heal": {"name": "§{color}治疗自我{cd}", "type": "skill"},
             "launch_bomb": {"name": "§{color}投放增益{cd}", "type": "skill"},
             "switch_bullet": {"name": "种类:{state}", "type": "switch",
                               "candidates": [("heal", {"name": "§d治疗弹"}),
