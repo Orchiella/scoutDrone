@@ -1,0 +1,13 @@
+{
+    "Arena.Component.Namespace": "tgcex",
+    "FirstTabSetting": 0,
+    "ShortItemSettings": [
+        "heal_gun_rp\\ui",
+        "heal_gun_rp\\models",
+        "heal_gun_rp\\textures"
+    ],
+    "Uluru.autoLayerDict": {
+
+    },
+    "Uluru.checkSuspectOldUI": true
+}

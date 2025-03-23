@@ -1,0 +1,18 @@
+{
+    "UI": {
+        "customPrefabGroupExpand": [
+
+        ],
+        "expandData": {
+            "prefab": {
+
+            },
+            "screen": {
+                "D:\\MCStudioDownload\\work\\valorin233@163.com\\Cpp\\AddOn\\healGun\\heal_gun_rp\\ui\\heal_gun_functions.json": [
+                    "/main",
+                    "/main/template"
+                ]
+            }
+        }
+    }
+}

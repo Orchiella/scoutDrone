@@ -1,0 +1,7 @@
+{
+    "ui_defs": [
+        "ui/heal_gun_functions.json",
+        "ui/heal_gun_settings.json",
+        "ui/netease_editor_template_namespace.json"
+    ]
+}

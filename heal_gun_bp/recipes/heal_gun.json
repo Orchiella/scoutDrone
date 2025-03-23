@@ -1,0 +1,31 @@
+{
+    "format_version": "1.12",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "orchiella:heal_gun"
+        },
+        "key": {
+            "G": {
+                "data": 0,
+                "item": "minecraft:glass_pane"
+            },
+            "I": {
+                "data": 0,
+                "item": "minecraft:iron_ingot"
+            }
+        },
+        "pattern": [
+            "IGI",
+            "III",
+            " I "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "orchiella:heal_gun"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}
