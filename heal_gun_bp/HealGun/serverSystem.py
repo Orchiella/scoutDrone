@@ -50,6 +50,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         DataManager.Check(None)
         serverApi.AddEntityTickEventWhiteList('orchiella:heal_bomb_entity')
         serverApi.AddEntityTickEventWhiteList('orchiella:heal_bullet_entity')
+        serverApi.AddEntityTickEventWhiteList('orchiella:speed_bullet_entity')
         serverApi.AddEntityTickEventWhiteList('orchiella:slow_bullet_entity')
         serverApi.AddEntityTickEventWhiteList('orchiella:poison_bullet_entity')
 
@@ -99,7 +100,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         playerId = GetEntityData(projectileId, "shooter")
         bulletType = bulletInfo['type']
         if event['hitTargetType'] == "ENTITY":
-            entityId = event["targetId"]
+            entities = [event["targetId"]]
+        else:
+            entities = [entityId for entityId in GC.GetEntitiesAround(projectileId,3,{})]
+        for entityId in entities:
             CF.CreateEffect(entityId).AddEffectToEntity(
                 bulletInfo['effect'],
                 DataManager.Get(playerId, "{}_bullet_duration".format(bulletType)),
@@ -149,6 +153,11 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                                               "func_launch_bomb_jump_amplifier") != 0:
                     effectComp.AddEffectToEntity("jump_boost", 1,
                                                  DataManager.Get(launcherId, "func_launch_bomb_jump_amplifier"), True)
+                if not effectComp.HasEffect("strength") and DataManager.Get(launcherId,
+                                                                            "func_launch_bomb_strength_amplifier") != 0:
+                    effectComp.AddEffectToEntity("strength", 1,
+                                                 DataManager.Get(launcherId, "func_launch_bomb_strength_amplifier"),
+                                                 True)
 
     def SearchForLocking(self):
         for playerId in serverApi.GetPlayerList():

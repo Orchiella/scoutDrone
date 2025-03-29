@@ -13,9 +13,9 @@
 			"loop": true,
 			"bones": {
 				"heal_gun": {
-					"rotation": [0, 41, -90],
-					"position": [0, 3, 7],
-					"scale": 1.2
+					"rotation": [-277, 55, -48],
+					"position": [-4, 2, -4],
+					"scale": 1.5
 				}
 			}
 		},

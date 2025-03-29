@@ -8,10 +8,12 @@ SPECIAL_ENTITIES = set("minecraft:" + entity for entity in [
     "evocation_fang"]) | set("orchiella:" + entity for entity in [
     "absorption_bomb", "remote_bomb", "remote_bomb_lightning", "remote_bomb_flame", "remote_bomb_quake",
     "heal_bomb_entity",
-    "heal_bullet_entity", "slow_bullet_entity", "poison_bullet_entity"])
+    "heal_bullet_entity", "speed_bullet_entity", "slow_bullet_entity", "poison_bullet_entity"])
 HOLDING_POS_FOR_PHONE = (-7.0, 11.5, -17.0)
 HOLDING_POS_FOR_PAD = (-7.0, 10.5, -15.0)
 BULLET_ENTITY_TYPE_DICT = {"orchiella:heal_bullet_entity": {"type": "heal", "effect": "regeneration"},
+                           "orchiella:speed_bullet_entity": {"type": "speed", "effect": "speed"},
                            "orchiella:slow_bullet_entity": {"type": "slow", "effect": "slowness"},
                            "orchiella:poison_bullet_entity": {"type": "poison", "effect": "poison"}}
-BULLET_COLOR_DICT = {"heal": (0.804, 0.361, 0.671), "slow": (0.545, 0.686, 0.878), "poison": (0.529, 0.639, 0.388)}
+BULLET_COLOR_DICT = {"heal": (0.804, 0.361, 0.671), "speed": (0.2, 0.9216, 1.0),
+                     "slow": (0.545, 0.686, 0.878), "poison": (0.529, 0.639, 0.388)}

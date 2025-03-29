@@ -30,6 +30,7 @@ class HealGunFunctions(ScreenNode):
             "launch_bomb": {"name": "§{color}投放增益{cd}", "type": "skill"},
             "switch_bullet": {"name": "种类:{state}", "type": "switch",
                               "candidates": [("heal", {"name": "§d治疗弹"}),
+                                             ("speed", {"name": "§b迅捷弹", "settings_key": "speed_bullet_enabled"}),
                                              ("slow", {"name": "§3减速弹", "settings_key": "slow_bullet_enabled"}),
                                              (
                                                  "poison",
@@ -43,7 +44,7 @@ class HealGunFunctions(ScreenNode):
         self.bullet_rec = {func_key: 0 for func_key, func_def in self.func_def.items() if
                            func_def['type'] == 'shoot'}
         self.state_rec = {func_key: self.GetData("func_{}_state".format(func_key)) for func_key, func_def in
-                           self.func_def.items() if func_def['type'] == 'switch'}
+                          self.func_def.items() if func_def['type'] == 'switch'}
         self.func_btn_ctrls = {}
         self.func_label_ctrls = {}
 
@@ -135,7 +136,8 @@ class HealGunFunctions(ScreenNode):
                     elif func_def['type'] == 'switch':
                         label_ctrl.SetText(
                             func_def['name'].format(state=tuple(
-                                info['name'] for state, info in func_def['candidates'] if state == self.state_rec[func_key])[0]))
+                                info['name'] for state, info in func_def['candidates'] if
+                                state == self.state_rec[func_key])[0]))
                     self.func_label_ctrls[func_key] = label_ctrl
 
                     self.GetBaseUIControl("/" + func_key + "/default").asImage().SetSprite(

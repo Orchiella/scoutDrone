@@ -11,6 +11,9 @@ class DataManager(object):
         ("func_shoot_cd", {"description": "§9[射击]§f每颗子弹恢复秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("heal_bullet_duration", {"description": "§d[治疗弹]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("heal_bullet_amplifier", {"description": "§d[治疗弹]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
+        ("speed_bullet_enabled", {"description": "§b[迅捷弹]§f启用", "type": "bool", "default": True}),
+        ("speed_bullet_duration", {"description": "§b[迅捷弹]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
+        ("speed_bullet_amplifier", {"description": "§b[迅捷弹]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
         ("slow_bullet_enabled", {"description": "§3[迟缓弹]§f启用", "type": "bool", "default": True}),
         ("slow_bullet_duration", {"description": "§3[迟缓弹]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("slow_bullet_amplifier", {"description": "§3[迟缓弹]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
@@ -26,6 +29,7 @@ class DataManager(object):
         ("func_launch_bomb_heal_amplifier", {"description": "§b[技能:投放增益]§f生命恢复效果强度", "type": "int", "range": (0, 5), "default": 2}),
         ("func_launch_bomb_speed_amplifier", {"description": "§b[技能:投放增益]§f速度提升效果强度", "type": "int", "range": (0, 5), "default": 2}),
         ("func_launch_bomb_jump_amplifier", {"description": "§b[技能:投放增益]§f跳跃提升效果强度", "type": "int", "range": (0, 5), "default": 0}),
+        ("func_launch_bomb_strength_amplifier", {"description": "§b[技能:投放增益]§f力量提升效果强度", "type": "int", "range": (0, 5), "default": 0}),
     ]
 
     default_player_data = {"func_self_heal_pos": (275, 33), "func_launch_bomb_pos": (335, 33), "func_switch_bullet_pos": (290, 83),
