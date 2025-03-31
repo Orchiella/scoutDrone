@@ -58,23 +58,28 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         GC.AddRepeatedTimer(0.25, self.SearchForLocking)
 
     def ReleaseSkill(self, playerId, skill):
-        if not self.IsHoldingGun(playerId):
+        handType = self.IsHoldingGun(playerId)
+        if not handType:
             return
         if skill == "self_heal":
             CF.CreateEffect(playerId).AddEffectToEntity("regeneration",
                                                         DataManager.Get(playerId, "func_self_heal_duration"),
                                                         DataManager.Get(playerId, "func_self_heal_amplifier"), False)
+            self.TakeDurability(playerId, handType, DataManager.Get(playerId, "func_self_heal_durability_consumption"))
         elif skill == "launch_bomb":
             footPos = CF.CreatePos(playerId).GetFootPos()
             bombId = CF.CreateProjectile(levelId).CreateProjectileEntity(playerId, "orchiella:heal_bomb_entity", {
-                "power": 2,
+                "power": 1,
                 'position': (footPos[0], footPos[1] + 1.4, footPos[2]),
                 'direction': serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())})
             SetEntityData(bombId, "launcher", playerId)
             SetEntityData(bombId, "destroyTime", time.time() + DataManager.Get(playerId, "func_launch_bomb_duration"))
+            self.TakeDurability(playerId, handType,
+                                DataManager.Get(playerId, "func_launch_bomb_durability_consumption"))
 
     def Shoot(self, playerId, bulletType):
-        if not self.IsHoldingGun(playerId):
+        handType = self.IsHoldingGun(playerId)
+        if not handType:
             return
         footPos = CF.CreatePos(playerId).GetFootPos()
         bulletId = CF.CreateProjectile(levelId).CreateProjectileEntity(playerId,
@@ -90,6 +95,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         targetId = self.lockCache.get(playerId, None)
         if targetId:
             SetEntityData(bulletId, "targetId", targetId)
+        self.TakeDurability(playerId, handType, DataManager.Get(playerId, "func_shoot_durability_consumption"))
 
     @Listen
     def ProjectileDoHitEffectEvent(self, event):
@@ -102,14 +108,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if event['hitTargetType'] == "ENTITY":
             entities = [event["targetId"]]
         else:
-            entities = [entityId for entityId in GC.GetEntitiesAround(projectileId,3,{})]
+            entities = [entityId for entityId in GC.GetEntitiesAround(projectileId, 3, {})]
         for entityId in entities:
             CF.CreateEffect(entityId).AddEffectToEntity(
                 bulletInfo['effect'],
                 DataManager.Get(playerId, "{}_bullet_duration".format(bulletType)),
                 DataManager.Get(playerId, "{}_bullet_amplifier".format(bulletType)), True)
         color = BULLET_COLOR_DICT[bulletType]
-        self.CallClient(playerId, "PlayParticle", "heal_gun:bullet_hit", (event["x"], event["y"], event["z"]),
+        self.CallClient(playerId, "PlayParticle", "bullet_hit", (event["x"], event["y"], event["z"]),
                         {"color_r": color[0], "color_g": color[1], "color_b": color[2]})
         self.DestroyEntity(projectileId)
 
@@ -136,10 +142,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 self.DestroyEntity(entityId)
                 return
             launcherId = GetEntityData(entityId, "launcher")
+            pos = CF.CreatePos(entityId).GetPos()
             for nearEntityId in GC.GetEntitiesAround(entityId, DataManager.Get(launcherId, "func_launch_bomb_radius"),
                                                      {}):
                 if CF.CreateEngineType(nearEntityId).GetEngineTypeStr() in SPECIAL_ENTITIES:
                     continue
+                elif CF.CreateEngineType(nearEntityId).GetEngineTypeStr() == "minecraft:player":
+                    if int(time.time() * 10) % 10 == 3:
+                        self.CallClient(nearEntityId, "PlayParticle", "heal_bomb", (pos[0], pos[1] + 1.1, pos[2]))
                 effectComp = CF.CreateEffect(nearEntityId)
                 if not effectComp.HasEffect("regeneration") and DataManager.Get(launcherId,
                                                                                 "func_launch_bomb_heal_amplifier") != 0:
@@ -196,8 +206,21 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         comp = CF.CreateItem(playerId)
         mainHandItem = comp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.CARRIED)
         offHandItem = comp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.OFFHAND)
-        return (mainHandItem and mainHandItem['newItemName'] == 'orchiella:heal_gun') or (
-                offHandItem and offHandItem['newItemName'] == 'orchiella:heal_gun')
+        if mainHandItem and mainHandItem['newItemName'] == 'orchiella:heal_gun':
+            return 1
+        elif offHandItem and offHandItem['newItemName'] == 'orchiella:heal_gun':
+            return 2
+        return 0
+
+    def TakeDurability(self, playerId, handType, value):
+        if value == 0: return
+        if GC.GetPlayerGameType(playerId) == serverApi.GetMinecraftEnum().GameType.Creative: return
+        itemComp = CF.CreateItem(playerId)
+        handEnum = serverApi.GetMinecraftEnum().ItemPosType.CARRIED if handType == 1 else serverApi.GetMinecraftEnum().ItemPosType.OFFHAND
+        if itemComp.GetPlayerItem(handEnum)['durability'] > value:
+            itemComp.SetItemDurability(handEnum, 0, itemComp.GetPlayerItem(handEnum)['durability'] - value)
+        else:
+            itemComp.SetEntityItem(handEnum, None)
 
     def SendTip(self, playerId, message, color):
         GC.SetOnePopupNotice(playerId, "§f" + message, "§" + color + "[治疗枪]")

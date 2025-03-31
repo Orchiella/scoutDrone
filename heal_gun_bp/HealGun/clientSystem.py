@@ -4,7 +4,6 @@ import time
 import mod.client.extraClientApi as clientApi
 
 import config as DB
-from HealGun.const import HOLDING_POS_FOR_PHONE, HOLDING_POS_FOR_PAD
 from HealGun.ui import uiMgr
 from HealGun.ui.uiDef import UIDef
 
@@ -91,7 +90,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                         0.5 if extra_height == 0.0 else extra_height), pos[2]))
 
     def PlayParticle(self, particleName, pos, varDict=None):
-        parId = parComp.Create(particleName, pos)
+        parId = parComp.Create("heal_gun:" + particleName, pos)
         if varDict:
             for key, value in varDict.items():
                 parComp.SetVariable(parId, "variable." + key, value)
@@ -107,7 +106,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def Click(self, event):
         if not self.IsHoldingGun():
             return
-        event['cancel'] = True
         # 暂时没想到怎么互动
 
     def ReleaseSkill(self, skill):
@@ -116,15 +114,15 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.is_attacking:
             return
         if skill == "self_heal":
-            self.CallServer("ReleaseSkill", 0.1, PID, skill)
+            self.CallServer("ReleaseSkill", 0, PID, skill)
         elif skill == "launch_bomb":
-            self.CallServer("ReleaseSkill", 0.2, PID, skill)
+            self.CallServer("ReleaseSkill", 0, PID, skill)
 
     def Shoot(self, bulletType):
         if not self.IsHoldingGun():
             return
         self.UpdateVar("heal_gun_attacking", 1)
-        self.CallServer("Shoot", 0.2, PID, bulletType)
+        self.CallServer("Shoot", 0, PID, bulletType)
         GC.AddTimer(0.3, self.UpdateVar, "heal_gun_attacking", 0)
 
     def SyncVarToServer(self, delay, key, value):
@@ -135,8 +133,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.CallServer("SyncVarToClients", delay, PID, key, value)
 
     def UpdateVar(self, key, value, playerId=PID):
-        CF.CreateQueryVariable(playerId).Set(key, value)
-        if key == "query.mod.heal_gun_attacking" and playerId == PID:
+        CF.CreateQueryVariable(playerId).Set("q.mod." + key, value)
+        if key == "heal_gun_attacking" and playerId == PID:
             self.is_attacking = True if value == 1.0 else False
 
     @Listen
@@ -146,6 +144,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
         queryComp = CF.CreateQueryVariable(PID)
         queryComp.Set('query.mod.heal_gun_attacking', 0.0)
+
+        actorComp = CF.CreateActorRender(PID)
+        actorComp.AddPlayerAnimation('heal_gun_third_hold_arm', 'animation.heal_gun.third_hold_arm')
+        actorComp.AddPlayerAnimationIntoState('root', 'third_person', 'heal_gun_third_hold_arm',
+                                              "q.get_equipped_item_full_name('main_hand') == 'orchiella:heal_gun' ||"
+                                              "q.get_equipped_item_full_name('off_hand') == 'orchiella:heal_gun'")
+        actorComp.RebuildPlayerRender()
 
         self.CallServer("LoadData", 0, PID)
 

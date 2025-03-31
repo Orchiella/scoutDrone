@@ -8,7 +8,8 @@ levelId = serverApi.GetLevelId()
 class DataManager(object):
     default_player_settings = [
         ("func_shoot_capacity", {"description": "§9[射击]§f子弹容量", "type": "int", "range": (1, 20), "default": 10}),
-        ("func_shoot_cd", {"description": "§9[射击]§f每颗子弹恢复秒数", "type": "int", "range": (1, 60), "default": 4}),
+        ("func_shoot_cd", {"description": "§9[射击]§f每颗子弹恢复秒数", "type": "int", "range": (1, 60), "default": 2}),
+        ("func_shoot_durability_consumption", {"description": "§9[射击]§f消耗耐久 §7(0表示不消耗)", "type": "int", "range": (0, 100), "default": 1}),
         ("heal_bullet_duration", {"description": "§d[治疗弹]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("heal_bullet_amplifier", {"description": "§d[治疗弹]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
         ("speed_bullet_enabled", {"description": "§b[迅捷弹]§f启用", "type": "bool", "default": True}),
@@ -21,10 +22,12 @@ class DataManager(object):
         ("poison_bullet_duration", {"description": "§2[毒液弹]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("poison_bullet_amplifier", {"description": "§2[毒液弹]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
         ("func_self_heal_cd", {"description": "§d[技能:治疗自我]§f冷却秒数", "type": "int", "range": (1, 60), "default": 10}),
+        ("func_self_heal_durability_consumption", {"description": "§d[技能:治疗自我]§f消耗耐久", "type": "int", "range": (0, 100), "default": 3}),
         ("func_self_heal_duration", {"description": "§d[技能:治疗自我]§f效果秒数", "type": "int", "range": (1, 60), "default": 4}),
         ("func_self_heal_amplifier", {"description": "§d[技能:治疗自我]§f效果强度", "type": "int", "range": (1, 5), "default": 2}),
         ("func_launch_bomb_cd", {"description": "§b[技能:投放增益]§f冷却秒数", "type": "int", "range": (1, 60), "default": 20}),
-        ("func_launch_bomb_radius", {"description": "§b[技能:投放增益]§f作用半径", "type": "int", "range": (1, 20), "default": 3}),
+        ("func_launch_bomb_durability_consumption", {"description": "§b[技能:投放增益]§f消耗耐久", "type": "int", "range": (0, 100), "default": 10}),
+        ("func_launch_bomb_radius", {"description": "§b[技能:投放增益]§f作用半径", "type": "int", "range": (1, 30), "default": 8}),
         ("func_launch_bomb_duration", {"description": "§b[技能:投放增益]§f维持秒数", "type": "int", "range": (1, 60), "default": 10}),
         ("func_launch_bomb_heal_amplifier", {"description": "§b[技能:投放增益]§f生命恢复效果强度", "type": "int", "range": (0, 5), "default": 2}),
         ("func_launch_bomb_speed_amplifier", {"description": "§b[技能:投放增益]§f速度提升效果强度", "type": "int", "range": (0, 5), "default": 2}),
