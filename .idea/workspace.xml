@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7579f03b-41b6-4155-9479-511d8a9fe9fa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/clientSystem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/const.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/dataManager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/serverSystem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/uiDef.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_attracting.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_frozen.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/texts/zh_CN.lang" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_gun.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_attracting.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_attracting.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_frozen.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_frozen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/sector.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gravitation_gun_rp/ui/_ui_defs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/healGun.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gravitationGun.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mcs/editorSave.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mcs/images/heal_gun_functions.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mcs/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/clientSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/const.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/dataManager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/mathUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/modMain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/serverSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/ui/healGunFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/gravitationGunFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/ui/healGunSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/gravitationGunSettings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/ui/uiDef.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/HealGun/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/uiMgr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/entities/heal_bomb.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/entities/gravitation_trap.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/entities/heal_bullet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/entities/poison_bullet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/entities/slow_bullet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/entities/speed_bullet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/netease_items_beh/heal_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/netease_items_beh/gravitation_gun.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_bp/recipes/heal_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/recipes/gravitation_gun.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/animation_controllers/heal_gun.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/animation_controllers/gravitation_gun.animations_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/animations/heal_gun.animation.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/animations/gravitation_gun.animation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/attachables/heal_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/attachables/gravitation_gun.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/effects/heal_gun_lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/entity/heal_bomb.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/entity/gravitation_bomb.entity.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/entity/heal_bullet.entity.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/entity/poison_bullet.entity.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/entity/slow_bullet.entity.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/entity/speed_bullet.entity.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/models/entity/heal_bomb.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_trap.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/models/entity/heal_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_gun.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/models/entity/heal_gun_bullet.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/netease_items_res/heal_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/netease_items_res/gravitation_gun.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/particles/heal_gun/bullet_hit.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/particles/heal_gun/heal_bomb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/render_controllers/heal_gun.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/render_controllers/gravitation_gun.render_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/texts/zh_CN.lang" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/heal_bomb.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_trap.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/heal_bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/heal_gun.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/poison_bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/slow_bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/entity/speed_bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/item_texture.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/items/heal_gun.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/items/gravitation_gun.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/sfxs/heal_gun_lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/sfxs/heal_gun_lock.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_lock.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/ui/heal_gun/launch_bomb.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/trap.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/ui/heal_gun/self_heal.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/frozen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/ui/heal_gun/shoot.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/use.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/ui/heal_gun/switch_bullet.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/switch_force.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/textures/ui/heal_gun/switch_tracking.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/switch_target.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/ui/_ui_defs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/ui/heal_gun_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/ui/gravitation_gun_functions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/ui/heal_gun_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/ui/gravitation_gun_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heal_gun_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2vr5zoSkwt78ftBZ6i9q991Fyef" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/gravitationGun/gravitation_gun_rp/textures/sfxs"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\gravitationGun\gravitation_gun_rp\textures\sfxs" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\gravitationGun\gravitation_gun_rp\effects" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\gravitationGun\gravitation_gun_rp\textures\ui\gravitation_gun" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7579f03b-41b6-4155-9479-511d8a9fe9fa" name="Changes" comment="" />
+      <created>1744890616623</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744890616623</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -1,9 +1,0 @@
-{
-    "resource_pack_name": "vanilla",
-    "texture_name": "atlas.items",
-    "texture_data": {
-        "orchiella:heal_gun": {
-            "textures": "textures/items/heal_gun"
-        }
-    }
-}

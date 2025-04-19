@@ -1,0 +1,14 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "orchiella:gravitation_gun",
+			"category": "Equipment"
+        },
+
+        "components": {
+            "minecraft:icon": "orchiella:gravitation_gun",
+            "minecraft:render_offsets": "tools"
+        }
+    }
+}

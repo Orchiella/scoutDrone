@@ -1,0 +1,46 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "orchiella:gravitation_gun",
+      "materials": {
+        "default": "entity_emissive_alpha",
+        "enchanted": "entity_alphatest_glint"
+      },
+      "textures": {
+        "default": "textures/entity/gravitation_gun",
+        "enchanted": "textures/misc/enchanted_item_glint"
+      },
+      "animations": {
+        "first_hold": "animation.gravitation_gun.first_hold",
+        "first_attacking": "animation.gravitation_gun.first_attacking",
+        "controller.first": "controller.animation.gravitation_gun.first",
+        "third_hold": "animation.gravitation_gun.third_hold",
+        "third_attacking": "animation.gravitation_gun.third_attacking",
+        "controller.third": "controller.animation.gravitation_gun.third"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "controller.first": "c.is_first_person"
+          },
+          {
+            "first_hold": "c.is_first_person"
+          },
+          {
+            "controller.third": "!c.is_first_person"
+          },
+          {
+            "third_hold": "!c.is_first_person"
+          }
+        ]
+      },
+      "geometry": {
+        "default": "geometry.gravitation_gun"
+      },
+      "render_controllers": [
+        "controller.render.item_default"
+      ]
+    }
+  }
+}
