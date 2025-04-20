@@ -25,12 +25,18 @@ class GravitationGunFunctions(ScreenNode):
         self.clicking_func = None
 
         self.lock = None
+        self.lockInfo = None
+        self.doll_ctrl = None
+        self.item_ctrl = None
+        self.info_label_ctrl = None
 
         self.func_def = {
             "use": {"name": "§{color}使用({rem}/{max})", "type": "shoot"},
-            "sector": {"name": "§{color}范围使用{cd}", "type": "skill"},
+            "sector": {"name": "§{color}范围使用{cd}", "type": "skill",
+                       "condition": lambda: self.GetData("func_switch_target_state") != "block" or isinstance(self.lock,
+                                                                                                              tuple)},
             "trap": {"name": "§{color}引力陷阱{cd}", "type": "skill"},
-            "frozen": {"name": "§{color}冻结{cd}", "type": "skill", "condition": lambda : isinstance(self.lock, str)},
+            "frozen": {"name": "§{color}冻结{cd}", "type": "skill", "condition": lambda: isinstance(self.lock, str)},
             "switch_force": {"name": "方向:{state}", "type": "switch",
                              "candidates": [("gravitation", {"name": "§b引力"}),
                                             ("repulsion", {"name": "§d斥力"})]},
@@ -71,7 +77,8 @@ class GravitationGunFunctions(ScreenNode):
                 leftTime = self.use_cd[func_key] - time.time()
                 isConditionMet = "condition" not in func_def or func_def['condition']()
                 if leftTime > 0.2:
-                    label_ctrl.SetText(func_def['name'].format(color="e" if isConditionMet else "8", cd="({}s)".format(round(leftTime, 1))))
+                    label_ctrl.SetText(func_def['name'].format(color="e" if isConditionMet else "8",
+                                                               cd="({}s)".format(round(leftTime, 1))))
                 else:
                     label_ctrl.SetText(func_def['name'].format(color="f" if isConditionMet else "8", cd=""))
         if self.client.IsHoldingGun():
@@ -149,6 +156,12 @@ class GravitationGunFunctions(ScreenNode):
                     self.GetBaseUIControl("/" + func_key + "/pressed").asImage().SetSprite(
                         "textures/ui/gravitation_gun/" + func_key)
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
+                self.doll_ctrl = self.GetBaseUIControl("/info/paper_doll").asNeteasePaperDoll()
+                self.doll_ctrl.SetVisible(False)
+                self.item_ctrl = self.GetBaseUIControl("/info/item_renderer").asItemRenderer()
+                self.item_ctrl.SetVisible(False)
+                self.info_label_ctrl = self.GetBaseUIControl("/info/label").asLabel()
+                self.info_label_ctrl.SetVisible(False)
 
                 self.initialized = True
             self.SetScreenVisible(show)
@@ -214,8 +227,27 @@ class GravitationGunFunctions(ScreenNode):
     def GetState(self, func_key):
         return self.state_rec[func_key]
 
-    def UpdateLock(self, lock):
+    def UpdateLock(self, lock,lockInfo=None):
         self.lock = lock
+        self.lockInfo = lockInfo
+        print lock,lockInfo
+        if lock:
+            if isinstance(lock, str):
+                self.item_ctrl.SetVisible(False)
+                self.doll_ctrl.SetVisible(True)
+                print self.doll_ctrl.RenderEntity({
+                    "entity_id": lock})
+                self.info_label_ctrl.SetText("当前选中:\n"+lockInfo[1])
+            else:
+                self.item_ctrl.SetVisible(True)
+                self.doll_ctrl.SetVisible(False)
+                self.item_ctrl.SetUiItem(lockInfo[0], lockInfo[1])
+                self.info_label_ctrl.SetText("当前选中:\n"+lockInfo[2])
+            self.info_label_ctrl.SetVisible(True)
+        else:
+            self.item_ctrl.SetVisible(False)
+            self.doll_ctrl.SetVisible(False)
+            self.info_label_ctrl.SetVisible(False)
 
     def GetData(self, key):
         return self.client.GetData(key)

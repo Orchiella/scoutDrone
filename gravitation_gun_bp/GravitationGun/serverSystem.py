@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
 import time
+from collections import deque
 
 import mod.server.extraServerApi as serverApi
 from mod.common.utils.mcmath import Vector3
@@ -64,7 +65,39 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                 self.SectorChoose(playerId, DataManager.Get(playerId, "func_sector_angle") / 2,
                                                   DataManager.Get(playerId, "func_sector_radius")))
             else:
-                pass
+                startPos = self.lockCache[playerId]
+                if not isinstance(startPos, tuple):
+                    return
+                blockInfoComp = serverApi.GetEngineCompFactory().CreateBlockInfo(levelId)
+                dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
+                target = blockInfoComp.GetBlockNew(startPos, dimId)['name']
+                queue = deque([startPos])
+                visitedPoses = []
+                targetDict = {startPos: blockInfoComp.GetBlockNew(startPos, dimId)}
+                searchingTimes = 0
+                while queue:
+                    currentBlockPos = queue.popleft()
+                    visitedPoses.append(currentBlockPos)
+                    for neighborPos in mathUtil.GetNeighboringPoses(currentBlockPos):
+                        searchingTimes += 1
+                        if neighborPos in visitedPoses:
+                            continue
+                        visitedPoses.append(neighborPos)
+                        neighborBlock = blockInfoComp.GetBlockNew(neighborPos, dimId)
+                        if neighborBlock["name"] == target:
+                            queue.append(neighborPos)
+                            targetDict[neighborPos] = neighborBlock
+                    if searchingTimes > 100:
+                        break
+                itemEntities = set()
+                for pos, block in targetDict.items():
+                    blockInfoComp.SetBlockNew(pos, AIR_BLOCK, 0, dimId)
+                    itemEntities.add(self.CreateEngineItemEntity(
+                        dict(INCOMPLETE_ITEM, newItemName=block['name'], itemName=block['name'],
+                             newAuxValue=block['aux'],
+                             auxValue=block['aux']), dimId, pos))
+                for i in range(10):
+                    GC.AddTimer(0.1 * i, self.MultipleAttracting, playerId, itemEntities)
         elif skill == "trap":
             footPos = CF.CreatePos(playerId).GetFootPos()
             bombId = CF.CreateProjectile(levelId).CreateProjectileEntity(playerId, "orchiella:gravitation_trap_entity",
@@ -232,7 +265,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                         self.lockCache[playerId] = targetId
                         self.CallClient(playerId, "UpdateEffectTime", targetId, 0.5, "lock",
                                         0.5 * CF.CreateCollisionBox(targetId).GetSize()[1])
-                        self.CallClient(playerId, "functionsScreen.UpdateLock", targetId)
+                        self.CallClient(playerId, "functionsScreen.UpdateLock", targetId,
+                                        (CF.CreateEngineType(targetId).GetEngineTypeStr(),self.GetEntityName(targetId)))
                         continue
                 elif DataManager.Get(playerId, "func_switch_target_state") == "block":
                     blocks = serverApi.getEntitiesOrBlockFromRay(CF.CreateDimension(playerId).GetEntityDimensionId(),
@@ -241,8 +275,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                                      CF.CreateRot(playerId).GetRot()), 16, False,
                                                                  serverApi.GetMinecraftEnum().RayFilterType.OnlyBlocks)
                     if blocks:
-                        self.lockCache[playerId] = blocks[0]["pos"]
-                        self.CallClient(playerId, "functionsScreen.UpdateLock", blocks[0]["pos"])
+                        blockPos = blocks[0]["pos"]
+                        self.lockCache[playerId] = blockPos
+                        block = CF.CreateBlockInfo(levelId).GetBlockNew(blockPos, CF.CreateDimension(
+                            playerId).GetEntityDimensionId())
+                        self.CallClient(playerId, "functionsScreen.UpdateLock", blockPos,
+                                        (block['name'], block['aux'], self.GetBlockName(block['name'],block['aux'])))
                         continue
             if self.lockCache.get(playerId, None):
                 del self.lockCache[playerId]
@@ -293,6 +331,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def SendTip(self, playerId, message, color):
         GC.SetOnePopupNotice(playerId, "§f" + message, "§" + color + "[引力枪]")
+
+    def GetEntityName(self, entityId):
+        name = CF.CreateName(entityId).GetName()
+        if name: return name
+        return GC.GetChinese(
+            "entity.{}.name".format(CF.CreateEngineType(entityId).GetEngineTypeStr().replace("minecraft:", ""))).encode(
+            "utf-8")
+
+    def GetBlockName(self, name, aux):
+        return CF.CreateItem(levelId).GetItemBasicInfo(name, aux)['itemName']
 
     def SyncVarToClients(self, playerId, key, value):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVar", key, value, playerId)

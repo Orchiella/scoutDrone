@@ -79,6 +79,61 @@
                     ],
                     "type": "button"
                 }
+            },
+            {
+                "info": {
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "controls": [
+                        {
+                            "label": {
+                                "font_type": "default",
+                                "size": [
+                                    100,
+                                    100
+                                ],
+                                "text": "选中目标：\n文本文本文本",
+                                "text_alignment": "center",
+                                "type": "label",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0,
+                                    8
+                                ]
+                            }
+                        },
+                        {
+                            "paper_doll": {
+                                "animation": "",
+                                "enable_scissor_test": false,
+                                "layer": 1,
+                                "renderer": "paper_doll_renderer",
+                                "rotation": "gesture_x",
+                                "type": "custom"
+                            }
+                        },
+                        {
+                            "item_renderer": {
+                                "layer": 1,
+                                "property_bag": {
+                                    "#item_id_aux": 131072
+                                },
+                                "renderer": "inventory_item_renderer",
+                                "size": [
+                                    40,
+                                    40
+                                ],
+                                "type": "custom"
+                            }
+                        }
+                    ],
+                    "size": [
+                        50,
+                        50
+                    ],
+                    "type": "panel"
+                }
             }
         ],
         "type": "screen"
