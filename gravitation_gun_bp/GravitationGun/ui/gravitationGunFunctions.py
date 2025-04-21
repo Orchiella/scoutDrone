@@ -156,7 +156,7 @@ class GravitationGunFunctions(ScreenNode):
                     self.GetBaseUIControl("/" + func_key + "/pressed").asImage().SetSprite(
                         "textures/ui/gravitation_gun/" + func_key)
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
-                self.doll_ctrl = self.GetBaseUIControl("/info/paper_doll").asNeteasePaperDoll()
+                self.doll_ctrl = self.GetBaseUIControl("/info/netease_paper_doll").asNeteasePaperDoll()
                 self.doll_ctrl.SetVisible(False)
                 self.item_ctrl = self.GetBaseUIControl("/info/item_renderer").asItemRenderer()
                 self.item_ctrl.SetVisible(False)
@@ -227,22 +227,25 @@ class GravitationGunFunctions(ScreenNode):
     def GetState(self, func_key):
         return self.state_rec[func_key]
 
-    def UpdateLock(self, lock,lockInfo=None):
+    def UpdateLock(self, lock, lockInfo=None):
         self.lock = lock
         self.lockInfo = lockInfo
-        print lock,lockInfo
         if lock:
             if isinstance(lock, str):
                 self.item_ctrl.SetVisible(False)
                 self.doll_ctrl.SetVisible(True)
-                print self.doll_ctrl.RenderEntity({
-                    "entity_id": lock})
-                self.info_label_ctrl.SetText("当前选中:\n"+lockInfo[1])
+                self.doll_ctrl.RenderEntity({
+                    "entity_id": lock,
+                    "scale": 0.75,
+                    "render_depth": -50,
+                    "init_rot_y": -30,
+                    "init_rot_x": 10})
+                self.info_label_ctrl.SetText("当前选中:\n" + lockInfo)
             else:
                 self.item_ctrl.SetVisible(True)
                 self.doll_ctrl.SetVisible(False)
                 self.item_ctrl.SetUiItem(lockInfo[0], lockInfo[1])
-                self.info_label_ctrl.SetText("当前选中:\n"+lockInfo[2])
+                self.info_label_ctrl.SetText("当前选中:\n" + lockInfo[2])
             self.info_label_ctrl.SetVisible(True)
         else:
             self.item_ctrl.SetVisible(False)

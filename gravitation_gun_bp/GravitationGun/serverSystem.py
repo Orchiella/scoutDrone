@@ -8,7 +8,8 @@ from mod.common.utils.mcmath import Vector3
 
 import config as DB
 from GravitationGun import mathUtil
-from GravitationGun.const import SPECIAL_ENTITIES, INCOMPLETE_ITEM, AIR_BLOCK
+from GravitationGun.const import SPECIAL_ENTITY_TYPE, INCOMPLETE_ITEM, AIR_BLOCK, PENETRABLE_BLOCK_TYPE, \
+    FORBIDDEN_BLOCK_TYPE
 from GravitationGun.dataManager import DataManager
 
 CF = serverApi.GetEngineCompFactory()
@@ -200,7 +201,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         for entityId in entities:
             if entityId == playerId:
                 continue
-            if CF.CreateEngineType(entityId).GetEngineTypeStr() in SPECIAL_ENTITIES:
+            if CF.CreateEngineType(entityId).GetEngineTypeStr() in SPECIAL_ENTITY_TYPE:
                 continue
             ownerId = CF.CreateTame(entityId).GetOwnerId()
             if ownerId and ownerId == playerId:
@@ -228,7 +229,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             launcherId = GetEntityData(entityId, "launcher")
             for nearEntityId in GC.GetEntitiesAround(entityId, DataManager.Get(launcherId, "func_trap_radius"),
                                                      {}):
-                if CF.CreateEngineType(nearEntityId).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                if CF.CreateEngineType(nearEntityId).GetEngineTypeStr() in SPECIAL_ENTITY_TYPE:
                     continue
                 elif CF.CreateEngineType(nearEntityId).GetEngineTypeStr() == "minecraft:player":
                     if not DataManager.Get(launcherId, "func_trap_affect_other_players"):
@@ -247,7 +248,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     for entityId in GC.GetEntitiesAround(playerId, 60, {}):
                         if playerId == entityId:
                             continue
-                        if CF.CreateEngineType(entityId).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                        if CF.CreateEngineType(entityId).GetEngineTypeStr() in SPECIAL_ENTITY_TYPE:
                             continue
                         if not GC.CanSee(playerId, entityId, 100.0, True, 180.0, 180.0):
                             continue
@@ -266,22 +267,29 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                         self.CallClient(playerId, "UpdateEffectTime", targetId, 0.5, "lock",
                                         0.5 * CF.CreateCollisionBox(targetId).GetSize()[1])
                         self.CallClient(playerId, "functionsScreen.UpdateLock", targetId,
-                                        (CF.CreateEngineType(targetId).GetEngineTypeStr(),self.GetEntityName(targetId)))
+                                        self.GetEntityName(targetId))
                         continue
                 elif DataManager.Get(playerId, "func_switch_target_state") == "block":
                     blocks = serverApi.getEntitiesOrBlockFromRay(CF.CreateDimension(playerId).GetEntityDimensionId(),
                                                                  CF.CreatePos(playerId).GetPos(),
                                                                  serverApi.GetDirFromRot(
-                                                                     CF.CreateRot(playerId).GetRot()), 16, False,
+                                                                     CF.CreateRot(playerId).GetRot()), 16, True,
                                                                  serverApi.GetMinecraftEnum().RayFilterType.OnlyBlocks)
                     if blocks:
-                        blockPos = blocks[0]["pos"]
-                        self.lockCache[playerId] = blockPos
-                        block = CF.CreateBlockInfo(levelId).GetBlockNew(blockPos, CF.CreateDimension(
-                            playerId).GetEntityDimensionId())
-                        self.CallClient(playerId, "functionsScreen.UpdateLock", blockPos,
-                                        (block['name'], block['aux'], self.GetBlockName(block['name'],block['aux'])))
-                        continue
+                        penetratedBlock = None
+                        for block in blocks:
+                            if block['identifier'] in PENETRABLE_BLOCK_TYPE:
+                                continue
+                            penetratedBlock = block
+                            break
+                        if penetratedBlock and penetratedBlock['identifier'] not in FORBIDDEN_BLOCK_TYPE:
+                            blockPos = penetratedBlock["pos"]
+                            self.lockCache[playerId] = blockPos
+                            block = CF.CreateBlockInfo(levelId).GetBlockNew(blockPos, CF.CreateDimension(
+                                playerId).GetEntityDimensionId())
+                            self.CallClient(playerId, "functionsScreen.UpdateLock", blockPos,
+                                            (block['name'], block['aux'], self.GetBlockName(block['name'],block['aux'])))
+                            continue
             if self.lockCache.get(playerId, None):
                 del self.lockCache[playerId]
                 self.CallClient(playerId, "functionsScreen.UpdateLock", None)
