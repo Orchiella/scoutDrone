@@ -21,7 +21,8 @@
         ],
         "animate": [
           "rotating"
-        ]
+        ],
+        "scale": "2"
       },
       "textures": {
         "default": "textures/entity/gravitation_trap"

@@ -308,7 +308,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     "test": "is_family",
                     "value": "player"
                 }]}), 'UpdateEffectTime', entityId,
-                             DataManager.Get(launcherId, 'func_trap_duration'), 'attracting', 1.5)
+                             DataManager.Get(launcherId, 'func_trap_duration'), 'attracting', 0.75)
 
     @Listen("DamageEvent")
     def EntityDamaged(self, event):
