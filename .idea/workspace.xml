@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7579f03b-41b6-4155-9479-511d8a9fe9fa" name="Changes" comment="3">
+    <list default="true" id="7579f03b-41b6-4155-9479-511d8a9fe9fa" name="Changes" comment="4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/entities/gravitation_trap.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_bp/entities/gravitation_trap.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/animations/gravitation_gun.animation.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/animations/gravitation_gun.animation.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/entity/gravitation_bomb.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/entity/gravitation_trap.entity.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_gun.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_trap.json" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_trap.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_gun.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_gun.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_trap.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_trap.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/frozen.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/frozen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/trap.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/trap.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/items/gravitation_gun.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/items/gravitation_gun.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/sector.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/sector.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/use.png" beforeDir="false" afterPath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/use.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
@@ -79,12 +73,21 @@
       <option name="project" value="LOCAL" />
       <updated>1745233327522</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="4">
+      <option name="closed" value="true" />
+      <created>1745426144524</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745426144524</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2" />
     <MESSAGE value="3" />
-    <option name="LAST_COMMIT_MESSAGE" value="3" />
+    <MESSAGE value="4" />
+    <option name="LAST_COMMIT_MESSAGE" value="4" />
   </component>
 </project>

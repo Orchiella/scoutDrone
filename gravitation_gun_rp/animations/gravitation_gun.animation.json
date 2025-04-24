@@ -22,8 +22,8 @@
 			"bones": {
 				"gravitation_gun": {
 					"rotation": [0, 180, 0],
-					"position": [-3, -3, 9],
-					"scale": 1.5
+					"position": [0, -5, 27],
+					"scale": 0.7
 				}
 			}
 		},
@@ -45,9 +45,9 @@
 			"loop": true,
 			"bones": {
 				"gravitation_gun": {
-					"position": [8, 0, -9],
+					"position": [8, -3, -6],
 					"rotation": [8, 18, 0],
-					"scale": 1.2
+					"scale": 0.7
 				}
 			}
 		},
