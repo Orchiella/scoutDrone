@@ -237,6 +237,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     def SetData(self, key, value):
         self.settings[key] = value
+        if key == 'sight_bead_enabled':
+            self.functionsScreen.GetBaseUIControl("/sight_bead").SetVisible(value)
 
     def LoadData(self, settings):
         self.settings = settings

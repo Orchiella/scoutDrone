@@ -7,22 +7,26 @@ levelId = serverApi.GetLevelId()
 
 class DataManager(object):
     default_player_settings = [
+        ("sight_bead_enabled", {"description": "§f显示准星", "type": "bool", "default": True}),
         ("func_use_capacity", {"description": "§9[使用]§f能量载量", "type": "int", "range": (1, 20), "default": 10}),
         ("func_use_cd", {"description": "§9[使用]§f每点能量填充秒数", "type": "int", "range": (1, 60), "default": 2}),
+        ("func_use_entity_distance", {"description": "§9[使用]§f对实体的最大锁定距离", "type": "int", "range": (1, 60), "default": 60}),
+        ("func_use_block_distance", {"description": "§9[使用]§f对方块的最大锁定距离", "type": "int", "range": (1, 60), "default": 30}),
         ("func_use_entity_durability_consumption", {"description": "§9[使用]§f作用于实体时消耗的耐久", "type": "int", "range": (0, 100), "default": 1}),
-        ("func_use_block_durability_consumption", {"description": "§9[使用]§f作用于方块时消耗的耐久", "type": "int", "range": (0, 100), "default": 1}),
+        ("func_use_block_durability_consumption", {"description": "§9[使用]§f作用于方块时消耗的耐久", "type": "int", "range": (0, 100), "default": 3}),
         ("func_sector_cd", {"description": "§a[技能:范围使用]§f冷却秒数", "type": "int", "range": (1, 60), "default": 10}),
-        ("func_sector_durability_consumption", {"description": "§a[技能:范围使用]§f消耗耐久", "type": "int", "range": (0, 100), "default": 3}),
-        ("func_sector_angle", {"description": "§a[技能:范围使用]§f作用范围的扇形角度", "type": "int", "range": (30, 180), "default": 120}),
-        ("func_sector_radius", {"description": "§a[技能:范围使用]§f作用范围的扇形半径", "type": "int", "range": (1, 30), "default": 8}),
-        ("func_trap_cd", {"description": "§5[技能:引力陷阱]§f冷却秒数", "type": "int", "range": (1, 60), "default": 20}),
+        ("func_sector_durability_consumption", {"description": "§a[技能:范围使用]§f消耗耐久", "type": "int", "range": (0, 100), "default": 10}),
+        ("func_sector_angle", {"description": "§a[技能:范围使用]§f作用范围的扇形角度", "type": "int", "range": (30, 180), "default": 150}),
+        ("func_sector_radius", {"description": "§a[技能:范围使用]§f作用范围的扇形半径", "type": "int", "range": (1, 30), "default": 15}),
+        ("func_sector_affect_other_players", {"description": "§a[技能:范围使用]§f是否对其他玩家生效", "type": "bool", "default": False}),
+        ("func_trap_cd", {"description": "§5[技能:引力陷阱]§f冷却秒数", "type": "int", "range": (1, 60), "default": 12}),
         ("func_trap_durability_consumption", {"description": "§5[技能:引力陷阱]§f消耗耐久", "type": "int", "range": (0, 100), "default": 10}),
-        ("func_trap_radius", {"description": "§5[技能:引力陷阱]§f作用半径", "type": "int", "range": (1, 30), "default": 8}),
+        ("func_trap_radius", {"description": "§5[技能:引力陷阱]§f作用半径", "type": "int", "range": (1, 30), "default": 10}),
         ("func_trap_duration", {"description": "§5[技能:引力陷阱]§f维持秒数", "type": "int", "range": (1, 60), "default": 5}),
         ("func_trap_affect_other_players", {"description": "§5[技能:引力陷阱]§f是否对其他玩家生效", "type": "bool", "default": False}),
         ("func_frozen_cd", {"description": "§b[技能:冰冻]§f冷却秒数", "type": "int", "range": (1, 60), "default": 20}),
         ("func_frozen_durability_consumption", {"description": "§b[技能:冰冻]§f消耗耐久", "type": "int", "range": (0, 100), "default": 10}),
-        ("func_frozen_duration", {"description": "§b[技能:冰冻]§f冻结秒数", "type": "int", "range": (1, 60), "default": 5}),
+        ("func_frozen_duration", {"description": "§b[技能:冰冻]§f冻结秒数", "type": "int", "range": (1, 60), "default": 8}),
     ]
 
     default_player_data = {"func_sector_pos": (215, 33),"func_trap_pos": (275, 33), "func_switch_force_pos": (335, 33),

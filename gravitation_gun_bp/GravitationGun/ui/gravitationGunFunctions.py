@@ -87,7 +87,7 @@ class GravitationGunFunctions(ScreenNode):
             self.SetScreenVisible(False)
             return
         if self.clicking_func:
-            if time.time() - self.tick > 0.5 and not self.dragging_mode:
+            if self.tick != 0 and time.time() - self.tick > 0.5 and not self.dragging_mode:
                 # 进入拖拽模式
                 dragging_skill_ctrl = self.func_btn_ctrls[self.clicking_func]
                 btn_pos, click_pos = dragging_skill_ctrl.GetPosition(), clientApi.GetTouchPos()
@@ -162,6 +162,7 @@ class GravitationGunFunctions(ScreenNode):
                 self.item_ctrl.SetVisible(False)
                 self.info_label_ctrl = self.GetBaseUIControl("/info/label").asLabel()
                 self.info_label_ctrl.SetVisible(False)
+                self.GetBaseUIControl("/sight_bead").SetVisible(self.GetData("sight_bead_enabled"))
 
                 self.initialized = True
             self.SetScreenVisible(show)

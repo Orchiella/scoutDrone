@@ -5,9 +5,9 @@
             "identifier": "orchiella:gravitation_gun"
         },
         "key": {
-            "G": {
+            "B": {
                 "data": 0,
-                "item": "minecraft:golden_apple"
+                "item": "minecraft:iron_block"
             },
             "I": {
                 "data": 0,
@@ -20,7 +20,7 @@
         },
         "pattern": [
             " I ",
-            "IGI",
+            "IBI",
             " R "
         ],
         "result": {

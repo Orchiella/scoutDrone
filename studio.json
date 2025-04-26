@@ -1,9 +1,9 @@
 {
   "Source": "import",
   "CreateVersion": "3.2.0.893323",
-  "EditVersion": "3.3.0.958953",
+  "EditVersion": "3.3.0.965966",
   "OldEditCount": 0,
-  "NewEditCount": 18,
+  "NewEditCount": 19,
   "OldComponents": [],
   "Account": "valorin233@163.com",
   "UserName": "蕙兰",
@@ -35,7 +35,7 @@
   "EditMaterialPaths": [],
   "EditLogFilePath": "E:\\MCStudioDownload\\work\\editor\\edit.log",
   "ServerName": "EXPR",
-  "StudioPort": 10465,
+  "StudioPort": 11563,
   "DCWebUrl": "https://x19apigatewayexpr.nie.netease.com",
   "ShowGuide": false,
   "AssertCacheDir": "E:\\MCStudioDownload\\EngineAssert",
@@ -44,6 +44,6 @@
   "StudioTempPath": "E:\\MCStudioDownload\\temp\\editorTemp",
   "EditorResourcePackPath": "E:\\MCStudio\\data\\inner_res",
   "EditDate": 1737468296,
-  "EditDuration": 56587,
-  "TestDuration": 431365
+  "EditDuration": 57986,
+  "TestDuration": 447365
 }

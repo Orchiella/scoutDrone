@@ -28,14 +28,19 @@
 			}
 		},
 		"animation.gravitation_gun.first_attacking": {
-			"override_previous_animation": true,
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.3,
+			"override_previous_animation": true,
 			"bones": {
 				"gravitation_gun": {
 					"rotation": {
 						"0.0": [0, 0, 0],
 						"0.1": [-10, 0, 0],
+						"0.15": [0, 0, 0]
+					},
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.1": [0, 0, 1],
 						"0.15": [0, 0, 0]
 					}
 				}

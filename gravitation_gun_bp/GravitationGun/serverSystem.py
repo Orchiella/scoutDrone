@@ -163,10 +163,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             for i in range(10):
                 GC.AddTimer(0.1 * i, self.Attracting, playerId, itemId)
             self.TakeDurability(playerId, handType, DataManager.Get(playerId, "func_use_block_durability_consumption"))
-        # if not DataManager.Get(playerId, "usage_informed"):
-        #     DataManager.Set(playerId, "usage_informed", True)
-        #     CF.CreateMsg(playerId).NotifyOneMessage(playerId,
-        #                                             "§d[治疗枪模组] §f欢迎使用治疗枪模组！你可以在聊天框发送§e“治疗枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+        if not DataManager.Get(playerId, "usage_informed"):
+            DataManager.Set(playerId, "usage_informed", True)
+            CF.CreateMsg(playerId).NotifyOneMessage(playerId,
+                                                    "§6[引力枪模组] §f欢迎使用引力枪模组！你可以在聊天框发送§e“引力枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
 
     def Attracting(self, playerId, entityId, ensureGravitation=False):
         entityPos = CF.CreatePos(entityId).GetFootPos()
@@ -192,6 +192,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def MultipleAttracting(self, playerId, entities):
         for entityId in entities:
+            if CF.CreateEngineType(entityId).GetEngineTypeStr() == "minecraft:player" and not DataManager.Get(playerId,
+                                                                                                              "func_sector_affect_other_players"):
+                continue
             self.Attracting(playerId, entityId)
 
     def SectorChoose(self, playerId, includedAngle, radius):
@@ -232,7 +235,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 if CF.CreateEngineType(nearEntityId).GetEngineTypeStr() in SPECIAL_ENTITY_TYPE:
                     continue
                 elif CF.CreateEngineType(nearEntityId).GetEngineTypeStr() == "minecraft:player":
-                    if not DataManager.Get(launcherId, "func_trap_affect_other_players"):
+                    if nearEntityId == launcherId:
+                        continue
+                    elif not DataManager.Get(launcherId, "func_trap_affect_other_players"):
                         continue
                 self.Attracting(entityId, nearEntityId, True)
 
@@ -245,7 +250,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     minAngle = -999
                     playerPos = CF.CreatePos(playerId).GetPos()
                     targetId = None
-                    for entityId in GC.GetEntitiesAround(playerId, 60, {}):
+                    for entityId in GC.GetEntitiesAround(playerId,
+                                                         DataManager.Get(playerId, "func_use_entity_distance"), {}):
                         if playerId == entityId:
                             continue
                         if CF.CreateEngineType(entityId).GetEngineTypeStr() in SPECIAL_ENTITY_TYPE:
@@ -273,7 +279,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     blocks = serverApi.getEntitiesOrBlockFromRay(CF.CreateDimension(playerId).GetEntityDimensionId(),
                                                                  CF.CreatePos(playerId).GetPos(),
                                                                  serverApi.GetDirFromRot(
-                                                                     CF.CreateRot(playerId).GetRot()), 16, True,
+                                                                     CF.CreateRot(playerId).GetRot()),
+                                                                 DataManager.Get(playerId, "func_use_block_distance"),
+                                                                 True,
                                                                  serverApi.GetMinecraftEnum().RayFilterType.OnlyBlocks)
                     if blocks:
                         penetratedBlock = None
@@ -288,7 +296,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                             block = CF.CreateBlockInfo(levelId).GetBlockNew(blockPos, CF.CreateDimension(
                                 playerId).GetEntityDimensionId())
                             self.CallClient(playerId, "functionsScreen.UpdateLock", blockPos,
-                                            (block['name'], block['aux'], self.GetBlockName(block['name'],block['aux'])))
+                                            (block['name'], block['aux'],
+                                             self.GetBlockName(block['name'], block['aux'])))
                             continue
             if self.lockCache.get(playerId, None):
                 del self.lockCache[playerId]
@@ -368,7 +377,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        if message == "引力枪设置" or message == "1":
+        if message == "引力枪设置":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:
