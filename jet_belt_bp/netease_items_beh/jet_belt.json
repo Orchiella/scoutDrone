@@ -1,0 +1,18 @@
+{
+  "format_version": "1.10",
+  "minecraft:item": {
+    "description": {
+      "identifier": "orchiella:jet_belt",
+      "category": "Equipment",
+      "custom_item_type": "armor"
+    },
+    "components": {
+      "minecraft:max_damage": 800,
+      "netease:armor": {
+        "armor_slot": 2,
+        "defense": 20,
+        "enchantment": 10
+      }
+    }
+  }
+}

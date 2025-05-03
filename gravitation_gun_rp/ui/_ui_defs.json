@@ -1,7 +1,0 @@
-{
-    "ui_defs": [
-        "ui/gravitation_gun_functions.json",
-        "ui/gravitation_gun_settings.json",
-        "ui/netease_editor_template_namespace.json"
-    ]
-}
