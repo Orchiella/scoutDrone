@@ -148,7 +148,7 @@ class JetBeltFunctions(ScreenNode):
                     self.GetBaseUIControl("/" + func_key + "/hover").asImage().SetSprite(
                         "textures/ui/" + mod_name + "/" + func_key)
                     self.GetBaseUIControl("/" + func_key + "/pressed").asImage().SetSprite(
-                        "textures/ui/" + mod_name + "n/" + func_key)
+                        "textures/ui/" + mod_name + "/" + func_key)
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
 
                 self.initialized = True

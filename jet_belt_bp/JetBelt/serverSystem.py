@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-import math
 import time
-from collections import deque
 
 import mod.server.extraServerApi as serverApi
 from mod.common.utils.mcmath import Vector3
 
 import config as DB
 from JetBelt import mathUtil
-from JetBelt.const import INCOMPLETE_ITEM, AIR_BLOCK, PENETRABLE_BLOCK_TYPE
+from JetBelt.const import PENETRABLE_BLOCK_TYPE
 from JetBelt.dataManager import DataManager
 
 CF = serverApi.GetEngineCompFactory()
@@ -66,18 +64,32 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())) * DataManager.Get(playerId,
                                                                                                 "func_flash_max_distance")).ToTuple())
                 self.fallingProtectionDict[playerId] = time.time() + 3
-                self.TakeDurability(playerId, DataManager.Get(playerId, "func_{}_durability_consumption".format(skill)))
+        elif skill == "fear":
+            playerPos = Vector3(CF.CreatePos(playerId).GetFootPos())
+            for entityId in GC.GetEntitiesAround(playerId, DataManager.Get(playerId, "func_fear_radius"), {}):
+                if entityId == playerId:
+                    continue
+                if CF.CreateTame(entityId).GetOwnerId() == playerId:
+                    continue
+                entityPos = CF.CreatePos(entityId).GetFootPos()
+                relativePos = Vector3(entityPos) - playerPos
+                motion = (relativePos.Normalized() * 3).ToTuple()
+                CF.CreateActorMotion(entityId).SetMotion(motion)
+            self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer(), "PlayParticle", "smoke",
+                             mathUtil.generate_circle_points((playerPos[0], playerPos[1] + 0.5, playerPos[2]), 3, 15))
+        self.TakeDurability(playerId, DataManager.Get(playerId, "func_{}_durability_consumption".format(skill)))
 
     def Use(self, playerId, vector):
         if not self.IsWearing(playerId):
             return
         motionComp = CF.CreateActorMotion(playerId)
         playerDir = serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())
-        jetDir = playerDir if abs(vector[0]) < 0.2 else mathUtil.rotate_direction(vector, playerDir)
+        jetDir = playerDir if abs(vector[0]) < 0.2 and vector[1] >= 0 else mathUtil.rotate_direction(vector, playerDir)
         motionComp.SetPlayerMotion(
             (Vector3(jetDir).Normalized() * (DataManager.Get(playerId, "func_use_strength") + (
                 0 if DataManager.Get(playerId, "func_switch_power_state") == "normal" else DataManager.Get(playerId,
-                                                                                                           "func_boost_use_strength")))).ToTuple())
+                                                                                                           "func_boost_use_strength")))
+             + Vector3(0, 0.1, 0)).ToTuple())
         self.fallingProtectionDict[playerId] = time.time() + 3
         self.TakeDurability(playerId, DataManager.Get(playerId, "func_use_durability_consumption") + (
             0 if DataManager.Get(playerId, "func_switch_power_state") == "normal" else DataManager.Get(playerId,
@@ -86,28 +98,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         #     DataManager.Set(playerId, "usage_informed", True)
         #     CF.CreateMsg(playerId).NotifyOneMessage(playerId,
         #                                             "§6[引力枪模组] §f欢迎使用引力枪模组！你可以在聊天框发送§e“引力枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
-
-    def Attracting(self, playerId, entityId, ensureGravitation=False):
-        entityPos = CF.CreatePos(entityId).GetFootPos()
-        if not entityPos:  # 说明实体死亡
-            return
-        playerPos = CF.CreatePos(playerId).GetFootPos()
-        isGravitation = ensureGravitation or DataManager.Get(playerId, "func_switch_force_state") == "gravitation"
-        if entityId in self.frozenEntities and isGravitation:
-            CF.CreatePos(entityId).SetPos(playerPos)
-        else:
-            relativePos = Vector3(playerPos) - Vector3(entityPos)
-            motion = (relativePos.Normalized() * (1.2 if relativePos.Length() < 15 else 2)
-                      * (1 if isGravitation else -1)).ToTuple()
-            if relativePos.Length() < 3:
-                if relativePos.Length() < 1.5:
-                    motion = (0, motion[1], 0)
-            elif playerPos[1] > entityPos[1]:
-                motion = (motion[0], motion[1] + 0.15, motion[2])
-            if CF.CreateEngineType(entityId).GetEngineTypeStr() == "minecraft:player":
-                CF.CreateActorMotion(entityId).SetPlayerMotion(motion)
-            else:
-                CF.CreateActorMotion(entityId).SetMotion(motion)
 
     @Listen("DamageEvent")
     def PlayerDamaged(self, event):
@@ -138,16 +128,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def SendTip(self, playerId, message, color):
         GC.SetOnePopupNotice(playerId, "§f" + message, "§" + color + "[动力推进器]")
-
-    def GetEntityName(self, entityId):
-        name = CF.CreateName(entityId).GetName()
-        if name: return name
-        return GC.GetChinese(
-            "entity.{}.name".format(CF.CreateEngineType(entityId).GetEngineTypeStr().replace("minecraft:", ""))).encode(
-            "utf-8")
-
-    def GetBlockName(self, name, aux):
-        return CF.CreateItem(levelId).GetItemBasicInfo(name, aux)['itemName']
 
     def SyncVarToClients(self, playerId, key, value):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVar", key, value, playerId)

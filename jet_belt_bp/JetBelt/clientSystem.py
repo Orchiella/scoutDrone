@@ -34,31 +34,54 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         super(ClientSystem, self).__init__(namespace, systemName)
         for EN, ESN, eventName, callback, priority in eventList:
             self.ListenForEvent(EN, ESN, eventName, self, callback, priority)
+        self.is_using = False
 
         self.uiMgr = uiMgr.UIMgr()
         self.settingsScreen = None
         self.functionsScreen = None
         self.settings = {}
 
-    def PlayParticle(self, particleName, pos, varDict=None):
-        parId = parComp.Create(DB.mod_name + ":" + particleName, pos)
-        if varDict:
-            for key, value in varDict.items():
-                parComp.SetVariable(parId, "variable." + key, value)
+    def PlayParticle(self, particleName, poses, varDict=None):
+        if isinstance(poses, tuple):
+            poses = {poses}
+        prefix = "orchiella:" + DB.mod_name + "_"
+        for pos in poses:
+            parId = parComp.Create(prefix + particleName, pos)
+            if varDict:
+                for key, value in varDict.items():
+                    parComp.SetVariable(parId, "variable." + key, value)
 
     def ReleaseSkill(self, skill):
         if not self.IsWearing():
             return
         self.CallServer("ReleaseSkill", 0, PID, skill)
 
-    def Use(self,vector):
+    def Use(self, vector):
         if not self.IsWearing():
             return
-        self.CallServer("Use", 0, PID,vector)
+        self.UpdateVar("jetting", 1)
+        self.CallServer("Use", 0, PID, vector)
+        GC.AddTimer(0.3, self.UpdateVar, "jetting", 0)
+
+    def SyncVarToServer(self, delay, key, value):
+        if delay == 0:
+            self.UpdateVar(key, value)
+        else:
+            GC.AddTimer(delay, self.UpdateVar, key, value)
+        self.CallServer("SyncVarToClients", delay, PID, key, value)
+
+    def UpdateVar(self, key, value, playerId=PID):
+        CF.CreateQueryVariable(playerId).Set("query.mod." + DB.mod_name + "_" + key, value)
+        if key == "jetting" and playerId == PID:
+            self.is_using = True if value == 1.0 else False
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
         self.CallServer("LoadData", 0, PID)
+        queryComp = CF.CreateQueryVariable(clientApi.GetLevelId())
+        queryComp.Register('query.mod.{}_jetting'.format(DB.mod_name), 0.0)
+        queryComp = CF.CreateQueryVariable(PID)
+        queryComp.Set('query.mod.{}_jetting'.format(DB.mod_name), 0.0)
 
     def IsWearing(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.ARMOR, 2)

@@ -4,72 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="078f40d2-fd40-4a53-891a-93de5f070d77" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/const.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/mathUtil.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/serverSystem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/uiDef.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_bp/netease_items_beh/jet_belt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_rp/attachables/jet_belt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_rp/netease_items_res/jet_belt.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_rp/texts/zh_CN.lang" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_rp/ui/_ui_defs.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jet_belt_rp/ui/jet_belt_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gravitationGun.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jetBelt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="078f40d2-fd40-4a53-891a-93de5f070d77" name="Changes" comment="1">
+      <change afterPath="$PROJECT_DIR$/jet_belt_rp/animation_controllers/jet_belt.animations_controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jet_belt_rp/animations/jet_belt.animation.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jet_belt_rp/particles/jet_belt_smoke.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jet_belt_rp/textures/particle/jet_belt/smoke.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/clientSystem.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/const.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/mathUtil.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/modMain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/serverSystem.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/gravitationGunFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/gravitationGunSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltSettings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/uiDef.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/GravitationGun/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/uiMgr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/entities/gravitation_trap.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/netease_items_beh/gravitation_gun.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_bp/recipes/gravitation_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/recipes/jet_belt.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/animation_controllers/gravitation_gun.animations_controllers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/animations/gravitation_gun.animation.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/attachables/gravitation_gun.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_attracting.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_frozen.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/effects/gravitation_gun_lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/entity/gravitation_trap.entity.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_gun.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/models/entity/jet_belt.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/models/entity/gravitation_trap.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/netease_items_res/gravitation_gun.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/render_controllers/gravitation_gun.render_controllers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/texts/zh_CN.lang" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_gun.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/entity/jet_belt.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/entity/gravitation_trap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/item_texture.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/items/gravitation_gun.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/items/jet_belt.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_attracting.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_attracting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_frozen.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_frozen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/sfxs/gravitation_gun_lock.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/frozen.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/fear.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/sector.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/flash.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/sight_bead.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/brake.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/switch_force.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/switch_target.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/switch_power.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/trap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/textures/ui/gravitation_gun/use.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/use.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/ui/_ui_defs.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/ui/gravitation_gun_functions.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/ui/gravitation_gun_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/ui/jet_belt_settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gravitation_gun_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/mathUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/serverSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/attachables/jet_belt.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/attachables/jet_belt.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/models/entity/jet_belt.json" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/models/entity/jet_belt.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/entity/jet_belt.png" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_rp/textures/entity/jet_belt.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,19 +31,31 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2wZ6nqi934YntrcQg7oiB7vKixm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/jetBelt&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/jetBelt/jet_belt_rp"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\textures\particle" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\textures\particle\jet_belt" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -106,6 +65,19 @@
       <option name="presentableId" value="Default" />
       <updated>1746236919395</updated>
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1746277783372</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1746277783373</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>

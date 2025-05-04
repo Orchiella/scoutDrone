@@ -1,0 +1,27 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+		"controller.animation.jet_belt.jetting": {
+			"initial_state" : "default",
+			"states" : {
+				"default": {
+					"transitions" : [
+						{
+							"jetting": "q.mod.jet_belt_jetting"
+						}
+					]
+				},
+				"jetting": {
+					"animations": [
+						"jetting"
+					],
+					"transitions" : [
+						{
+							"default" : "!q.mod.jet_belt_jetting"
+						}
+					]
+				}
+			}
+		}
+	}
+}
