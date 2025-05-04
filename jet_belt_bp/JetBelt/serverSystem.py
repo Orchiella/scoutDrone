@@ -102,7 +102,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     @Listen("DamageEvent")
     def PlayerDamaged(self, event):
         playerId = event['entityId']
-        if event['cause'] != serverApi.GetMinecraftEnum().ActorDamageCause.Fall:
+        if event['cause'] != serverApi.GetMinecraftEnum().ActorDamageCause.Fall and \
+                event['cause'] != serverApi.GetMinecraftEnum().ActorDamageCause.FlyIntoWall:
             return
         if CF.CreateEngineType(playerId).GetEngineTypeStr() != "minecraft:player":
             return

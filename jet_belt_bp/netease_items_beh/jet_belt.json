@@ -10,7 +10,7 @@
       "minecraft:max_damage": 800,
       "netease:armor": {
         "armor_slot": 2,
-        "defense": 20,
+        "defense": 6,
         "enchantment": 10
       }
     }
