@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 import time
 
 import mod.client.extraClientApi as clientApi
@@ -11,6 +12,7 @@ CF = clientApi.GetEngineCompFactory()
 PID = clientApi.GetLocalPlayerId()
 levelId = clientApi.GetLevelId()
 parComp = CF.CreateParticleSystem(None)
+audioComp = CF.CreateCustomAudio(levelId)
 GC = CF.CreateGame(levelId)
 eventList = []
 
@@ -51,6 +53,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 for key, value in varDict.items():
                     parComp.SetVariable(parId, "variable." + key, value)
 
+    def PlaySound(self, soundName):
+        audioComp.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
+
     def ReleaseSkill(self, skill):
         if not self.IsWearing():
             return
@@ -59,6 +64,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def Use(self, vector):
         if not self.IsWearing():
             return
+        if self.GetData("func_use_sound_enabled"):
+            self.PlaySound("jetting" + str(random.randint(1, 2)))
         self.UpdateVar("jetting", 1)
         self.CallServer("Use", 0, PID, vector)
         GC.AddTimer(0.3, self.UpdateVar, "jetting", 0)

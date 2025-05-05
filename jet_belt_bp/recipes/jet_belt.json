@@ -5,10 +5,6 @@
             "identifier": "orchiella:jet_belt"
         },
         "key": {
-            "B": {
-                "data": 0,
-                "item": "minecraft:iron_block"
-            },
             "I": {
                 "data": 0,
                 "item": "minecraft:iron_ingot"
@@ -19,9 +15,9 @@
             }
         },
         "pattern": [
-            " I ",
-            "IBI",
-            " R "
+            "I I",
+            "III",
+            "R R"
         ],
         "result": {
             "count": 1,

@@ -9,9 +9,10 @@ levelId = serverApi.GetLevelId()
 
 class DataManager(object):
     default_player_settings = [
+        ("func_use_sound_enabled", {"description": "§9[喷气]§f开启音效", "type": "bool", "default": True}),
         ("func_use_capacity", {"description": "§9[喷气]§f能量载量", "type": "int", "range": (1, 20), "default": 6}),
         ("func_use_cd", {"description": "§9[喷气]§f每点能量填充秒数", "type": "int", "range": (1, 60), "default": 2}),
-        ("func_use_strength", {"description": "§9[喷气]§f推进力度", "type": "int", "range": (1, 5), "default": 3}),
+        ("func_use_strength", {"description": "§9[喷气]§f推进力度", "type": "int", "range": (1, 5), "default": 2}),
         ("func_use_durability_consumption", {"description": "§9[喷气]§f消耗耐久", "type": "int", "range": (1, 60), "default": 1}),
         ("func_boost_use_strength", {"description": "§9[喷气]§f提高功率时额外的推进力度", "type": "int", "range": (1, 5), "default": 2}),
         ("func_boost_use_energy_consumption", {"description": "§9[喷气]§f提高功率时额外消耗的能量", "type": "int", "range": (1, 100), "default": 2}),
