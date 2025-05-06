@@ -94,10 +94,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.TakeDurability(playerId, DataManager.Get(playerId, "func_use_durability_consumption") + (
             0 if DataManager.Get(playerId, "func_switch_power_state") == "normal" else DataManager.Get(playerId,
                                                                                                        "func_boost_use_durability_consumption")))
-        # if not DataManager.Get(playerId, "usage_informed"):
-        #     DataManager.Set(playerId, "usage_informed", True)
-        #     CF.CreateMsg(playerId).NotifyOneMessage(playerId,
-        #                                             "§6[引力枪模组] §f欢迎使用引力枪模组！你可以在聊天框发送§e“引力枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+        if not DataManager.Get(playerId, "usage_informed"):
+            DataManager.Set(playerId, "usage_informed", True)
+            CF.CreateMsg(playerId).NotifyOneMessage(playerId,
+                                                    "§6[推进器模组] §f欢迎使用推进器模组！你可以在聊天框发送§e“推进器设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
 
     @Listen("DamageEvent")
     def PlayerDamaged(self, event):
@@ -109,7 +109,15 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         if time.time() < self.fallingProtectionDict.get(playerId, 0):
             event['damage'] = 0
-            print "保护"
+
+    @Listen
+    def MobDieEvent(self, event):
+        playerId = event['attacker']
+        if CF.CreateEngineType(playerId).GetEngineTypeStr() != "minecraft:player":
+            return
+        if not self.IsWearing(playerId):
+            return
+        self.CallClient(playerId, "functionsScreen.Cooldown", "use")
 
     def IsWearing(self, playerId):
         comp = CF.CreateItem(playerId)
@@ -148,7 +156,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        if message == "1":
+        if message == "推进器设置":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:

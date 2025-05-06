@@ -65,8 +65,9 @@ class JetBeltFunctions(ScreenNode):
                     0 if self.state_rec["switch_power"] == "normal" else self.GetData(
                         "func_boost_use_energy_consumption"))
                 label_ctrl.SetText(
-                    func_def['name'].format(color="f" if self.bullet_rec["use"] + bullet_consumption <= bullet_capacity else "8",
-                                            rem=(bullet_capacity - self.bullet_rec[func_key]), max=bullet_capacity))
+                    func_def['name'].format(
+                        color="f" if self.bullet_rec["use"] + bullet_consumption <= bullet_capacity else "8",
+                        rem=(bullet_capacity - self.bullet_rec[func_key]), max=bullet_capacity))
             elif func_def['type'] == 'skill':
                 leftTime = self.use_cd[func_key] - time.time()
                 isConditionMet = "condition" not in func_def or func_def['condition']()
@@ -215,6 +216,9 @@ class JetBeltFunctions(ScreenNode):
 
     def GetState(self, func_key):
         return self.state_rec[func_key]
+
+    def Cooldown(self, func):
+        self.use_cd[func] = time.time()
 
     def GetData(self, key):
         return self.client.GetData(key)

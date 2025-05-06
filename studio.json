@@ -8,7 +8,7 @@
   "Account": "",
   "UserName": "",
   "UserId": "",
-  "Id": "0d5f1d3a90cb4bb988150a2ef79b6838",
+  "Id": "067c7346a2a84c98adfbdfdcc9e1291a",
   "EditType": 4,
   "IsMap": false,
   "CreateNew": true,
@@ -34,7 +34,7 @@
   "NameSpace": "tgcex",
   "EditMaterialPaths": [],
   "EditLogFilePath": "",
-  "ServerName": "EXPR",
+  "ServerName": "",
   "StudioPort": 11563,
   "DCWebUrl": "https://x19apigatewayexpr.nie.netease.com",
   "ShowGuide": false,
@@ -45,5 +45,5 @@
   "EditorResourcePackPath": "",
   "EditDate": 1737468296,
   "EditDuration": 57986,
-  "TestDuration": 496510
+  "TestDuration": 503596
 }

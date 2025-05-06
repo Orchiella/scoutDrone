@@ -5,7 +5,7 @@
       "identifier": "orchiella:jet_belt",
       "materials": {
         "default": "entity_emissive_alpha",
-        "enchanted": "entity_alphatest_glint"
+        "enchanted": "entity_emissive_alpha"
       },
       "textures": {
         "default": "textures/entity/jet_belt",
