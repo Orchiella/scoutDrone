@@ -131,8 +131,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     def SetData(self, key, value):
         self.settings[key] = value
-        if key == 'sight_bead_enabled':
-            self.functionsScreen.GetBaseUIControl("/sight_bead").SetVisible(value)
+        if key == 'func_use_size':
+            self.functionsScreen.SetBtnSize("use", value)
+        elif key == "func_flash_enabled":
+            self.functionsScreen.SetBtnVisible("flash", value)
+        elif key == "func_brake_enabled":
+            self.functionsScreen.SetBtnVisible("brake", value)
+        elif key == "func_fear_enabled":
+            self.functionsScreen.SetBtnVisible("fear", value)
+        elif key == "func_switch_power_enabled":
+            self.functionsScreen.SetBtnVisible("switch_power", value)
 
     def LoadData(self, settings):
         self.settings = settings

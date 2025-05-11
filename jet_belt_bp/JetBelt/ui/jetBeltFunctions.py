@@ -114,7 +114,7 @@ class JetBeltFunctions(ScreenNode):
                              self.func_btn_ctrls[self.clicking_func].GetPosition())
 
     def Create(self):
-        self.Display(False)
+        self.SetScreenVisible(False)
 
     def Display(self, show):
         if show:
@@ -152,8 +152,16 @@ class JetBeltFunctions(ScreenNode):
                         "textures/ui/" + mod_name + "/" + func_key)
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
 
+                self.SetBtnSize("use", self.GetData("func_use_size"))
+                self.SetBtnVisible("flash", self.GetData("func_flash_enabled"))
+                self.SetBtnVisible("brake", self.GetData("func_brake_enabled"))
+                self.SetBtnVisible("fear", self.GetData("func_fear_enabled"))
+                self.SetBtnVisible("switch_power", self.GetData("func_switch_power_enabled"))
+
                 self.initialized = True
-            self.SetScreenVisible(show)
+        self.SetScreenVisible(show)
+
+        self.SetIsHud(show)
 
     def on_click_down(self, args):
         self.tick = time.time()
@@ -216,6 +224,12 @@ class JetBeltFunctions(ScreenNode):
 
     def GetState(self, func_key):
         return self.state_rec[func_key]
+
+    def SetBtnVisible(self, btn_name, visible):
+        self.func_btn_ctrls[btn_name].SetVisible(visible)
+
+    def SetBtnSize(self, btn_name, percentage):
+        self.func_btn_ctrls[btn_name].SetSize((int(35 * percentage / 100.0), int(35 * percentage / 100.0)), True)
 
     def Cooldown(self, func):
         self.use_cd[func] = time.time()

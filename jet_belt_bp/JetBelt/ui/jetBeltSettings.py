@@ -35,7 +35,7 @@ class JetBeltSettings(ScreenNode):
         self.GetBaseUIControl("/permission").SetVisible(True)  # 要先显示，否则下面获取不到
         self.mPermissionButtonLabel1Ctrl = self.GetBaseUIControl("/permission/button1/button_label").asLabel()
         self.mPermissionButtonLabel2Ctrl = self.GetBaseUIControl("/permission/button2/button_label").asLabel()
-        self.Display(False)
+        self.SetScreenVisible(False)
 
     def Display(self, show):
         self.SetScreenVisible(show)
@@ -48,7 +48,6 @@ class JetBeltSettings(ScreenNode):
     @ViewBinder.binding(ViewBinder.BF_ButtonClickUp)
     def OnClickCloseButton(self, args):
         self.Display(False)
-        clientApi.PopScreen()
 
     @ViewBinder.binding(ViewBinder.BF_ButtonClickUp)
     def OnClickCloseEnterButton(self, args):
