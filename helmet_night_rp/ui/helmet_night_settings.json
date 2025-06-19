@@ -1,0 +1,1896 @@
+{
+    "main": {
+        "controls": [
+            {
+                "panel": {
+                    "controls": [
+                        {
+                            "bg": {
+                                "clip_direction": "left",
+                                "clip_ratio": 0,
+                                "layer": 1,
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    310,
+                                    180
+                                ],
+                                "texture": "textures/ui/background_panel",
+                                "type": "image"
+                            }
+                        },
+                        {
+                            "scroll_view@common.scrolling_panel": {
+                                "$background_nine_slice_buttom": 0,
+                                "$background_nine_slice_left": 0,
+                                "$background_nine_slice_right": 0,
+                                "$background_nine_slice_top": 0,
+                                "$background_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$box_nine_slice_buttom": 0,
+                                "$box_nine_slice_left": 0,
+                                "$box_nine_slice_right": 0,
+                                "$box_nine_slice_top": 0,
+                                "$box_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$is_background_nine_slice": false,
+                                "$is_box_nine_slice": false,
+                                "$is_track_nine_slice": false,
+                                "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                "$scroll_background_texture": "textures/ui/ScrollRail",
+                                "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                "$scroll_track_texture": "textures/ui/ScrollRail",
+                                "$scrolling_content": "helmet_night_settings.setting",
+                                "$show_background": true,
+                                "$track_nine_slice_buttom": 0,
+                                "$track_nine_slice_left": 0,
+                                "$track_nine_slice_right": 0,
+                                "$track_nine_slice_top": 0,
+                                "$track_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "layer": 2,
+                                "offset": [
+                                    0,
+                                    -5
+                                ],
+                                "size": [
+                                    300,
+                                    150
+                                ],
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle"
+                            }
+                        },
+                        {
+                            "close_button@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/close_button_default",
+                                "$hover_texture": "textures/ui/close_button_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickCloseButton",
+                                "$pressed_texture": "textures/ui/close_button_pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_right",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 93,
+                                "pressed_control": "pressed",
+                                "size": [
+                                    25,
+                                    25
+                                ],
+                                "type": "button",
+                                "anchor_to": "top_right"
+                            }
+                        },
+                        {
+                            "permission_button@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/netease/common/button/default",
+                                "$hover_texture": "textures/netease/common/button/hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "normal",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "权限管理",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    1,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickOpenPermissionButton",
+                                "$pressed_texture": "textures/netease/common/button/pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "pressed_control": "pressed",
+                                "size": [
+                                    60,
+                                    20
+                                ],
+                                "type": "button",
+                                "offset": [
+                                    5,
+                                    3
+                                ]
+                            }
+                        },
+                        {
+                            "title": {
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "font_size": "large",
+                                "font_type": "default",
+                                "layer": 2,
+                                "offset": [
+                                    0,
+                                    5
+                                ],
+                                "size": [
+                                    136,
+                                    20
+                                ],
+                                "text": "设置面板",
+                                "text_alignment": "center",
+                                "type": "label"
+                            }
+                        }
+                    ],
+                    "layer": 1,
+                    "size": [
+                        310,
+                        180
+                    ],
+                    "type": "panel"
+                }
+            },
+            {
+                "original_setting@helmet_night_settings.setting": {
+                    "layer": 104,
+                    "visible": false
+                }
+            },
+            {
+                "enter": {
+                    "controls": [
+                        {
+                            "bg": {
+                                "clip_direction": "left",
+                                "clip_ratio": 0,
+                                "layer": 1,
+                                "texture": "textures/ui/background_image",
+                                "type": "image"
+                            }
+                        },
+                        {
+                            "sub_bg": {
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "clip_direction": "left",
+                                "clip_ratio": 0,
+                                "controls": [
+                                    {
+                                        "value": {
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "font_scale_factor": 1.5,
+                                            "font_type": "default",
+                                            "layer": 1,
+                                            "offset": [
+                                                0,
+                                                5
+                                            ],
+                                            "size": [
+                                                100,
+                                                15
+                                            ],
+                                            "text": "当前输入：{值}",
+                                            "text_alignment": "center",
+                                            "type": "label"
+                                        }
+                                    },
+                                    {
+                                        "button1@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "1",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 2,
+                                            "offset": [
+                                                -30,
+                                                -90
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button2@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "2",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 12,
+                                            "offset": [
+                                                0,
+                                                -90
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button3@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "3",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 22,
+                                            "offset": [
+                                                30,
+                                                -90
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button6@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "6",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 32,
+                                            "offset": [
+                                                30,
+                                                -60
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button4@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "4",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 42,
+                                            "offset": [
+                                                -30,
+                                                -60
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button5@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "5",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 52,
+                                            "offset": [
+                                                0,
+                                                -60
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button8@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "8",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 62,
+                                            "offset": [
+                                                0,
+                                                -30
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button9@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "9",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 72,
+                                            "offset": [
+                                                30,
+                                                -30
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button7@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "7",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 82,
+                                            "offset": [
+                                                -30,
+                                                -30
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button_reverse@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1.4,
+                                            "$label_font_size": "normal",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "回退",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickReverseButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 92,
+                                            "offset": [
+                                                -30,
+                                                0
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button0@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "0",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%helmetNightSettings.OnClickNumberButton",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 102,
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    },
+                                    {
+                                        "button_confirm@common.button": {
+                                            "$control_alpha": 1,
+                                            "$default_texture": "textures/netease/common/button/default",
+                                            "$hover_texture": "textures/netease/common/button/hover",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                0,
+                                                0.3333,
+                                                0
+                                            ],
+                                            "$label_font_scale_factor": 1.4,
+                                            "$label_font_size": "normal",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "确认",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$pressed_button_name": "%editor_screen.on_click_confirm_button",
+                                            "$pressed_texture": "textures/netease/common/button/pressed",
+                                            "$texture_layer": 2,
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "bindings": [
+                                                {
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible",
+                                                    "binding_type": "collection_details"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "button_label@netease_editor_template_namespace.button_label": {}
+                                                }
+                                            ],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "layer": 112,
+                                            "offset": [
+                                                30,
+                                                0
+                                            ],
+                                            "pressed_control": "pressed",
+                                            "size": [
+                                                30,
+                                                30
+                                            ],
+                                            "type": "button"
+                                        }
+                                    }
+                                ],
+                                "layer": 2,
+                                "offset": [
+                                    0,
+                                    -5
+                                ],
+                                "size": [
+                                    110,
+                                    140
+                                ],
+                                "texture": "textures/ui/background_with_border",
+                                "type": "image"
+                            }
+                        },
+                        {
+                            "title": {
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "font_scale_factor": 1.2,
+                                "font_type": "default",
+                                "layer": 124,
+                                "offset": [
+                                    0,
+                                    2
+                                ],
+                                "size": [
+                                    100,
+                                    10
+                                ],
+                                "text": "{输入提示}",
+                                "text_alignment": "center",
+                                "type": "label"
+                            }
+                        },
+                        {
+                            "close@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/close_button_default",
+                                "$hover_texture": "textures/ui/close_button_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "Button",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickCloseEnterButton",
+                                "$pressed_texture": "textures/ui/close_button_pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 125,
+                                "offset": [
+                                    -5,
+                                    0
+                                ],
+                                "pressed_control": "pressed",
+                                "size": [
+                                    15,
+                                    15
+                                ],
+                                "type": "button"
+                            }
+                        }
+                    ],
+                    "layer": 987,
+                    "size": [
+                        120,
+                        160
+                    ],
+                    "type": "panel",
+                    "visible": false
+                }
+            },
+            {
+                "permission": {
+                    "controls": [
+                        {
+                            "title": {
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "font_scale_factor": 1,
+                                "font_type": "default",
+                                "layer": 4,
+                                "offset": [
+                                    0,
+                                    5
+                                ],
+                                "size": [
+                                    100,
+                                    20
+                                ],
+                                "text": "房主专用：权限管理",
+                                "text_alignment": "center",
+                                "type": "label"
+                            }
+                        },
+                        {
+                            "bg": {
+                                "clip_direction": "left",
+                                "clip_ratio": 0,
+                                "layer": 1,
+                                "offset": [
+                                    1,
+                                    0
+                                ],
+                                "texture": "textures/ui/background_panel",
+                                "type": "image"
+                            }
+                        },
+                        {
+                            "scroll_view@common.scrolling_panel": {
+                                "$background_nine_slice_buttom": 0,
+                                "$background_nine_slice_left": 0,
+                                "$background_nine_slice_right": 0,
+                                "$background_nine_slice_top": 0,
+                                "$background_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$box_nine_slice_buttom": 0,
+                                "$box_nine_slice_left": 0,
+                                "$box_nine_slice_right": 0,
+                                "$box_nine_slice_top": 0,
+                                "$box_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$is_background_nine_slice": false,
+                                "$is_box_nine_slice": false,
+                                "$is_track_nine_slice": false,
+                                "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                "$scroll_background_texture": "textures/ui/ScrollRail",
+                                "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                "$scroll_track_texture": "textures/ui/ScrollRail",
+                                "$scrolling_content": "helmet_night_settings.permission",
+                                "$show_background": true,
+                                "$track_nine_slice_buttom": 0,
+                                "$track_nine_slice_left": 0,
+                                "$track_nine_slice_right": 0,
+                                "$track_nine_slice_top": 0,
+                                "$track_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "layer": 9,
+                                "offset": [
+                                    0,
+                                    16
+                                ],
+                                "size": [
+                                    190,
+                                    100
+                                ]
+                            }
+                        },
+                        {
+                            "close_button@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/close_button_default",
+                                "$hover_texture": "textures/ui/close_button_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickClosePermissionButton",
+                                "$pressed_texture": "textures/ui/close_button_pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "pressed_control": "pressed",
+                                "size": [
+                                    20,
+                                    15
+                                ],
+                                "type": "button"
+                            }
+                        },
+                        {
+                            "button1@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/netease/common/button/default",
+                                "$hover_texture": "textures/netease/common/button/hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "normal",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "首次进入自动获得权限\n§4否",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    1,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickPermissionButton1",
+                                "$pressed_texture": "textures/netease/common/button/pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "offset": [
+                                    5,
+                                    -2
+                                ],
+                                "pressed_control": "pressed",
+                                "size": [
+                                    95,
+                                    40
+                                ],
+                                "type": "button"
+                            }
+                        },
+                        {
+                            "button2@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/netease/common/button/default",
+                                "$hover_texture": "textures/netease/common/button/hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "normal",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "强制同步使用我的设置\n§4否",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    1,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$pressed_button_name": "%helmetNightSettings.OnClickPermissionButton2",
+                                "$pressed_texture": "textures/netease/common/button/pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "offset": [
+                                    -5,
+                                    -2
+                                ],
+                                "pressed_control": "pressed",
+                                "size": [
+                                    95,
+                                    40
+                                ],
+                                "type": "button"
+                            }
+                        }
+                    ],
+                    "layer": 1,
+                    "size": [
+                        200,
+                        160
+                    ],
+                    "type": "panel",
+                    "visible": false
+                }
+            },
+            {
+                "original_permission@helmet_night_settings.permission": {
+                    "visible": false
+                }
+            }
+        ],
+        "type": "screen"
+    },
+    "namespace": "helmet_night_settings",
+    "setting": {
+        "controls": [
+            {
+                "default": {
+                    "controls": [
+                        {
+                            "description": {
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "controls": [],
+                                "font_scale_factor": 1.5,
+                                "font_type": "smooth",
+                                "layer": 65,
+                                "offset": [
+                                    5,
+                                    0
+                                ],
+                                "size": [
+                                    228,
+                                    16
+                                ],
+                                "text": "配置内容",
+                                "type": "label"
+                            }
+                        },
+                        {
+                            "toggle@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_off_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/toggle_off",
+                                "$texture_layer": 2,
+                                "anchor_from": "right_middle",
+                                "anchor_to": "right_middle",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "button_mappings": [],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "pressed_control": "pressed",
+                                "size": [
+                                    50,
+                                    40
+                                ],
+                                "type": "button",
+                                "offset": [
+                                    -15,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "edit_box@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/edit_box_indent",
+                                "$hover_texture": "textures/ui/edit_box_indent_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "normal",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/edit_box_indent",
+                                "$texture_layer": 2,
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "button_mappings": [],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "pressed_control": "pressed",
+                                "size": [
+                                    40,
+                                    20
+                                ],
+                                "type": "button",
+                                "anchor_from": "right_middle",
+                                "anchor_to": "right_middle",
+                                "offset": [
+                                    -20,
+                                    0
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 1,
+                    "size": [
+                        300,
+                        40
+                    ],
+                    "type": "panel"
+                }
+            }
+        ],
+        "layer": 16,
+        "offset": [
+            0,
+            0.5
+        ],
+        "size": [
+            300,
+            40
+        ],
+        "type": "panel"
+    },
+    "permission": {
+        "controls": [
+            {
+                "default": {
+                    "layer": 1,
+                    "type": "panel",
+                    "controls": [
+                        {
+                            "toggle@common.button": {
+                                "$control_alpha": 1,
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_off_hover",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/toggle_off",
+                                "$texture_layer": 2,
+                                "anchor_from": "right_middle",
+                                "anchor_to": "right_middle",
+                                "bindings": [
+                                    {
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible",
+                                        "binding_type": "collection_details"
+                                    }
+                                ],
+                                "button_mappings": [],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "layer": 2,
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "pressed_control": "pressed",
+                                "size": [
+                                    40,
+                                    20
+                                ],
+                                "type": "button"
+                            }
+                        },
+                        {
+                            "description": {
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "controls": [],
+                                "font_scale_factor": 1.5,
+                                "font_type": "smooth",
+                                "layer": 65,
+                                "offset": [
+                                    5,
+                                    0
+                                ],
+                                "size": [
+                                    228,
+                                    16
+                                ],
+                                "text": "玩家名",
+                                "type": "label"
+                            }
+                        }
+                    ],
+                    "size": [
+                        180,
+                        30
+                    ]
+                }
+            }
+        ],
+        "layer": 1,
+        "size": [
+            180,
+            30
+        ],
+        "type": "panel"
+    }
+}

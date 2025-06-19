@@ -1,9 +1,0 @@
-{
-    "resource_pack_name": "vanilla",
-    "texture_name": "atlas.items",
-    "texture_data": {
-        "orchiella:jet_belt": {
-            "textures": "textures/items/jet_belt"
-        }
-    }
-}

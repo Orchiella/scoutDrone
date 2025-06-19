@@ -1,0 +1,27 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+		"controller.animation.helmet_night.lighting": {
+			"initial_state" : "default",
+			"states" : {
+				"default": {
+					"transitions" : [
+						{
+							"lighting": "q.mod.helmet_night_lighting"
+						}
+					]
+				},
+				"lighting": {
+					"animations": [
+						"lighting"
+					],
+					"transitions" : [
+						{
+							"default" : "!q.mod.helmet_night_lighting"
+						}
+					]
+				}
+			}
+		}
+	}
+}

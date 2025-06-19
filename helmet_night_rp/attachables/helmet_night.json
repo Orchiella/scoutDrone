@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "orchiella:helmet_night",
+      "materials": {
+        "default": "entity_emissive_alpha",
+        "enchanted": "entity_emissive_alpha"
+      },
+      "textures": {
+        "default": "textures/entity/helmet_night",
+        "enchanted": "textures/misc/enchanted_item_glint"
+      },
+      "animations": {
+        "lighting": "animation.helmet_night.lighting",
+        "controller.lighting": "controller.animation.helmet_night.lighting"
+      },
+      "geometry": {
+        "default": "geometry.helmet_night"
+      },
+      "scripts": {
+        "animate": [
+          "controller.lighting"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

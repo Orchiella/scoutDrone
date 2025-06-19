@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "orchiella:helmet_night"
+        },
+        "components": {
+            "minecraft:icon": "orchiella:helmet_night"
+        }
+    }
+}

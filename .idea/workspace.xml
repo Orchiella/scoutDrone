@@ -4,12 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="078f40d2-fd40-4a53-891a-93de5f070d77" name="Changes" comment="6">
+    <list default="true" id="1706f00e-5a51-4d02-a674-fa801c4edd54" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/helmetNight.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helmet_night_rp/effects/hn_frame.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helmet_night_rp/textures/sfxs/hn_frame.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helmet_night_rp/textures/sfxs/hn_frame.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jetBelt.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltSettings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/clientSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/const.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/dataManager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/mathUtil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/modMain.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/serverSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltFunctions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/jetBeltSettings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/uiDef.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/JetBelt/ui/uiMgr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/netease_items_beh/jet_belt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_bp/recipes/jet_belt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/animation_controllers/jet_belt.animations_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/animations/jet_belt.animation.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/attachables/jet_belt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/models/entity/jet_belt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/netease_items_res/jet_belt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/particles/jet_belt_smoke.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/sounds/jet_belt/jetting1.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/sounds/jet_belt/jetting2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/sounds/sound_definitions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/texts/zh_CN.lang" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/entity/jet_belt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/item_texture.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/items/jet_belt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/particle/jet_belt/smoke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/brake.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/fear.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/flash.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/switch_power.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/textures/ui/jet_belt/use.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/ui/_ui_defs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/ui/jet_belt_functions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/ui/jet_belt_settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jet_belt_rp/ui/netease_editor_template_namespace.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,9 +63,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="2wZ6nqi934YntrcQg7oiB7vKixm" />
+  <component name="ProjectId" id="2yhUNUJl20Xz6u83f3eIu2zSL3J" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -31,93 +73,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/jetBelt/jet_belt_rp/sounds/jet_belt&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/dev"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\sounds\jet_belt" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\textures\ui\jet_belt" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\textures\particle" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\jetBelt\jet_belt_rp\textures\particle\jet_belt" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\helmetNight\helmet_night_rp\textures" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\helmetNight\helmet_night_rp" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="078f40d2-fd40-4a53-891a-93de5f070d77" name="Changes" comment="" />
-      <created>1746236919395</created>
+      <changelist id="1706f00e-5a51-4d02-a674-fa801c4edd54" name="Changes" comment="" />
+      <created>1750286258923</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1746236919395</updated>
+      <updated>1750286258923</updated>
     </task>
-    <task id="LOCAL-00001" summary="1">
-      <option name="closed" value="true" />
-      <created>1746277783372</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1746277783373</updated>
-    </task>
-    <task id="LOCAL-00002" summary="2">
-      <option name="closed" value="true" />
-      <created>1746369810445</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1746369810445</updated>
-    </task>
-    <task id="LOCAL-00003" summary="3">
-      <option name="closed" value="true" />
-      <created>1746373895790</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1746373895790</updated>
-    </task>
-    <task id="LOCAL-00004" summary="4">
-      <option name="closed" value="true" />
-      <created>1746452758705</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1746452758705</updated>
-    </task>
-    <task id="LOCAL-00005" summary="5">
-      <option name="closed" value="true" />
-      <created>1746509891447</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1746509891447</updated>
-    </task>
-    <task id="LOCAL-00006" summary="6">
-      <option name="closed" value="true" />
-      <created>1746543774590</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1746543774590</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="1" />
-    <MESSAGE value="2" />
-    <MESSAGE value="3" />
-    <MESSAGE value="4" />
-    <MESSAGE value="5" />
-    <MESSAGE value="6" />
-    <option name="LAST_COMMIT_MESSAGE" value="6" />
   </component>
 </project>
