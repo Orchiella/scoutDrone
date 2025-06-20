@@ -110,7 +110,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 for entityType,frameColor in frameColors.items():
                     if CF.CreateEngineType(nearEntity).GetEngineType() & entityType == entityType:
                         color = frameColor
-                        print color
                         break
                 self.CallClient(playerId, "AppendFrame", nearEntity, "hn_frame",
                                 DataManager.Get(playerId, "func_sensing_duration"),
@@ -136,7 +135,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         return item and item['newItemName'] == 'orchiella:helmet_night'
 
     def TakeDurability(self, playerId, value):
-        if value == 0: return
         if GC.GetPlayerGameType(playerId) == serverApi.GetMinecraftEnum().GameType.Creative: return
         itemComp = CF.CreateItem(playerId)
         enum = serverApi.GetMinecraftEnum().ItemPosType.ARMOR
@@ -167,7 +165,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        if message == "1":
+        if message == "夜视头盔设置":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:

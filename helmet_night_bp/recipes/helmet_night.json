@@ -9,15 +9,19 @@
                 "data": 0,
                 "item": "minecraft:iron_ingot"
             },
+            "S": {
+                "data": 0,
+                "item": "minecraft:spyglass"
+            },
             "R": {
                 "data": 0,
                 "item": "minecraft:redstone"
             }
         },
         "pattern": [
-            "I I",
             "III",
-            "R R"
+            "ISI",
+            " R "
         ],
         "result": {
             "count": 1,

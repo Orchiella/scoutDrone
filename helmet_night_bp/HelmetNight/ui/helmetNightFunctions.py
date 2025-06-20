@@ -32,8 +32,8 @@ class HelmetNightFunctions(ScreenNode):
                              "candidates": [("on", {"name": "§a开"}),
                                             ("off", {"name": "§7关"})]},
             "light": {"name": "探照:{state}", "type": "switch",
-                             "candidates": [("on", {"name": "§a开"}),
-                                            ("off", {"name": "§7关"})]}
+                      "candidates": [("on", {"name": "§a开"}),
+                                     ("off", {"name": "§7关"})]}
         }
         self.use_cd = {func_key: 0 for func_key, func_def in self.func_def.items() if
                        func_def['type'] == 'skill' or func_def['type'] == 'shoot'}
@@ -220,8 +220,15 @@ class HelmetNightFunctions(ScreenNode):
                     self.SetData("func_{}_state".format(self.clicking_func), state_key)
 
                     if self.clicking_func == "light":
-                        self.client.CallServer("CallRelevantClients",0,PID, "UpdateVar", "lighting",
-                                                     1 if state_key == "on" else 0, PID)
+                        self.client.CallServer("CallRelevantClients", 0, PID, "UpdateVar", "lighting",
+                                               1 if state_key == "on" else 0, PID)
+                        if state_key == "on":
+                            self.client.CallServer("TakeDurability",0, PID,
+                                                   self.GetData("func_light_durability_consumption"))
+                    elif self.clicking_func == "night_vision":
+                        if state_key == "on":
+                            self.client.CallServer("TakeDurability",0, PID,
+                                                   self.GetData("func_night_vision_durability_consumption"))
         self.clicking_func = None
 
     def GetState(self, func_key):

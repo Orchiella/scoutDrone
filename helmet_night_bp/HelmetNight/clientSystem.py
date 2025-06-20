@@ -75,7 +75,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 elif pos:
                     # 若序列帧未过期，则更新位置
                     aniTransComp = frameData["aniTransComp"]
-                    aniTransComp.SetPos((pos[0], pos[1]+frameData["height"]/2, pos[2]))
+                    aniTransComp.SetPos((pos[0], pos[1] + frameData["height"] / 2, pos[2]))
             for index in reversed(frameDataToRemove):
                 del frameDataList[index]  # 倒序删除，避免索引错误
 
@@ -170,10 +170,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     def SetData(self, key, value):
         self.settings[key] = value
-        s = "func_{}_size"
+        s1, s2 = "func_{}_enabled", "func_{}_size"
         for func_key in self.functionsScreen.func_def.keys():
-            if key == s.format(key):
+            if key == s1.format(func_key):
                 self.functionsScreen.SetBtnVisible(func_key, value)
+                break
+            elif key == s2.format(func_key):
+                self.functionsScreen.SetBtnSize(func_key, value)
                 break
 
     def LoadData(self, settings):
