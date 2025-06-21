@@ -1,0 +1,41 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "orchiella:electric_bow",
+      "materials": {
+        "default": "entity_emissive_alpha",
+        "enchanted": "entity_emissive_alpha"
+      },
+      "textures": {
+        "default": "textures/entity/electric_bow",
+        "enchanted": "textures/misc/enchanted_item_glint"
+      },
+      "animations": {
+        "1st_default": "animation.electric_bow.1st_default",
+        "1st_equip": "animation.electric_bow.1st_equip",
+        "1st_idle": "animation.electric_bow.1st_idle",
+        "1st_run_enter": "animation.electric_bow.1st_run_enter",
+        "1st_run": "animation.electric_bow.1st_run",
+        "1st_run_exit": "animation.electric_bow.1st_run_exit",
+        "1st_aim_enter": "animation.electric_bow.1st_aim_enter",
+        "1st_aim": "animation.electric_bow.1st_aim",
+        "1st_shoot": "animation.electric_bow.1st_shoot",
+        "1st_aim_exit": "animation.electric_bow.1st_aim_exit",
+        "controller.general": "controller.animation.electric_bow.general"
+      },
+      "geometry": {
+        "default": "geometry.electric_bow"
+      },
+      "scripts": {
+        "animate": [
+          "controller.general",
+          "1st_default"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.electric_bow"
+      ]
+    }
+  }
+}

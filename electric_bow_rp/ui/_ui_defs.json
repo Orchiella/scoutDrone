@@ -1,0 +1,7 @@
+{
+    "ui_defs": [
+        "ui/electric_bow_functions.json",
+        "ui/electric_bow_settings.json",
+        "ui/netease_editor_template_namespace.json"
+    ]
+}

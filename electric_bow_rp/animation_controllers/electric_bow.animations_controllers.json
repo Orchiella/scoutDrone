@@ -1,0 +1,137 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+		"controller.animation.electric_bow.general": {
+			"initial_state" : "default",
+			"states" : {
+				"default": {
+					"transitions" : [
+						{
+							"1st_equip": "c.is_first_person && q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_equip": {
+					"animations": [
+						"1st_equip"
+					],
+					"transitions" : [
+						{
+							"1st_idle" : "q.any_animation_finished"
+						}
+					]
+				},
+				"1st_idle": {
+					"animations": [
+						"1st_idle"
+					],
+					"transitions" : [
+						{
+							"1st_run_enter" : "q.mod.eb_run_enter"
+						},
+						{
+							"1st_aim_enter" : "q.mod.eb_aim_enter"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_run_enter": {
+					"animations": [
+						"1st_run_enter"
+					],
+					"transitions" : [
+						{
+							"1st_run" : "q.any_animation_finished"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_run": {
+					"animations": [
+						"1st_run"
+					],
+					"transitions" : [
+						{
+							"1st_run_exit" : "!q.mod.eb_run_exit"
+						},
+						{
+							"1st_aim_enter" : "q.mod.eb_aim_enter"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_run_exit": {
+					"animations": [
+						"1st_run_exit"
+					],
+					"transitions" : [
+						{
+							"1st_idle" : "q.any_animation_finished"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_aim_enter": {
+					"animations": [
+						"1st_aim_enter"
+					],
+					"transitions" : [
+						{
+							"1st_aim" : "q.any_animation_finished"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_aim": {
+					"animations": [
+						"1st_aim"
+					],
+					"transitions" : [
+						{
+							"1st_shoot" : "q.mod.eb_shoot"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_shoot": {
+					"animations": [
+						"1st_shoot"
+					],
+					"transitions" : [
+						{
+							"1st_aim_exit" : "q.any_animation_finished"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				},
+				"1st_aim_exit": {
+					"animations": [
+						"1st_aim_exit"
+					],
+					"transitions" : [
+						{
+							"1st_idle" : "q.any_animation_finished"
+						},
+						{
+							"default" : "q.mod.eb_equip"
+						}
+					]
+				}
+			}
+		}
+	}
+}

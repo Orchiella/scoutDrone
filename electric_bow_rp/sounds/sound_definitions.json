@@ -1,0 +1,23 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "orchiella:electric_bow_jetting1": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/electric_bow/jetting1",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:electric_bow_jetting2": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/electric_bow/jetting2",
+          "stream": false
+        }
+      ]
+    }
+  }
+}
