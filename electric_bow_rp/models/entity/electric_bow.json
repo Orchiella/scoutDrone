@@ -36,12 +36,22 @@
 					"pivot": [-5, 15, 0]
 				},
 				{
+					"name": "leftArm",
+					"parent": "body",
+					"pivot": [5, 22, 0]
+				},
+				{
+					"name": "leftItem",
+					"parent": "leftArm",
+					"pivot": [6, 15, 0]
+				},
+				{
 					"name": "electric_bow",
-					"parent": "rightItem",
-					"pivot": [-6, 14, 0],
+					"parent": "leftItem",
+					"pivot": [6, 13, -9],
 					"cubes": [
 						{
-							"origin": [-7, 14, -9],
+							"origin": [5, 13, -15],
 							"size": [2, 2, 16],
 							"uv": {
 								"north": {"uv": [0, 0], "uv_size": [2, 2]},
@@ -53,9 +63,9 @@
 							}
 						},
 						{
-							"origin": [-7, 14, -25],
+							"origin": [5, 13, -31],
 							"size": [2, 2, 16],
-							"pivot": [-6, 14, -9],
+							"pivot": [6, 13, -15],
 							"rotation": [-30, 0, 0],
 							"uv": {
 								"north": {"uv": [0, 0], "uv_size": [2, 2]},
@@ -67,9 +77,9 @@
 							}
 						},
 						{
-							"origin": [-7, 14, 7],
+							"origin": [5, 13, 1],
 							"size": [2, 2, 16],
-							"pivot": [-6, 15, 7],
+							"pivot": [6, 13, 1],
 							"rotation": [30, 0, 0],
 							"uv": {
 								"north": {"uv": [0, 0], "uv_size": [2, 2]},
@@ -85,10 +95,10 @@
 				{
 					"name": "arrow",
 					"parent": "electric_bow",
-					"pivot": [-6, 14, 0],
+					"pivot": [6, 13, -9],
 					"cubes": [
 						{
-							"origin": [-7, 9, -2],
+							"origin": [5, 8, -8],
 							"size": [2, 11, 2],
 							"uv": {
 								"north": {"uv": [0, 0], "uv_size": [2, 11]},
@@ -100,16 +110,6 @@
 							}
 						}
 					]
-				},
-				{
-					"name": "leftArm",
-					"parent": "body",
-					"pivot": [5, 22, 0]
-				},
-				{
-					"name": "leftItem",
-					"parent": "leftArm",
-					"pivot": [5, 15, 0]
 				}
 			]
 		}

@@ -1,0 +1,31 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.electric_bow.3rd_idle": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": ["q.mod.eb_3rd_left_idle_rot_x", "q.mod.eb_3rd_left_idle_rot_y", "q.mod.eb_3rd_left_idle_rot_z"],
+					"position": ["q.mod.eb_3rd_left_idle_pos_x", "q.mod.eb_3rd_left_idle_pos_y", "q.mod.eb_3rd_left_idle_pos_z"]
+				},
+				"rightArm": {
+					"rotation": ["q.mod.eb_3rd_right_idle_rot_x", "q.mod.eb_3rd_right_idle_rot_y", "q.mod.eb_3rd_right_idle_rot_z"],
+					"position": ["q.mod.eb_3rd_right_idle_pos_x", "q.mod.eb_3rd_right_idle_pos_y", "q.mod.eb_3rd_right_idle_pos_z"]
+				}
+			}
+		},
+		"animation.electric_bow.3rd_aim": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": ["q.mod.eb_3rd_left_aim_rot_x", "q.mod.eb_3rd_left_aim_rot_y", "q.mod.eb_3rd_left_aim_rot_z"],
+					"position": ["q.mod.eb_3rd_left_aim_pos_x", "q.mod.eb_3rd_left_aim_pos_y", "q.mod.eb_3rd_left_aim_pos_z"]
+				},
+				"rightArm": {
+					"rotation": ["q.mod.eb_3rd_right_aim_rot_x", "q.mod.eb_3rd_right_aim_rot_y", "q.mod.eb_3rd_right_aim_rot_z"],
+					"position": ["q.mod.eb_3rd_right_aim_pos_x", "q.mod.eb_3rd_right_aim_pos_y", "q.mod.eb_3rd_right_aim_pos_z"]
+				}
+			}
+		}
+	}
+}

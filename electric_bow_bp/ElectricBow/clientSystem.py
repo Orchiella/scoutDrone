@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import random
 import time
 
@@ -48,11 +49,26 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         GC.AddRepeatedTimer(0.5, self.TestVar)
 
     def TestVar(self):
-        for key, value in {"aim_rot_offset_x": -133, "aim_rot_offset_y": 61, "aim_rot_offset_z": 131,
-                           "aim_pos_offset_x": 4.3, "aim_pos_offset_y": 3.1, "aim_pos_offset_z": -5.3,
-                           "run_rot_offset_x": -17, "run_rot_offset_y": 52, "run_rot_offset_z": -17,
-                           "run_pos_offset_x": 2.1, "run_pos_offset_y": 2, "run_pos_offset_z": 1.7}.items():
+        for key, value in {
+            "1st_idle_pos_x": -3, "1st_idle_pos_y": -5, "1st_idle_pos_z": 8,
+            "1st_idle_rot_x": 87, "1st_idle_rot_y": 0, "1st_idle_rot_z": -132,
+            "1st_run_rot_offset_x": 0, "1st_run_rot_offset_y": 17, "1st_run_rot_offset_z": 34,
+            "1st_aim_rot_offset_x": -9, "1st_aim_rot_offset_y": 13, "1st_aim_rot_offset_z": -33,
+            "1st_aim_pos_offset_x": 1.5, "1st_aim_pos_offset_y": -0.8, "1st_aim_pos_offset_z": 1.5,
+
+            "3rd_left_idle_pos_x": 0, "3rd_left_idle_pos_y": 0, "3rd_left_idle_pos_z": 0,
+            "3rd_left_idle_rot_x": 0, "3rd_left_idle_rot_y": 0, "3rd_left_idle_rot_z": 0,
+            "3rd_right_idle_pos_x": 0, "3rd_right_idle_pos_y": 0, "3rd_right_idle_pos_z": 0,
+            "3rd_right_idle_rot_x": 0, "3rd_right_idle_rot_y": 0, "3rd_right_idle_rot_z": 0,
+        }.items():
             QC.Set('query.mod.{}_{}'.format(DB.mn, key), value)
+
+    aimAvailableTime = 0
+    animLengthDict = {"equip": 0.3333, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "aim_exit": 0.2}
+
+    def UpdateAimAvailableTime(self, second):
+        if time.time() > self.aimAvailableTime:
+            self.aimAvailableTime = time.time() + second
 
     @Listen
     def OnCarriedNewItemChangedClientEvent(self, event):
@@ -60,8 +76,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not item:
             return
         if item['newItemName'] == "orchiella:electric_bow":
-            # CC.SetFov(60)
             self.BlinkVar("equip")
+            self.UpdateAimAvailableTime(self.animLengthDict["equip"])
         else:
             if self.aimFinished or self.fovAnimating:
                 # 如果在fov动画时或瞄准状态下切换了武器，则重置fov
@@ -69,13 +85,19 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     # 切换疾跑事件，其实有专门的原生molang表达式可以判断，但为了管理，由模组来控制
     @Listen("OnLocalPlayerActionClientEvent")
-    def OnSwitchSprint(self,event):
+    def OnSwitchSprint(self, event):
         if not self.IsEquipped():
             return
         if event['actionType'] == clientApi.GetMinecraftEnum().PlayerActionType.StartSprinting:
             self.BlinkVar("run_enter")
+            self.UpdateAimAvailableTime(self.animLengthDict["run_enter"])
         elif event['actionType'] == clientApi.GetMinecraftEnum().PlayerActionType.StopSprinting:
-            self.BlinkVar("exit_enter")
+            self.BlinkVar("run_exit")
+            self.UpdateAimAvailableTime(self.animLengthDict["run_exit"])
+
+    @Listen
+    def PerspChangeClientEvent(self, event):
+        self.UpdateVar("perspective", event['to'])
 
     @Listen(("LeftClickBeforeClientEvent", "TapBeforeClientEvent"))
     def LeftClick(self, event):
@@ -86,8 +108,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnEnterAim(self, event):
         if not self.IsEquipped():
             return
-        print QC.GetMolangValue("q.all_animations_finished")
-        if self.nowBlinkVar == self.nowBlinkVar:
+        if time.time() > self.aimAvailableTime:
             self.BlinkVar("aim_enter")
             self.fovBeforeAiming = CC.GetFov()
             self.tick = 0
@@ -119,7 +140,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             return
         if (self.fovStep > 0 and CC.GetFov() >= self.fovEnd) or \
                 (self.fovStep <= 0 and CC.GetFov() <= self.fovEnd):
-            # 达到目的
             self.fovAnimating = False
             if self.fovStep < 0:
                 self.aimFinished = True
@@ -134,6 +154,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.GetVar("shoot"):
             self.BlinkVar("shoot")
             self.ResumeFov()
+            self.UpdateAimAvailableTime(self.animLengthDict["shoot"] + self.animLengthDict["aim_exit"])
 
     def ReleaseSkill(self, skill):
         if not self.IsEquipped():
@@ -153,29 +174,56 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def UpdateVar(self, key, value):
         QC.Set("query.mod." + DB.mn + "_" + key, value)
 
-    nowBlinkVar = "default"  # 最近一次闪烁的变量，用于推测当前的动画阶段
-
     # 让变量闪烁一次，用于通知状态转换
     def BlinkVar(self, key):
         self.UpdateVar(key, 1.0)
-        self.nowBlinkVar = "blink"
         GC.AddTimer(0.05, self.UpdateVar, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
         self.CallServer("LoadData", 0, PID)
         levelQC = CF.CreateQueryVariable(levelId)
-        for key, value in {"equip": 0, "aim_enter": 0, "shoot": 0,
+        for key, value in {"perspective": CF.CreatePlayerView(PID).GetPerspective(),
                            "run_enter": 0, "run_exit": 0,
-                           "idle_pos_x": 0, "idle_pos_y": -3, "idle_pos_z": -6,
-                           "idle_rot_x": -14, "idle_rot_y": -97, "idle_rot_z": -13,
-                           "aim_rot_offset_x": -133, "aim_rot_offset_y": 61, "aim_rot_offset_z": 131,
-                           "aim_pos_offset_x": 4.3, "aim_pos_offset_y": 3.1, "aim_pos_offset_z": -5.3,
-                           "run_rot_offset_x": -17, "run_rot_offset_y": 52, "run_rot_offset_z": -17,
-                           "run_pos_offset_x": 2.1, "run_pos_offset_y": 2, "run_pos_offset_z": 1.7,
-                           "hide_offset": 100}.items():
+                           "equip": 0, "aim_enter": 0, "shoot": 0,
+
+                           "1st_idle_pos_x": -3, "1st_idle_pos_y": -5, "1st_idle_pos_z": 8,
+                           "1st_idle_rot_x": 87, "1st_idle_rot_y": 0, "1st_idle_rot_z": -132,
+                           "1st_run_rot_offset_x": 0, "1st_run_rot_offset_y": 17, "1st_run_rot_offset_z": 34,
+                           "1st_aim_rot_offset_x": -6, "1st_aim_rot_offset_y": 20, "1st_aim_rot_offset_z": -37,
+                           "1st_aim_pos_offset_x": 4.5, "1st_aim_pos_offset_y": -1,
+                           "1st_aim_pos_offset_z": 1.7,
+
+                           "3rd_left_idle_pos_x": 0, "3rd_left_idle_pos_y": 0, "3rd_left_idle_pos_z": 0,
+                           "3rd_left_idle_rot_x": 0, "3rd_left_idle_rot_y": 0, "3rd_left_idle_rot_z": 0,
+                           "3rd_right_idle_pos_x": 0, "3rd_right_idle_pos_y": 0, "3rd_right_idle_pos_z": 0,
+                           "3rd_right_idle_rot_x": 0, "3rd_right_idle_rot_y": 0, "3rd_right_idle_rot_z": 0,
+                           }.items():
             levelQC.Register('query.mod.{}_{}'.format(DB.mn, key), value)
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, key), value)
+
+        actorComp = CF.CreateActorRender(PID)
+        actorComp.RebuildPlayerRender()
+        actorComp.AddPlayerGeometry("arm", "geometry.electric_bow_arm")
+        actorComp.AddPlayerRenderController("controller.render.electric_bow_arm",
+                                            "variable.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
+        actorComp.AddPlayerAnimation("1st_equip", "animation.electric_bow.1st_equip")
+        actorComp.AddPlayerAnimation("1st_idle", "animation.electric_bow.1st_idle")
+        actorComp.AddPlayerAnimation("1st_default", "animation.electric_bow.1st_default")
+        actorComp.AddPlayerAnimation("1st_run_enter", "animation.electric_bow.1st_run_enter")
+        actorComp.AddPlayerAnimation("1st_run", "animation.electric_bow.1st_run")
+        actorComp.AddPlayerAnimation("1st_run_exit", "animation.electric_bow.1st_run_exit")
+        actorComp.AddPlayerAnimation("1st_aim_enter", "animation.electric_bow.1st_aim_enter")
+        actorComp.AddPlayerAnimation("1st_aim", "animation.electric_bow.1st_aim")
+        actorComp.AddPlayerAnimation("1st_shoot", "animation.electric_bow.1st_shoot")
+        actorComp.AddPlayerAnimation("1st_aim_exit", "animation.electric_bow.1st_aim_exit")
+        actorComp.AddPlayerAnimation("3rd_idle", "animation.electric_bow.3rd_idle")
+        actorComp.AddPlayerAnimation("3rd_aim", "animation.electric_bow.3rd_aim")
+
+        actorComp.AddPlayerAnimationController("arm_controller", "controller.animation.electric_bow.general")
+        actorComp.AddPlayerScriptAnimate("arm_controller",
+                                         "query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
+        actorComp.RebuildPlayerRender()
 
     def IsEquipped(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.CARRIED)

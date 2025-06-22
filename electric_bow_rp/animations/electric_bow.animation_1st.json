@@ -1,0 +1,203 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.electric_bow.1st_equip": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.3333,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": ["0.5418+q.mod.eb_1st_idle_rot_x", "1.7202+q.mod.eb_1st_idle_rot_y", "34.9632+q.mod.eb_1st_idle_rot_z"],
+						"0.25": ["0.0029+q.mod.eb_1st_idle_rot_x", "-0.1308+q.mod.eb_1st_idle_rot_y", "-2.4966+q.mod.eb_1st_idle_rot_z"],
+						"0.3333": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"]
+					},
+					"position": {
+						"0.0": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"],
+						"0.25": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"],
+						"0.3333": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+					}
+				}
+			}
+		},
+		"animation.electric_bow.1st_idle": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"],
+					"position": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+				},
+				"rightArm": {
+					"rotation": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"],
+					"position": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+				}
+			}
+		},
+		"animation.electric_bow.1st_run_enter": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.1,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"],
+						"0.1": [
+							"q.mod.eb_1st_run_rot_offset_x+q.mod.eb_1st_idle_rot_x",
+							"q.mod.eb_1st_run_rot_offset_y+q.mod.eb_1st_idle_rot_y",
+							"q.mod.eb_1st_run_rot_offset_z+q.mod.eb_1st_idle_rot_z"
+						]
+					},
+					"position": {
+						"0.0": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"],
+						"0.1": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+					}
+				}
+			}
+		},
+		"animation.electric_bow.1st_run": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": [
+						"q.mod.eb_1st_run_rot_offset_x+q.mod.eb_1st_idle_rot_x",
+						"q.mod.eb_1st_run_rot_offset_y+q.mod.eb_1st_idle_rot_y",
+						"q.mod.eb_1st_run_rot_offset_z+q.mod.eb_1st_idle_rot_z"
+					],
+					"position": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+				}
+			}
+		},
+		"animation.electric_bow.1st_run_exit": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.2,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": [
+							"q.mod.eb_1st_run_rot_offset_x+q.mod.eb_1st_idle_rot_x",
+							"q.mod.eb_1st_run_rot_offset_y+q.mod.eb_1st_idle_rot_y",
+							"q.mod.eb_1st_run_rot_offset_z+q.mod.eb_1st_idle_rot_z"
+						],
+						"0.2": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"]
+					},
+					"position": {
+						"0.0": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"],
+						"0.2": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+					}
+				}
+			}
+		},
+		"animation.electric_bow.1st_aim_enter": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.3,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"],
+						"0.3": [
+							"q.mod.eb_1st_idle_rot_x+q.mod.eb_1st_aim_rot_offset_x",
+							"q.mod.eb_1st_idle_rot_y+q.mod.eb_1st_aim_rot_offset_y",
+							"q.mod.eb_1st_idle_rot_z+q.mod.eb_1st_aim_rot_offset_z"
+						]
+					},
+					"position": {
+						"0.0": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"],
+						"0.3": [
+							"q.mod.eb_1st_idle_pos_x+q.mod.eb_1st_aim_pos_offset_x",
+							"q.mod.eb_1st_idle_pos_y+q.mod.eb_1st_aim_pos_offset_y",
+							"q.mod.eb_1st_idle_pos_z+q.mod.eb_1st_aim_pos_offset_z"
+						]
+					}
+				}
+			}
+		},
+		"animation.electric_bow.1st_aim": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": [
+						"q.mod.eb_1st_idle_rot_x+q.mod.eb_1st_aim_rot_offset_x",
+						"q.mod.eb_1st_idle_rot_y+q.mod.eb_1st_aim_rot_offset_y",
+						"q.mod.eb_1st_idle_rot_z+q.mod.eb_1st_aim_rot_offset_z"
+					],
+					"position": [
+						"q.mod.eb_1st_idle_pos_x+q.mod.eb_1st_aim_pos_offset_x",
+						"q.mod.eb_1st_idle_pos_y+q.mod.eb_1st_aim_pos_offset_y",
+						"q.mod.eb_1st_idle_pos_z+q.mod.eb_1st_aim_pos_offset_z"
+					]
+				}
+			}
+		},
+		"animation.electric_bow.1st_shoot": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.125,
+			"bones": {
+				"electric_bow": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.0417": [-2.5, 0, 0],
+						"0.0833": [2.5, 0, 0],
+						"0.125": [0, 0, 0]
+					}
+				},
+				"arrow": {
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.125": [0, -25, 0]
+					},
+					"scale": {
+						"0.0": [1, 1, 1],
+						"0.0417": [1, 1, 1],
+						"0.125": [0, 0, 0]
+					}
+				},
+				"leftArm": {
+					"rotation": [
+						"q.mod.eb_1st_idle_rot_x+q.mod.eb_1st_aim_rot_offset_x",
+						"q.mod.eb_1st_idle_rot_y+q.mod.eb_1st_aim_rot_offset_y",
+						"q.mod.eb_1st_idle_rot_z+q.mod.eb_1st_aim_rot_offset_z"
+					],
+					"position": [
+						"q.mod.eb_1st_idle_pos_x+q.mod.eb_1st_aim_pos_offset_x",
+						"q.mod.eb_1st_idle_pos_y+q.mod.eb_1st_aim_pos_offset_y",
+						"q.mod.eb_1st_idle_pos_z+q.mod.eb_1st_aim_pos_offset_z"
+					]
+				}
+			}
+		},
+		"animation.electric_bow.1st_aim_exit": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.1,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": [
+							"q.mod.eb_1st_idle_rot_x+q.mod.eb_1st_aim_rot_offset_x",
+							"q.mod.eb_1st_idle_rot_y+q.mod.eb_1st_aim_rot_offset_y",
+							"q.mod.eb_1st_idle_rot_z+q.mod.eb_1st_aim_rot_offset_z"
+						],
+						"0.1": ["q.mod.eb_1st_idle_rot_x", "q.mod.eb_1st_idle_rot_y", "q.mod.eb_1st_idle_rot_z"]
+					},
+					"position": {
+						"0.0": [
+							"q.mod.eb_1st_idle_pos_x+q.mod.eb_1st_aim_pos_offset_x",
+							"q.mod.eb_1st_idle_pos_y+q.mod.eb_1st_aim_pos_offset_y",
+							"q.mod.eb_1st_idle_pos_z+q.mod.eb_1st_aim_pos_offset_z"
+						],
+						"0.1": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+					}
+				},
+				"arrow": {
+					"scale": 0
+				}
+			}
+		},
+		"animation.electric_bow.1st_default": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": ["0.5418+q.mod.eb_1st_idle_rot_x", "1.7202+q.mod.eb_1st_idle_rot_y", "34.9632+q.mod.eb_1st_idle_rot_z"],
+					"position": ["q.mod.eb_1st_idle_pos_x", "q.mod.eb_1st_idle_pos_y", "q.mod.eb_1st_idle_pos_z"]
+				}
+			}
+		}
+	}
+}

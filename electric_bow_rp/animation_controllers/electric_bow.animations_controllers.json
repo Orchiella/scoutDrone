@@ -7,124 +7,134 @@
 				"default": {
 					"transitions" : [
 						{
-							"1st_equip": "c.is_first_person && q.mod.eb_equip"
+							"equip": "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_equip": {
+				"equip": {
 					"animations": [
-						"1st_equip"
-					],
-					"transitions" : [
 						{
-							"1st_idle" : "q.any_animation_finished"
-						}
-					]
-				},
-				"1st_idle": {
-					"animations": [
-						"1st_idle"
-					],
-					"transitions" : [
-						{
-							"1st_run_enter" : "q.mod.eb_run_enter"
+							"1st_equip": "q.mod.eb_perspective == 0"
 						},
 						{
-							"1st_aim_enter" : "q.mod.eb_aim_enter"
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
+					],
+					"transitions" : [
+						{
+							"idle" : "q.any_animation_finished"
+						}
+					]
+				},
+				"idle": {
+					"animations": [
+						{
+							"1st_idle": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
+					],
+					"transitions" : [
+						{
+							"run_enter" : "q.mod.eb_run_enter"
+						},
+						{
+							"aim_enter" : "q.mod.eb_aim_enter"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_run_enter": {
+				"run_enter": {
 					"animations": [
 						"1st_run_enter"
 					],
 					"transitions" : [
 						{
-							"1st_run" : "q.any_animation_finished"
+							"run" : "q.any_animation_finished"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_run": {
+				"run": {
 					"animations": [
 						"1st_run"
 					],
 					"transitions" : [
 						{
-							"1st_run_exit" : "!q.mod.eb_run_exit"
+							"run_exit" : "q.mod.eb_run_exit"
 						},
 						{
-							"1st_aim_enter" : "q.mod.eb_aim_enter"
+							"aim_enter" : "q.mod.eb_aim_enter"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_run_exit": {
+				"run_exit": {
 					"animations": [
 						"1st_run_exit"
 					],
 					"transitions" : [
 						{
-							"1st_idle" : "q.any_animation_finished"
+							"idle" : "q.any_animation_finished"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_aim_enter": {
+				"aim_enter": {
 					"animations": [
 						"1st_aim_enter"
 					],
 					"transitions" : [
 						{
-							"1st_aim" : "q.any_animation_finished"
+							"aim" : "q.any_animation_finished"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_aim": {
+				"aim": {
 					"animations": [
 						"1st_aim"
 					],
 					"transitions" : [
 						{
-							"1st_shoot" : "q.mod.eb_shoot"
+							"shoot" : "q.mod.eb_shoot"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_shoot": {
+				"shoot": {
 					"animations": [
 						"1st_shoot"
 					],
 					"transitions" : [
 						{
-							"1st_aim_exit" : "q.any_animation_finished"
+							"aim_exit" : "q.any_animation_finished"
 						},
 						{
 							"default" : "q.mod.eb_equip"
 						}
 					]
 				},
-				"1st_aim_exit": {
+				"aim_exit": {
 					"animations": [
 						"1st_aim_exit"
 					],
 					"transitions" : [
 						{
-							"1st_idle" : "q.any_animation_finished"
+							"idle" : "q.any_animation_finished"
 						},
 						{
 							"default" : "q.mod.eb_equip"

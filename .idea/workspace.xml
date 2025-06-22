@@ -4,63 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5964e731-f2cd-4124-8f19-f24fa7ee34c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/electric_bow_bp/netease_items_beh/electric_bow.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow.render_controllers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/texts/zh_CN.lang" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/textures/entity/electric_bow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/ui/_ui_defs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/helmetNight.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="5964e731-f2cd-4124-8f19-f24fa7ee34c1" name="Changes" comment="1">
+      <change afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_1st.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_3rd.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow_arm.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow_arm.render_controllers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/mathUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/modMain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/ui/helmetNightFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/electricBowFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/ui/helmetNightSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/electricBowSettings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/ui/uiDef.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/uiDef.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/HelmetNight/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/uiMgr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/netease_items_beh/helmet_night.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_bp/recipes/helmet_night.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/recipes/electric_bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/animation_controllers/helmet_night.animations_controllers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/animations/helmet_night.animation.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/attachables/helmet_night.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/effects/hn_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/effects/eb_lightning.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/models/entity/helmet_night.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/netease_items_res/helmet_night.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/netease_items_res/electric_bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/sounds/helmet_night/jetting1.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/jetting1.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/sounds/helmet_night/jetting2.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/jetting2.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/sounds/sound_definitions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/texts/zh_CN.lang" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/entity/helmet_night.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/item_texture.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/items/helmet_night.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/items/electric_bow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/sfxs/hn_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/sfxs/hn_frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/ui/helmet_night/invisibility.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/invisibility.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/ui/helmet_night/light.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/ui/helmet_night/night_vision.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/night_vision.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/textures/ui/helmet_night/sensing.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/sensing.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/ui/_ui_defs.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/ui/helmet_night_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/ui/electric_bow_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/ui/helmet_night_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/ui/electric_bow_settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helmet_night_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,9 +26,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2ynzfULjPt7GhxfjYxDmWr2kNGe" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -87,12 +42,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ElectricBow/electric_bow_rp"
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ElectricBow/electric_bow_rp/animations"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\animations" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\animation_controllers" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\render_controllers" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_bp" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\models\entity" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -104,6 +63,19 @@
       <option name="presentableId" value="Default" />
       <updated>1750485229087</updated>
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1750509743789</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750509743789</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>

@@ -22,15 +22,17 @@
         "1st_aim": "animation.electric_bow.1st_aim",
         "1st_shoot": "animation.electric_bow.1st_shoot",
         "1st_aim_exit": "animation.electric_bow.1st_aim_exit",
+        "3rd_idle": "animation.electric_bow.3rd_idle",
+        "3rd_aim": "animation.electric_bow.3rd_aim",
         "controller.general": "controller.animation.electric_bow.general"
       },
       "geometry": {
+        "arm": "geometry.electric_bow_arm",
         "default": "geometry.electric_bow"
       },
       "scripts": {
         "animate": [
-          "controller.general",
-          "1st_default"
+          "controller.general"
         ]
       },
       "render_controllers": [
