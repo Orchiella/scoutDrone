@@ -4,7 +4,8 @@
     "description": {
       "identifier": "orchiella:electric_bow",
       "materials": {
-        "default": "entity_emissive_alpha",
+        "default": "netease_entity_metallic",
+        "unlit": "entity_emissive_alpha",
         "enchanted": "entity_emissive_alpha"
       },
       "textures": {
@@ -12,7 +13,7 @@
         "enchanted": "textures/misc/enchanted_item_glint"
       },
       "animations": {
-        "1st_default": "animation.electric_bow.1st_default",
+        "default": "animation.electric_bow.default",
         "1st_equip": "animation.electric_bow.1st_equip",
         "1st_idle": "animation.electric_bow.1st_idle",
         "1st_run_enter": "animation.electric_bow.1st_run_enter",

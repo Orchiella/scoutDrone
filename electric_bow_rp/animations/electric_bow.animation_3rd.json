@@ -3,27 +3,39 @@
 	"animations": {
 		"animation.electric_bow.3rd_idle": {
 			"loop": "hold_on_last_frame",
+			"override_previous_animation": true,
 			"bones": {
 				"leftArm": {
-					"rotation": ["q.mod.eb_3rd_left_idle_rot_x", "q.mod.eb_3rd_left_idle_rot_y", "q.mod.eb_3rd_left_idle_rot_z"],
-					"position": ["q.mod.eb_3rd_left_idle_pos_x", "q.mod.eb_3rd_left_idle_pos_y", "q.mod.eb_3rd_left_idle_pos_z"]
+					"rotation": [-47.81983, 48.52813, -37.61852],
+					"position": [0, 0, 0]
 				},
 				"rightArm": {
-					"rotation": ["q.mod.eb_3rd_right_idle_rot_x", "q.mod.eb_3rd_right_idle_rot_y", "q.mod.eb_3rd_right_idle_rot_z"],
-					"position": ["q.mod.eb_3rd_right_idle_pos_x", "q.mod.eb_3rd_right_idle_pos_y", "q.mod.eb_3rd_right_idle_pos_z"]
+					"rotation": [-63.58212, 1.76175, -24.08563],
+					"position": [0, 0.29583, 0.63442]
+				},
+				"electric_bow": {
+					"rotation": [0, 0, 0],
+					"position": [0, -0.7, 1],
+					"scale": 0.8
 				}
 			}
 		},
 		"animation.electric_bow.3rd_aim": {
 			"loop": "hold_on_last_frame",
+			"override_previous_animation": true,
 			"bones": {
 				"leftArm": {
-					"rotation": ["q.mod.eb_3rd_left_aim_rot_x", "q.mod.eb_3rd_left_aim_rot_y", "q.mod.eb_3rd_left_aim_rot_z"],
-					"position": ["q.mod.eb_3rd_left_aim_pos_x", "q.mod.eb_3rd_left_aim_pos_y", "q.mod.eb_3rd_left_aim_pos_z"]
+					"rotation": [-52.52608, 33.73695, -2.36048],
+					"position": [-0.58251, -0.3741, -2.1262]
 				},
 				"rightArm": {
-					"rotation": ["q.mod.eb_3rd_right_aim_rot_x", "q.mod.eb_3rd_right_aim_rot_y", "q.mod.eb_3rd_right_aim_rot_z"],
-					"position": ["q.mod.eb_3rd_right_aim_pos_x", "q.mod.eb_3rd_right_aim_pos_y", "q.mod.eb_3rd_right_aim_pos_z"]
+					"rotation": [-76.85831, -32.39654, -15.79876],
+					"position": [-0.41602, -0.89347, 1.01422]
+				},
+				"electric_bow": {
+					"rotation": [-27.48906, -4.63344, -34.3557],
+					"position": [-0.36376, -0.17043, 1.13645],
+					"scale": 0.8
 				}
 			}
 		}

@@ -5,6 +5,9 @@
 			"initial_state" : "default",
 			"states" : {
 				"default": {
+					"animations": [
+						"default"
+                    ],
 					"transitions" : [
 						{
 							"equip": "q.mod.eb_equip"
@@ -49,7 +52,12 @@
 				},
 				"run_enter": {
 					"animations": [
-						"1st_run_enter"
+						{
+							"1st_run_enter": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -62,7 +70,12 @@
 				},
 				"run": {
 					"animations": [
-						"1st_run"
+						{
+							"1st_run": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -78,7 +91,12 @@
 				},
 				"run_exit": {
 					"animations": [
-						"1st_run_exit"
+						{
+							"1st_run_exit": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -91,7 +109,12 @@
 				},
 				"aim_enter": {
 					"animations": [
-						"1st_aim_enter"
+						{
+							"1st_aim_enter": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_aim": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -104,7 +127,12 @@
 				},
 				"aim": {
 					"animations": [
-						"1st_aim"
+						{
+							"1st_aim": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_aim": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -117,7 +145,12 @@
 				},
 				"shoot": {
 					"animations": [
-						"1st_shoot"
+						{
+							"1st_shoot": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{
@@ -130,7 +163,12 @@
 				},
 				"aim_exit": {
 					"animations": [
-						"1st_aim_exit"
+						{
+							"1st_aim_exit": "q.mod.eb_perspective == 0"
+						},
+						{
+							"3rd_idle": "q.mod.eb_perspective != 0"
+						}
 					],
 					"transitions" : [
 						{

@@ -5,13 +5,25 @@
       "geometry": "geometry.default",
       "materials": [
         {
-          "*": "Material.default"
+          "handle": "Material.default"
+        },
+        {
+          "unlit": "Material.unlit"
+        },
+        {
+          "arrow_unlit": "Material.unlit"
+        },
+        {
+          "semi1_unlit": "Material.unlit"
+        },
+        {
+          "semi2_unlit": "Material.unlit"
         }
       ],
       "textures": [
         "texture.default"
       ],
-      "filter_lighting": true
+      "ignore_lighting": true
     }
   }
 }

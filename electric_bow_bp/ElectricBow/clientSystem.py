@@ -49,17 +49,20 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         GC.AddRepeatedTimer(0.5, self.TestVar)
 
     def TestVar(self):
+        # 动态修改测试
         for key, value in {
             "1st_idle_pos_x": -3, "1st_idle_pos_y": -5, "1st_idle_pos_z": 8,
             "1st_idle_rot_x": 87, "1st_idle_rot_y": 0, "1st_idle_rot_z": -132,
             "1st_run_rot_offset_x": 0, "1st_run_rot_offset_y": 17, "1st_run_rot_offset_z": 34,
-            "1st_aim_rot_offset_x": -9, "1st_aim_rot_offset_y": 13, "1st_aim_rot_offset_z": -33,
-            "1st_aim_pos_offset_x": 1.5, "1st_aim_pos_offset_y": -0.8, "1st_aim_pos_offset_z": 1.5,
+            "1st_run_pos_offset_x": -4, "1st_run_pos_offset_y": -2, "1st_run_pos_offset_z": 0,
+            "1st_aim_rot_offset_x": -6, "1st_aim_rot_offset_y": 13, "1st_aim_rot_offset_z": -26,
+            "1st_aim_pos_offset_x": 1.7, "1st_aim_pos_offset_y": 0.1, "1st_aim_pos_offset_z": 1.4,
 
             "3rd_left_idle_pos_x": 0, "3rd_left_idle_pos_y": 0, "3rd_left_idle_pos_z": 0,
             "3rd_left_idle_rot_x": 0, "3rd_left_idle_rot_y": 0, "3rd_left_idle_rot_z": 0,
             "3rd_right_idle_pos_x": 0, "3rd_right_idle_pos_y": 0, "3rd_right_idle_pos_z": 0,
             "3rd_right_idle_rot_x": 0, "3rd_right_idle_rot_y": 0, "3rd_right_idle_rot_z": 0,
+                           "1st_arrow_pos_off_y": 7,
         }.items():
             QC.Set('query.mod.{}_{}'.format(DB.mn, key), value)
 
@@ -186,18 +189,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         for key, value in {"perspective": CF.CreatePlayerView(PID).GetPerspective(),
                            "run_enter": 0, "run_exit": 0,
                            "equip": 0, "aim_enter": 0, "shoot": 0,
-
                            "1st_idle_pos_x": -3, "1st_idle_pos_y": -5, "1st_idle_pos_z": 8,
                            "1st_idle_rot_x": 87, "1st_idle_rot_y": 0, "1st_idle_rot_z": -132,
                            "1st_run_rot_offset_x": 0, "1st_run_rot_offset_y": 17, "1st_run_rot_offset_z": 34,
-                           "1st_aim_rot_offset_x": -6, "1st_aim_rot_offset_y": 20, "1st_aim_rot_offset_z": -37,
-                           "1st_aim_pos_offset_x": 4.5, "1st_aim_pos_offset_y": -1,
-                           "1st_aim_pos_offset_z": 1.7,
-
-                           "3rd_left_idle_pos_x": 0, "3rd_left_idle_pos_y": 0, "3rd_left_idle_pos_z": 0,
-                           "3rd_left_idle_rot_x": 0, "3rd_left_idle_rot_y": 0, "3rd_left_idle_rot_z": 0,
-                           "3rd_right_idle_pos_x": 0, "3rd_right_idle_pos_y": 0, "3rd_right_idle_pos_z": 0,
-                           "3rd_right_idle_rot_x": 0, "3rd_right_idle_rot_y": 0, "3rd_right_idle_rot_z": 0,
+                           "1st_run_pos_offset_x": -4, "1st_run_pos_offset_y": -2, "1st_run_pos_offset_z": 0,
+                           "1st_aim_rot_offset_x": -6, "1st_aim_rot_offset_y": 13, "1st_aim_rot_offset_z": -26,
+                           "1st_aim_pos_offset_x": 1.5, "1st_aim_pos_offset_y": -0.8, "1st_aim_pos_offset_z": 1.5,
+                           "1st_arrow_pos_off_y": 7,
                            }.items():
             levelQC.Register('query.mod.{}_{}'.format(DB.mn, key), value)
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, key), value)
@@ -209,7 +207,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                             "variable.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
         actorComp.AddPlayerAnimation("1st_equip", "animation.electric_bow.1st_equip")
         actorComp.AddPlayerAnimation("1st_idle", "animation.electric_bow.1st_idle")
-        actorComp.AddPlayerAnimation("1st_default", "animation.electric_bow.1st_default")
         actorComp.AddPlayerAnimation("1st_run_enter", "animation.electric_bow.1st_run_enter")
         actorComp.AddPlayerAnimation("1st_run", "animation.electric_bow.1st_run")
         actorComp.AddPlayerAnimation("1st_run_exit", "animation.electric_bow.1st_run_exit")
@@ -217,6 +214,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerAnimation("1st_aim", "animation.electric_bow.1st_aim")
         actorComp.AddPlayerAnimation("1st_shoot", "animation.electric_bow.1st_shoot")
         actorComp.AddPlayerAnimation("1st_aim_exit", "animation.electric_bow.1st_aim_exit")
+        actorComp.AddPlayerAnimation("default", "animation.electric_bow.default")
         actorComp.AddPlayerAnimation("3rd_idle", "animation.electric_bow.3rd_idle")
         actorComp.AddPlayerAnimation("3rd_aim", "animation.electric_bow.3rd_aim")
 
@@ -224,6 +222,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerScriptAnimate("arm_controller",
                                          "query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
         actorComp.RebuildPlayerRender()
+
+        if self.IsEquipped():
+            self.BlinkVar("equip")
+            self.UpdateAimAvailableTime(self.animLengthDict["equip"])
 
     def IsEquipped(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.CARRIED)
