@@ -29,105 +29,69 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         for EN, ESN, eventName, callback, priority in eventList:
             self.ListenForEvent(EN, ESN, eventName, self, callback, priority)
 
+        serverApi.AddEntityTickEventWhiteList("orchiella:electric_arrow")
+
         dataComp = CF.CreateExtraData(levelId)
         if DataManager.KEY_NAME not in dataComp.GetWholeExtraData():
             dataComp.SetExtraData(DataManager.KEY_NAME, {})
         DataManager()
         DataManager.Check(None)
 
-        GC.AddRepeatedTimer(0.1, self.Timer)
-
-    lightBlockPoses = {}
-    nightVisionPlayers = set()
-
-    def Timer(self):
-        for playerId in serverApi.GetPlayerList():
-            if DataManager.Get(playerId, "func_night_vision_state") == "on":
-                if not self.IsEquipped(playerId):
-                    continue
-                CF.CreateEffect(playerId).AddEffectToEntity("night_vision", 11, 1, False)
-                self.nightVisionPlayers.add(playerId)
-            else:
-                if playerId in self.nightVisionPlayers:
-                    self.nightVisionPlayers.remove(playerId)
-                    CF.CreateEffect(playerId).RemoveEffectFromEntity("night_vision")
-            if playerId in self.lightBlockPoses:
-                CF.CreateBlockInfo(levelId).SetBlockNew(self.lightBlockPoses[playerId],
-                                                        {"name": "minecraft:air", "aux": 0}, 0,
-                                                        CF.CreateDimension(playerId).GetEntityDimensionId())
-            if DataManager.Get(playerId, "func_light_state") == "on":
-                if not self.IsEquipped(playerId):
-                    continue
-                dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
-                blocks = serverApi.getEntitiesOrBlockFromRay(dimId,
-                                                             CF.CreatePos(playerId).GetPos(),
-                                                             serverApi.GetDirFromRot(
-                                                                 CF.CreateRot(playerId).GetRot()),
-                                                             DataManager.Get(playerId, "func_light_distance"),
-                                                             True,
-                                                             serverApi.GetMinecraftEnum().RayFilterType.OnlyBlocks)
-                if blocks:
-                    penetratedBlock = None
-                    for block in blocks:
-                        if block['identifier'] in PENETRABLE_BLOCK_TYPE:
-                            continue
-                        penetratedBlock = block
-                        break
-                    blockComp = CF.CreateBlockInfo(levelId)
-                    if penetratedBlock:
-                        blockPos = penetratedBlock["pos"]
-                        for pos in mathUtil.GetSurroundingPoses(blockPos):
-                            if blockComp.GetBlockNew(pos, dimId)['name'] == "minecraft:air":
-                                blockComp.SetBlockNew(pos, {"name": "minecraft:light_block", "aux": 15}, 0,
-                                                      dimId)
-                                self.lightBlockPoses[playerId] = pos
-                                break
-                else:
-                    if playerId in self.lightBlockPoses:
-                        del self.lightBlockPoses[playerId]
-        for data in reversed(self.ignoreAttack):
-            if time.time() > data[2]:
-                self.ignoreAttack.remove(data)
-                continue
-            entityId = data[0]
-            playerId = data[1]
-            if CF.CreateAction(entityId).GetAttackTarget() == playerId:
-                CF.CreateAction(entityId).ResetAttackTarget()
-
     ignoreAttack = []
 
-    def ReleaseSkill(self, playerId, skill):
+    def Shoot(self, playerId):
         if not self.IsEquipped(playerId):
             return
-        frameColors = {serverApi.GetMinecraftEnum().EntityType.Monster: (1, 0, 0),
-                       serverApi.GetMinecraftEnum().EntityType.Player: (0, 0, 1)}
-        if skill == "sensing":
-            n = 0
-            for nearEntity in GC.GetEntitiesAround(playerId, DataManager.Get(playerId, "func_sensing_radius"), {}):
-                if nearEntity == playerId:
-                    continue
-                color = (1, 1, 1)
-                for entityType, frameColor in frameColors.items():
-                    if CF.CreateEngineType(nearEntity).GetEngineType() & entityType == entityType:
-                        color = frameColor
-                        break
-                self.CallClient(playerId, "AppendFrame", nearEntity, "hn_frame",
-                                DataManager.Get(playerId, "func_sensing_duration"),
-                                CF.CreateCollisionBox(nearEntity).GetSize()[1], color)
-                n += 1
-                if n >= DataManager.Get(playerId, "func_sensing_max"):
-                    break
-        elif skill == "invisibility":
-            for nearEntity in GC.GetEntitiesAround(playerId, DataManager.Get(playerId, "func_invisibility_radius"), {}):
-                if nearEntity == playerId:
-                    continue
-                self.ignoreAttack.append(
-                    (nearEntity, playerId, time.time() + DataManager.Get(playerId, "func_invisibility_duration")))
-        self.TakeDurability(playerId, DataManager.Get(playerId, "func_{}_durability_consumption".format(skill)))
+        footPos = CF.CreatePos(playerId).GetFootPos()
+        direction = serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())
+        yOffset = Vector3(0, 1.4, 0)
+        planeOffset = Vector3(0, 0, 0)
+        if direction[0] != 0 or direction[2] != 0:  # 向右偏移
+            planeOffset = Vector3.Cross(Vector3(direction), yOffset)
+            planeOffset = planeOffset.Normalized() * 0.15
+        arrowId = CF.CreateProjectile(levelId).CreateProjectileEntity(playerId,
+                                                                      "orchiella:electric_arrow",
+                                                                      {
+                                                                          "power": 10,
+                                                                          'position': (Vector3(footPos) + Vector3(
+                                                                              direction) * 0.5 + yOffset + planeOffset).ToTuple(),
+                                                                          'direction': direction})
+        SetEntityData(arrowId, "shooter", playerId)
+        SetEntityData(arrowId, "hit", False)
+        SetEntityData(arrowId, "shock_number", 3)
+        self.TakeDurability(playerId, 1)
         if not DataManager.Get(playerId, "usage_informed"):
             DataManager.Set(playerId, "usage_informed", True)
             CF.CreateMsg(playerId).NotifyOneMessage(playerId,
-                                                    "§6[夜视头盔模组] §f欢迎使用本模组！你可以在聊天框发送§e“夜视头盔设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f，或在设置面板中§e暂时隐藏§f掉。对于电脑版玩家，可以为各种功能§d绑定键位§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+                                                    "§d[治疗枪模组] §f欢迎使用治疗枪模组！你可以在聊天框发送§e“治疗枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+
+    @Listen
+    def EntityTickServerEvent(self, event):
+        arrowId = event["entityId"]
+        if CF.CreateEngineType(arrowId).GetEngineTypeStr() != "orchiella:electric_arrow":
+            return
+        if not GetEntityData(arrowId, "hit"):
+            return
+        shockNumber = GetEntityData(arrowId, "shock_number")
+        if shockNumber <= 0:
+            self.DestroyEntity(arrowId)
+            return
+        if time.time() - GetEntityData(arrowId, "shock_timestamp") > 0.5:
+            SetEntityData(arrowId, "shock_number", shockNumber - 1)
+            SetEntityData(arrowId, "shock_timestamp", time.time())
+            print "电"
+
+    @Listen
+    def ProjectileDoHitEffectEvent(self, event):
+        arrowId = event["id"]
+        if CF.CreateEngineType(arrowId).GetEngineTypeStr() != "orchiella:electric_arrow":
+            return
+        if not GetEntityData(arrowId, "hit"):
+            SetEntityData(arrowId, "hit", True)
+            SetEntityData(arrowId, "shock_timestamp", time.time())
+            GC.AddTimer(0.5, self.CallClients, CF.CreatePlayer(arrowId).GetRelevantPlayer(), "AppendFrame", arrowId,
+                        "eb_lightning", 0,
+                        0.1)
 
     def IsEquipped(self, playerId):
         comp = CF.CreateItem(playerId)
@@ -137,7 +101,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def TakeDurability(self, playerId, value):
         if GC.GetPlayerGameType(playerId) == serverApi.GetMinecraftEnum().GameType.Creative: return
         itemComp = CF.CreateItem(playerId)
-        enum = serverApi.GetMinecraftEnum().ItemPosType.ARMOR
+        enum = serverApi.GetMinecraftEnum().ItemPosType.CARRIED
         item = itemComp.GetPlayerItem(enum, 0)
         if item['durability'] > value:
             itemComp.SetItemDurability(enum, 0, item['durability'] - value)
@@ -149,6 +113,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def SyncVarToClients(self, playerId, key, value):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVar", key, value, playerId)
+
+    def SyncSoundToClients(self, playerId, soundName):
+        self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "PlaySound", soundName)
 
     @Listen
     def AddServerPlayerEvent(self, args):
@@ -233,3 +200,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     @Listen('ClientEvent', DB.ModName, 'ClientSystem')
     def OnGetClientEvent(self, args):
         getattr(self, args['funcName'])(*args.get('args', ()), **args.get('kwargs', {}))
+
+
+def GetEntityData(entityId, key):
+    return CF.CreateExtraData(entityId).GetExtraData(DB.mod_name + "_" + key)
+
+
+def RemoveEntityData(entityId, key):
+    if GetEntityData(entityId, key):
+        del CF.CreateExtraData(entityId).GetWholeExtraData()[DB.mod_name + "_" + key]
+
+
+def SetEntityData(entityId, key, value):
+    CF.CreateExtraData(entityId).SetExtraData(DB.mod_name + "_" + key, value)

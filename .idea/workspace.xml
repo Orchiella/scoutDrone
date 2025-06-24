@@ -4,18 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5964e731-f2cd-4124-8f19-f24fa7ee34c1" name="Changes" comment="2">
-      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_default.json" afterDir="false" />
+    <list default="true" id="5964e731-f2cd-4124-8f19-f24fa7ee34c1" name="Changes" comment="3">
+      <change afterPath="$PROJECT_DIR$/electric_bow_bp/entities/electric_arrow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_arrow.animation.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/entity/electric_arrow.entity.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_arrow.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_arrow.render_controllers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/a" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/serverSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_3rd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/effects/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/effects/eb_lightning.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/entity/electric_bow.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/entity/electric_bow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/jetting1.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/jetting2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/sounds/sound_definitions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,21 +42,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ElectricBow/electric_bow_rp/animations&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ElectricBow/electric_bow_rp/textures/sfxs"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\animations" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\animation_controllers" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\textures\sfxs" />
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\render_controllers" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_bp" />
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\models\entity" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\animations" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ElectricBow\electric_bow_rp\entity" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -79,12 +84,21 @@
       <option name="project" value="LOCAL" />
       <updated>1750600351233</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="3">
+      <option name="closed" value="true" />
+      <created>1750665045143</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750665045143</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
     <MESSAGE value="2" />
-    <option name="LAST_COMMIT_MESSAGE" value="2" />
+    <MESSAGE value="3" />
+    <option name="LAST_COMMIT_MESSAGE" value="3" />
   </component>
 </project>

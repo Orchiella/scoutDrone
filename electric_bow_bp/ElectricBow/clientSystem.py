@@ -62,12 +62,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             "3rd_left_idle_rot_x": 0, "3rd_left_idle_rot_y": 0, "3rd_left_idle_rot_z": 0,
             "3rd_right_idle_pos_x": 0, "3rd_right_idle_pos_y": 0, "3rd_right_idle_pos_z": 0,
             "3rd_right_idle_rot_x": 0, "3rd_right_idle_rot_y": 0, "3rd_right_idle_rot_z": 0,
-                           "1st_arrow_pos_off_y": 7,
+            "1st_arrow_pos_off_y": 7,
         }.items():
             QC.Set('query.mod.{}_{}'.format(DB.mn, key), value)
 
     aimAvailableTime = 0
-    animLengthDict = {"equip": 0.3333, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "aim_exit": 0.2}
+    animLengthDict = {"equip": 0.3333, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "aim_enter": 0.1,
+                      "aim_exit": 0.2}
 
     def UpdateAimAvailableTime(self, second):
         if time.time() > self.aimAvailableTime:
@@ -82,6 +83,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.BlinkVar("equip")
             self.UpdateAimAvailableTime(self.animLengthDict["equip"])
         else:
+            self.isAiming = False
             if self.aimFinished or self.fovAnimating:
                 # 如果在fov动画时或瞄准状态下切换了武器，则重置fov
                 self.ResumeFov()
@@ -107,11 +109,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.IsEquipped():
             event['cancel'] = True
 
+    isAiming = False
+
     @Listen(("HoldBeforeClientEvent", "RightClickBeforeClientEvent"))
     def OnEnterAim(self, event):
         if not self.IsEquipped():
             return
-        if time.time() > self.aimAvailableTime:
+        if time.time() > self.aimAvailableTime and not self.isAiming:
             self.BlinkVar("aim_enter")
             self.fovBeforeAiming = CC.GetFov()
             self.tick = 0
@@ -119,6 +123,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.fovEnd = 40
             self.fovStep = -2
             self.fovAnimating = True
+            self.isAiming = True
+            self.SyncSoundToServer(0, "draw")
 
     def ResumeFov(self):
         self.tick = 0
@@ -154,15 +160,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnShoot(self, event):
         if not self.IsEquipped():
             return
-        if not self.GetVar("shoot"):
-            self.BlinkVar("shoot")
-            self.ResumeFov()
-            self.UpdateAimAvailableTime(self.animLengthDict["shoot"] + self.animLengthDict["aim_exit"])
-
-    def ReleaseSkill(self, skill):
-        if not self.IsEquipped():
-            return
-        self.CallServer("ReleaseSkill", 0, PID, skill)
+        if self.isAiming:
+            self.isAiming = False
+            if self.aimFinished:
+                self.BlinkVar("shoot")
+                self.ResumeFov()
+                self.UpdateAimAvailableTime(self.animLengthDict["shoot"] + self.animLengthDict["aim_exit"])
+                self.SyncSoundToServer(0, "shoot")
+                self.CallServer("Shoot", 0, PID)
 
     def GetVar(self, key):
         return QC.Get("query.mod." + DB.mn + "_" + key)
@@ -181,6 +186,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def BlinkVar(self, key):
         self.UpdateVar(key, 1.0)
         GC.AddTimer(0.05, self.UpdateVar, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到
+
+    def SyncSoundToServer(self, delay, soundName):
+        if delay == 0:
+            self.PlaySound(soundName)
+        else:
+            GC.AddTimer(delay, self.PlaySound, soundName)
+        self.CallServer("SyncSoundToClients", delay, PID, soundName)
+
+    def PlaySound(self, soundName):
+        AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
@@ -248,19 +263,15 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 for key, value in varDict.items():
                     PC.SetVariable(parId, "variable." + key, value)
 
-    def PlaySound(self, soundName):
-        AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
-
-    def AppendFrame(self, entityId, frameType, duration, height, color):
+    def AppendFrame(self, entityId, frameType, duration, height):
         frameTypeId = self.CreateEngineSfxFromEditor("effects/" + frameType + ".json")
         frameAniTransComp = CF.CreateFrameAniTrans(frameTypeId)
         frameAniControlComp = CF.CreateFrameAniControl(frameTypeId)
-        scale = 0.6 * height
-        frameAniTransComp.SetScale((scale, scale, 0))
-        frameAniControlComp.SetMixColor((color[0], color[1], color[2], 255))
+        scale = 0.2
+        frameAniTransComp.SetScale((scale, scale, scale))
         frameAniControlComp.Play()
         self.frameDataDict[frameType].append(
-            {"effect": frameType, "time": time.time() + duration,
+            {"effect": frameType, "time": (time.time() + duration) if duration != 0 else 0,
              "entityId": entityId, "height": height,
              "aniTransComp": frameAniTransComp, "aniControlComp": frameAniControlComp})
 
@@ -271,14 +282,19 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             if not frameDataList: continue
             frameDataToRemove = []
             for i, frameData in enumerate(frameDataList):
-                nowTime = time.time()
                 pos = CF.CreatePos(frameData["entityId"]).GetFootPos()
-                if nowTime >= frameData["time"]:
+                if not pos:
+                    aniControlComp = frameData["aniControlComp"]
+                    aniControlComp.Stop()
+                    frameDataToRemove.append(i)  # 箭被销毁或被击中实体死亡，则直接清除
+                    continue
+                nowTime = time.time()
+                if frameData["time"] != 0 and nowTime >= frameData["time"]:
                     # 若序列帧已过期，则清理该序列帧
                     aniControlComp = frameData["aniControlComp"]
                     aniControlComp.Stop()
                     frameDataToRemove.append(i)
-                elif pos:
+                else:
                     # 若序列帧未过期，则更新位置
                     aniTransComp = frameData["aniTransComp"]
                     aniTransComp.SetPos((pos[0], pos[1] + frameData["height"] / 2, pos[2]))
