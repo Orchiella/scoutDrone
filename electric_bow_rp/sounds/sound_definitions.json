@@ -18,6 +18,24 @@
           "stream": false
         }
       ]
+    },
+    "orchiella:electric_bow_hit": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/electric_bow/hit",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:electric_bow_release": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/electric_bow/release",
+          "stream": false
+        }
+      ]
     }
   }
 }

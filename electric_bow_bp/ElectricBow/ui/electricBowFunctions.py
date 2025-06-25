@@ -26,14 +26,8 @@ class ElectricBowFunctions(ScreenNode):
         self.clicking_func = None
 
         self.func_def = {
-            "sensing": {"name": "§{color}感应{cd}", "type": "skill"},
-            "invisibility": {"name": "§{color}匿迹{cd}", "type": "skill"},
-            "night_vision": {"name": "夜视:{state}", "type": "switch",
-                             "candidates": [("on", {"name": "§a开"}),
-                                            ("off", {"name": "§7关"})]},
-            "light": {"name": "探照:{state}", "type": "switch",
-                      "candidates": [("on", {"name": "§a开"}),
-                                     ("off", {"name": "§7关"})]}
+            "sensing": {"name": "§{color}电场感应{cd}", "type": "skill"},
+            "release": {"name": "§{color}电能爆发{cd}", "type": "skill"},
         }
         self.use_cd = {func_key: 0 for func_key, func_def in self.func_def.items() if
                        func_def['type'] == 'skill' or func_def['type'] == 'shoot'}
@@ -53,21 +47,22 @@ class ElectricBowFunctions(ScreenNode):
         for func_key, func_def in self.func_def.items():
             label_ctrl = self.func_label_ctrls[func_key]
             if func_def['type'] == 'shoot':
-                bullet_capacity = self.GetData("func_{}_capacity".format(func_key))
-                if self.bullet_rec[func_key] > bullet_capacity:
-                    self.bullet_rec[func_key] = bullet_capacity
-                bullet_left = bullet_capacity - self.bullet_rec[func_key]
-                if bullet_left < bullet_capacity:
-                    if time.time() > self.use_cd[func_key]:
-                        self.bullet_rec[func_key] -= 1
-                        self.use_cd[func_key] = time.time() + self.GetData("func_{}_cd".format(func_key))
-                bullet_consumption = 1 + (
-                    0 if self.state_rec["switch_power"] == "normal" else self.GetData(
-                        "func_boost_use_energy_consumption"))
-                label_ctrl.SetText(
-                    func_def['name'].format(
-                        color="f" if self.bullet_rec["use"] + bullet_consumption <= bullet_capacity else "8",
-                        rem=(bullet_capacity - self.bullet_rec[func_key]), max=bullet_capacity))
+                pass
+                # bullet_capacity = self.GetData("func_{}_capacity".format(func_key))
+                # if self.bullet_rec[func_key] > bullet_capacity:
+                #     self.bullet_rec[func_key] = bullet_capacity
+                # bullet_left = bullet_capacity - self.bullet_rec[func_key]
+                # if bullet_left < bullet_capacity:
+                #     if time.time() > self.use_cd[func_key]:
+                #         self.bullet_rec[func_key] -= 1
+                #         self.use_cd[func_key] = time.time() + self.GetData("func_{}_cd".format(func_key))
+                # bullet_consumption = 1 + (
+                #     0 if self.state_rec["switch_power"] == "normal" else self.GetData(
+                #         "func_boost_use_energy_consumption"))
+                # label_ctrl.SetText(
+                #     func_def['name'].format(
+                #         color="f" if self.bullet_rec["use"] + bullet_consumption <= bullet_capacity else "8",
+                #         rem=(bullet_capacity - self.bullet_rec[func_key]), max=bullet_capacity))
             elif func_def['type'] == 'skill':
                 leftTime = self.use_cd[func_key] - time.time()
                 isConditionMet = "condition" not in func_def or func_def['condition']()
@@ -199,25 +194,26 @@ class ElectricBowFunctions(ScreenNode):
                 #         max=bullet_capacity))
                 # self.client.Use(CF.CreateActorMotion(PID).GetInputVector())
             elif func_def['type'] == 'switch':
-                now_i = -1
-                valid_candidate_indexes_before, valid_candidate_indexes_after = [], []
-                for i in range(len(func_def['candidates'])):
-                    candidate_name, candidate_info = func_def['candidates'][i][0], func_def['candidates'][i][1]
-                    if self.state_rec[self.clicking_func] == candidate_name:
-                        now_i = i
-                    else:
-                        if "settings_key" not in candidate_info or self.GetData(candidate_info['settings_key']):
-                            if now_i == -1:
-                                valid_candidate_indexes_before.append(i)
-                            else:
-                                valid_candidate_indexes_after.append(i)
-                valid_candidate_indexes_after.extend(valid_candidate_indexes_before)
-                if valid_candidate_indexes_after:
-                    state_key, state_info = func_def['candidates'][valid_candidate_indexes_after[0]]
-                    self.state_rec[self.clicking_func] = state_key
-                    self.func_label_ctrls[self.clicking_func].SetText(func_def['name'].format(
-                        state=state_info['name']))
-                    self.SetData("func_{}_state".format(self.clicking_func), state_key)
+                pass
+                # now_i = -1
+                # valid_candidate_indexes_before, valid_candidate_indexes_after = [], []
+                # for i in range(len(func_def['candidates'])):
+                #     candidate_name, candidate_info = func_def['candidates'][i][0], func_def['candidates'][i][1]
+                #     if self.state_rec[self.clicking_func] == candidate_name:
+                #         now_i = i
+                #     else:
+                #         if "settings_key" not in candidate_info or self.GetData(candidate_info['settings_key']):
+                #             if now_i == -1:
+                #                 valid_candidate_indexes_before.append(i)
+                #             else:
+                #                 valid_candidate_indexes_after.append(i)
+                # valid_candidate_indexes_after.extend(valid_candidate_indexes_before)
+                # if valid_candidate_indexes_after:
+                #     state_key, state_info = func_def['candidates'][valid_candidate_indexes_after[0]]
+                #     self.state_rec[self.clicking_func] = state_key
+                #     self.func_label_ctrls[self.clicking_func].SetText(func_def['name'].format(
+                #         state=state_info['name']))
+                #     self.SetData("func_{}_state".format(self.clicking_func), state_key)
         self.clicking_func = None
 
     def GetState(self, func_key):

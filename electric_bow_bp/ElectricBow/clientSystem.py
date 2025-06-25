@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
-import random
 import time
 
 import mod.client.extraClientApi as clientApi
@@ -44,7 +42,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.settingsScreen = None
         self.functionsScreen = None
         self.settings = {}
-        self.frameDataDict = {"eb_lightning": []}
+        self.frameDataDict = {"eb_lightning": [], "eb_frame": []}
         GC.AddRepeatedTimer(0.05, self.UpdateFrame)
         GC.AddRepeatedTimer(0.5, self.TestVar)
 
@@ -67,7 +65,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             QC.Set('query.mod.{}_{}'.format(DB.mn, key), value)
 
     aimAvailableTime = 0
-    animLengthDict = {"equip": 0.3333, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "aim_enter": 0.1,
+    animLengthDict = {"equip": 0.3333, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "aim_enter": 0.3,
                       "aim_exit": 0.2}
 
     def UpdateAimAvailableTime(self, second):
@@ -83,10 +81,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.BlinkVar("equip")
             self.UpdateAimAvailableTime(self.animLengthDict["equip"])
         else:
-            self.isAiming = False
+            self.shootAvailableTime = 0
             if self.aimFinished or self.fovAnimating:
                 # 如果在fov动画时或瞄准状态下切换了武器，则重置fov
                 self.ResumeFov()
+            self.aimFinished = False
 
     # 切换疾跑事件，其实有专门的原生molang表达式可以判断，但为了管理，由模组来控制
     @Listen("OnLocalPlayerActionClientEvent")
@@ -109,34 +108,33 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.IsEquipped():
             event['cancel'] = True
 
-    isAiming = False
-
     @Listen(("HoldBeforeClientEvent", "RightClickBeforeClientEvent"))
     def OnEnterAim(self, event):
         if not self.IsEquipped():
             return
-        if time.time() > self.aimAvailableTime and not self.isAiming:
+        if self.aimAvailableTime < time.time() and not self.aimFinished and self.shootAvailableTime == 0:
             self.BlinkVar("aim_enter")
             self.fovBeforeAiming = CC.GetFov()
             self.tick = 0
             self.fovStart = self.fovBeforeAiming
             self.fovEnd = 40
-            self.fovStep = -2
+            self.fovStep = (self.fovEnd - self.fovStart) / (30 * self.animLengthDict["aim_enter"])
             self.fovAnimating = True
-            self.isAiming = True
             self.SyncSoundToServer(0, "draw")
+            self.shootAvailableTime = time.time() + self.animLengthDict["aim_enter"]
+
+    shootAvailableTime = 0
+    aimFinished = False
 
     def ResumeFov(self):
         self.tick = 0
         self.fovStart = CC.GetFov()
         self.fovEnd = self.fovBeforeAiming
-        self.fovStep = 5
+        self.fovStep = (self.fovEnd - self.fovStart) / (30 * self.animLengthDict["aim_exit"])
         self.fovAnimating = True
-        self.aimFinished = False
 
     tick = 0
     fovAnimating = False
-    aimFinished = False
     fovBeforeAiming = 0
     fovStart = 0
     fovEnd = 0
@@ -144,14 +142,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     @Listen
     def OnScriptTickClient(self):
+        if self.shootAvailableTime != 0 and time.time() > self.shootAvailableTime:
+            self.aimFinished = True
         if not self.fovAnimating:
             # 说明不在动画状态
             return
         if (self.fovStep > 0 and CC.GetFov() >= self.fovEnd) or \
                 (self.fovStep <= 0 and CC.GetFov() <= self.fovEnd):
             self.fovAnimating = False
-            if self.fovStep < 0:
-                self.aimFinished = True
             return
         self.tick += 1
         CC.SetFov(self.fovStart + self.tick * self.fovStep)
@@ -160,14 +158,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnShoot(self, event):
         if not self.IsEquipped():
             return
-        if self.isAiming:
-            self.isAiming = False
-            if self.aimFinished:
-                self.BlinkVar("shoot")
-                self.ResumeFov()
-                self.UpdateAimAvailableTime(self.animLengthDict["shoot"] + self.animLengthDict["aim_exit"])
-                self.SyncSoundToServer(0, "shoot")
-                self.CallServer("Shoot", 0, PID)
+        if self.aimFinished:
+            self.BlinkVar("shoot")
+            self.ResumeFov()
+            self.UpdateAimAvailableTime(self.animLengthDict["shoot"] + self.animLengthDict["aim_exit"])
+            self.shootAvailableTime = 0
+            self.aimFinished = False
+            self.SyncSoundToServer(0, "shoot")
+            self.CallServer("Shoot", 0, PID)
 
     def GetVar(self, key):
         return QC.Get("query.mod." + DB.mn + "_" + key)
@@ -179,13 +177,18 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             GC.AddTimer(delay, self.UpdateVar, key, value)
         self.CallServer("SyncVarToClients", delay, PID, key, value)
 
-    def UpdateVar(self, key, value):
-        QC.Set("query.mod." + DB.mn + "_" + key, value)
+    def UpdateVar(self, key, value, playerId=PID):
+        CF.CreateQueryVariable(playerId).Set("query.mod." + DB.mn + "_" + key, value)
 
     # 让变量闪烁一次，用于通知状态转换
     def BlinkVar(self, key):
         self.UpdateVar(key, 1.0)
-        GC.AddTimer(0.05, self.UpdateVar, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到
+        GC.AddTimer(0.05, self.UpdateVar, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到(0, 0, 0), 1, 1, False, PID)
+
+    def ReleaseSkill(self, skill):
+        if not self.IsEquipped():
+            return
+        self.CallServer("ReleaseSkill", 0, PID, skill)
 
     def SyncSoundToServer(self, delay, soundName):
         if delay == 0:
@@ -263,17 +266,27 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 for key, value in varDict.items():
                     PC.SetVariable(parId, "variable." + key, value)
 
-    def AppendFrame(self, entityId, frameType, duration, height):
+    def BindParticle(self, effectName, entityId, locator="locator"):
+        parId = PC.Create("orchiella:" + effectName)
+        PC.BindEntity(parId, entityId, locator, (0, 0, 0), (0, 0, 0))
+
+    def AppendFrame(self, entityId, frameType, duration, height, scale=0.2):
         frameTypeId = self.CreateEngineSfxFromEditor("effects/" + frameType + ".json")
         frameAniTransComp = CF.CreateFrameAniTrans(frameTypeId)
         frameAniControlComp = CF.CreateFrameAniControl(frameTypeId)
-        scale = 0.2
         frameAniTransComp.SetScale((scale, scale, scale))
         frameAniControlComp.Play()
         self.frameDataDict[frameType].append(
-            {"effect": frameType, "time": (time.time() + duration) if duration != 0 else 0,
+            {"effect": frameType, "time": time.time() + duration,
              "entityId": entityId, "height": height,
              "aniTransComp": frameAniTransComp, "aniControlComp": frameAniControlComp})
+
+    def DelFrame(self, entityId, frameType):
+        for frameData in self.frameDataDict[frameType]:
+            if frameData["entityId"] == entityId:
+                frameData["aniControlComp"].Stop()
+                self.frameDataDict[frameType].remove(frameData)
+                return
 
     def UpdateFrame(self):
         if not self.frameDataDict: return  # 尚未加载序列帧
@@ -284,15 +297,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             for i, frameData in enumerate(frameDataList):
                 pos = CF.CreatePos(frameData["entityId"]).GetFootPos()
                 if not pos:
-                    aniControlComp = frameData["aniControlComp"]
-                    aniControlComp.Stop()
+                    frameData["aniControlComp"].Stop()
                     frameDataToRemove.append(i)  # 箭被销毁或被击中实体死亡，则直接清除
                     continue
                 nowTime = time.time()
-                if frameData["time"] != 0 and nowTime >= frameData["time"]:
+                if nowTime >= frameData["time"]:
                     # 若序列帧已过期，则清理该序列帧
-                    aniControlComp = frameData["aniControlComp"]
-                    aniControlComp.Stop()
+                    frameData["aniControlComp"].Stop()
                     frameDataToRemove.append(i)
                 else:
                     # 若序列帧未过期，则更新位置
@@ -351,4 +362,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 self.functionsScreen.SetBtnVisible(func_key, value)
                 break
             elif key == s2.format(func_key):
-                self.functions
+                self.functionsScreen.SetBtnSize(func_key, value)
+                break
+
+    def LoadData(self, settings):
+        self.settings = settings

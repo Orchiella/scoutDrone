@@ -9,38 +9,30 @@ levelId = serverApi.GetLevelId()
 
 class DataManager(object):
     default_player_settings = [
-        ("func_sensing_enabled", {"description": "§6[感应]§f显示按钮", "type": "bool", "default": True}),
-        ("func_sensing_size", {"description": "§6[感应]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30,200), "default": 100}),
-        ("func_sensing_key", {"description": "§6[感应]§fPC版绑定键 0即无 1-26即A-Z键", "type":"int", "range": (0, 26), "default": 0}),
-        ("func_sensing_cd", {"description": "§6[感应]§f冷却秒数", "type": "int", "range": (1, 60), "default": 6}),
-        ("func_sensing_durability_consumption", {"description": "§6[感应]§f消耗耐久", "type": "int", "range": (0, 100), "default": 3}),
-        ("func_sensing_radius", {"description": "§6[感应]§f作用半径", "type": "int", "range": (1, 100), "default": 60}),
-        ("func_sensing_duration", {"description": "§6[感应]§f标记秒数", "type": "int", "range": (1, 60), "default": 3}),
-        ("func_sensing_max", {"description": "§6[感应]§f最大标记数量", "type": "int", "range": (1, 100), "default": 50}),
+        ("arrow_shock_number", {"description": "§f电箭放能次数", "type": "int", "range": (1,30), "default": 6}),
+        ("arrow_shock_interval", {"description": "§f电箭放能间隔 §7(单位:毫秒)", "type": "int", "range": (100,10000), "default": 800}),
+        ("arrow_shock_radius", {"description": "§f放能伤害半径", "type": "int", "range": (1,10), "default": 2}),
+        ("arrow_shock_damage", {"description": "§f放能单次伤害", "type": "int", "range": (1,100), "default": 8}),
+        ("arrow_shock_sound_enabled", {"description": "§f开启电箭伤害音效", "type": "bool", "default": True}),
+        ("arrow_shock_self_protection", {"description": "§f防止误伤自己", "type": "bool", "default": True}),
+        ("arrow_shock_other_protection", {"description": "§f防止误伤其他玩家 §7(PVP建议关闭)", "type": "bool", "default": True}),
 
-        ("func_invisibility_enabled", {"description": "§b[匿迹]§f显示按钮", "type": "bool", "default": True}),
-        ("func_invisibility_size",{"description": "§b[匿迹]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30, 200), "default": 100}),
-        ("func_invisibility_key",{"description": "§b[匿迹]§fPC版绑定键 0即无 1-26即A-Z键", "type": "int", "range": (0, 26), "default": 0}),
-        ("func_invisibility_cd", {"description": "§b[匿迹]§f冷却秒数", "type": "int", "range": (1, 60), "default": 10}),
-        ("func_invisibility_durability_consumption",{"description": "§b[匿迹]§f消耗耐久", "type": "int", "range": (0, 100), "default": 5}),
-        ("func_invisibility_radius",{"description": "§b[匿迹]§f作用半径", "type": "int", "range": (1, 100), "default": 30}),
-        ("func_invisibility_duration",{"description": "§b[匿迹]§f生效持续秒数", "type": "int", "range": (1, 60), "default": 5}),
+        ("func_sensing_enabled", {"description": "§e[电磁感应]§f显示按钮", "type": "bool", "default": True}),
+        ("func_sensing_size", {"description": "§e[电磁感应]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30,200), "default": 100}),
+        ("func_sensing_key", {"description": "§e[电磁感应]§fPC版绑定键 0即无 1-26即A-Z键", "type":"int", "range": (0, 26), "default": 0}),
+        ("func_sensing_cd", {"description": "§e[电磁感应]§f冷却秒数", "type": "int", "range": (1, 60), "default": 6}),
+        ("func_sensing_radius", {"description": "§e[电磁感应]§f作用半径", "type": "int", "range": (1, 100), "default": 60}),
+        ("func_sensing_duration", {"description": "§e[电磁感应]§f标记秒数", "type": "int", "range": (1, 60), "default": 3}),
+        ("func_sensing_max", {"description": "§e[电磁感应]§f最大标记数量", "type": "int", "range": (1, 100), "default": 50}),
 
-        ("func_night_vision_enabled", {"description": "§5[夜视]§f显示按钮", "type": "bool", "default": True}),
-        ("func_night_vision_size",{"description": "§5[夜视]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30, 200), "default": 100}),
-        ("func_night_vision_key",{"description": "§5[夜视]§fPC版绑定键 0即无 1-26即A-Z键", "type": "int", "range": (0, 26), "default": 0}),
-        ("func_night_vision_durability_consumption",{"description": "§5[夜视]§f消耗耐久", "type": "int", "range": (0, 100), "default": 10}),
-
-        ("func_light_enabled", {"description": "§e[探照]§f显示按钮", "type": "bool", "default": True}),
-        ("func_light_size",{"description": "§e[探照]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30, 200), "default": 100}),
-        ("func_light_key",{"description": "§e[探照]§fPC版绑定键 0即无 1-26即A-Z键", "type": "int", "range": (0, 26), "default": 0}),
-        ("func_light_durability_consumption",{"description": "§e[探照]§f消耗耐久", "type": "int", "range": (0, 100), "default": 5}),
-        ("func_light_distance",{"description": "§e[探照]§f最大探照距离", "type": "int", "range": (0, 100), "default": 60}),
+        ("func_release_enabled", {"description": "§b[电能爆发]§f显示按钮", "type": "bool", "default": True}),
+        ("func_release_size",{"description": "§b[电能爆发]§f按钮大小缩放 §7(单位:百分比)", "type": "int", "range": (30, 200),"default": 100}),
+        ("func_release_key",{"description": "§b[电能爆发]§fPC版绑定键 0即无 1-26即A-Z键", "type": "int", "range": (0, 26), "default": 0}),
+        ("func_release_cd", {"description": "§b[电能爆发]§f冷却秒数", "type": "int", "range": (1, 60), "default": 6}),
+        ("func_release_damage_percentage",{"description": "§b[电能爆发]§f伤害缩放 §7(单位:百分比)", "type": "int", "range": (30, 300), "default": 150}),
     ]
 
-    default_player_data = {"func_sensing_pos": (275, 33), "func_invisibility_pos": (335, 33),
-                           "func_night_vision_pos": (290, 83),"func_light_pos": (350, 83),
-                           "func_night_vision_state": "off", "func_light_state": "off",
+    default_player_data = {"func_sensing_pos": (275, 33), "func_release_pos": (335, 33),
                            "usage_informed": False}
 
     default_world_settings = {"owner": None, "auto_gain_permission": False, "sync_owner_settings": False,

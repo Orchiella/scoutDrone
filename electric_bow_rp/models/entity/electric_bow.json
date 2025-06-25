@@ -792,7 +792,10 @@
 								"down": {"uv": [32, 96], "uv_size": [-32, -32]}
 							}
 						}
-					]
+					],
+					"locators": {
+						"locator": [6.3, 5.9, -4.2]
+					}
 				},
 				{
 					"name": "arrow_unlit",

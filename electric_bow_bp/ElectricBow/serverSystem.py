@@ -5,8 +5,7 @@ import mod.server.extraServerApi as serverApi
 from mod.common.utils.mcmath import Vector3
 
 import config as DB
-from ElectricBow import mathUtil
-from ElectricBow.const import PENETRABLE_BLOCK_TYPE
+from ElectricBow.const import SPECIAL_ENTITIES
 from ElectricBow.dataManager import DataManager
 
 CF = serverApi.GetEngineCompFactory()
@@ -36,8 +35,84 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             dataComp.SetExtraData(DataManager.KEY_NAME, {})
         DataManager()
         DataManager.Check(None)
+        GC.AddRepeatedTimer(0.05, self.ModTick)
 
-    ignoreAttack = []
+    hitEntities = []
+
+    def ModTick(self):
+        if not self.hitEntities:
+            return
+        entityToDel = []
+        for hitEntity in self.hitEntities:
+            shockNumber = GetEntityData(hitEntity, "shock_number")
+            if shockNumber == 0 or not CF.CreatePos(hitEntity):
+                entityToDel.append(hitEntity)
+                continue
+            shooter = GetEntityData(hitEntity, "shooter")
+            if time.time() - GetEntityData(hitEntity, "shock_timestamp") < GetEntityData(hitEntity, "shock_interval"):
+                continue
+            damage = (GetEntityData(hitEntity, "shock_number")) * DataManager.Get(shooter, "arrow_shock_damage")
+            CF.CreateHurt(hitEntity).Hurt(int(damage),
+                                          serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
+                                          None, None,
+                                          False)
+            SetEntityData(hitEntity, "shock_number", shockNumber - 1)
+            SetEntityData(hitEntity, "shock_timestamp", time.time())
+            if DataManager.Get(shooter, "arrow_shock_sound_enabled"):
+                self.CallClient(shooter, "PlaySound", "hit")
+        for hitEntity in entityToDel:
+            self.hitEntities.remove(hitEntity)
+
+    def ReleaseSkill(self, playerId, skill):
+        if not self.IsEquipped(playerId):
+            return
+        if skill == "sensing":
+            sensedEntities = set()
+            for entityId in GC.GetEntitiesAround(playerId, 100, {}):
+                if not GetEntityData(entityId, "shooter") or GetEntityData(entityId, "shooter") != playerId:
+                    continue
+                for nearEntity in GC.GetEntitiesAround(entityId, DataManager.Get(playerId, "func_sensing_radius"), {}):
+                    if nearEntity == playerId:
+                        continue
+                    if CF.CreateEngineType(nearEntity).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                        continue
+                    sensedEntities.add(nearEntity)
+            for sensedEntity in sensedEntities:
+                self.CallClient(playerId, "AppendFrame", sensedEntity, "eb_frame",
+                                DataManager.Get(playerId, "func_sensing_duration"),
+                                CF.CreateCollisionBox(sensedEntity).GetSize()[1],
+                                CF.CreateCollisionBox(sensedEntity).GetSize()[1] * 0.6)
+        elif skill == "release":
+            i = 0
+            for entityId in GC.GetEntitiesAround(playerId, 100, {}):
+                shooter = GetEntityData(entityId, "shooter")
+                if not shooter or GetEntityData(entityId, "shooter") != playerId:
+                    continue
+                if shooter != playerId:
+                    continue
+                shockNumber = GetEntityData(entityId, "shock_number")
+                damage = (shockNumber * DataManager.Get(playerId, "arrow_shock_damage") *
+                          (DataManager.Get(playerId, "func_release_damage_percentage")) / 100.0)
+                for nearEntity in GC.GetEntitiesAround(entityId, DataManager.Get(playerId, "arrow_shock_radius"), {}):
+                    if nearEntity == playerId:
+                        if DataManager.Get(playerId, "arrow_shock_self_protection"):
+                            continue
+                    elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() == "minecraft:player":
+                        if DataManager.Get(playerId, "arrow_shock_other_protection"):
+                            continue
+                    CF.CreateHurt(nearEntity).Hurt(int(damage),
+                                                   serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
+                                                   None, None,
+                                                   False)
+                if CF.CreateEngineType(entityId) == "orchiella:electric_arrow":
+                    self.DestroyEntity(entityId)
+                else:
+                    SetEntityData(entityId, "shock_number", 0)
+                    self.CallClients(CF.CreatePlayer(entityId).GetRelevantPlayer(), "DelFrame", entityId,
+                                     "eb_lightning")
+                i += 1
+            if i > 0:
+                self.CallClient(playerId, "PlaySound", "release")
 
     def Shoot(self, playerId):
         if not self.IsEquipped(playerId):
@@ -58,7 +133,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                                           'direction': direction})
         SetEntityData(arrowId, "shooter", playerId)
         SetEntityData(arrowId, "hit", False)
-        SetEntityData(arrowId, "shock_number", 3)
+        SetEntityData(arrowId, "shock_number", DataManager.Get(playerId, "arrow_shock_number"))
+        SetEntityData(arrowId, "shock_interval", DataManager.Get(playerId, "arrow_shock_interval") / 1000.0)
         self.TakeDurability(playerId, 1)
         if not DataManager.Get(playerId, "usage_informed"):
             DataManager.Set(playerId, "usage_informed", True)
@@ -76,22 +152,69 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if shockNumber <= 0:
             self.DestroyEntity(arrowId)
             return
-        if time.time() - GetEntityData(arrowId, "shock_timestamp") > 0.5:
+        shooter = GetEntityData(arrowId, "shooter")
+        if time.time() - GetEntityData(arrowId, "shock_timestamp") > GetEntityData(arrowId, "shock_interval"):
             SetEntityData(arrowId, "shock_number", shockNumber - 1)
             SetEntityData(arrowId, "shock_timestamp", time.time())
-            print "电"
+            i = 0
+            for nearEntity in GC.GetEntitiesAround(arrowId, DataManager.Get(shooter, "arrow_shock_radius"), {}):
+                if nearEntity == shooter:
+                    if DataManager.Get(shooter, "arrow_shock_self_protection"):
+                        continue
+                elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() == "minecraft:player":
+                    if DataManager.Get(shooter, "arrow_shock_other_protection"):
+                        continue
+                success = CF.CreateHurt(nearEntity).Hurt(DataManager.Get(shooter, "arrow_shock_damage"),
+                                                         serverApi.GetMinecraftEnum().ActorDamageCause.Projectile, None,
+                                                         None,
+                                                         False)
+                if success:
+                    i += 1
+            if i > 0:
+                if DataManager.Get(shooter, "arrow_shock_sound_enabled"):
+                    self.CallClient(shooter, "PlaySound", "hit")
 
     @Listen
     def ProjectileDoHitEffectEvent(self, event):
         arrowId = event["id"]
         if CF.CreateEngineType(arrowId).GetEngineTypeStr() != "orchiella:electric_arrow":
             return
-        if not GetEntityData(arrowId, "hit"):
-            SetEntityData(arrowId, "hit", True)
+        if GetEntityData(arrowId, "hit"):
+            return
+        SetEntityData(arrowId, "hit", True)
+        if event["hitTargetType"] == "ENTITY":
+            targetId = event["targetId"]
+            shooter = GetEntityData(arrowId, "shooter")
+            if targetId == shooter:
+                if DataManager.Get(shooter, "arrow_shock_self_protection"):
+                    event['cancel'] = True
+                    return
+            elif CF.CreateEngineType(targetId).GetEngineTypeStr() == "minecraft:player":
+                if DataManager.Get(shooter, "arrow_shock_other_protection"):
+                    event['cancel'] = True
+                    return
+            elif CF.CreateEngineType(targetId).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                event['cancel'] = True
+                return
+            SetEntityData(targetId, "shock_timestamp", 0)  # 确保一打中就开始电
+            SetEntityData(targetId, "shooter", shooter)
+            SetEntityData(targetId, "shock_number", GetEntityData(arrowId, "shock_number"))
+            SetEntityData(targetId, "shock_interval", GetEntityData(arrowId, "shock_interval"))
+            self.CallClients(CF.CreatePlayer(arrowId).GetRelevantPlayer(), "AppendFrame", targetId,
+                             "eb_lightning",
+                             GetEntityData(arrowId, "shock_interval") * GetEntityData(arrowId, "shock_number"),
+                             CF.CreateCollisionBox(targetId).GetSize()[1])
+            self.hitEntities.append(targetId)
+            self.DestroyEntity(arrowId)
+        else:
             SetEntityData(arrowId, "shock_timestamp", time.time())
             GC.AddTimer(0.5, self.CallClients, CF.CreatePlayer(arrowId).GetRelevantPlayer(), "AppendFrame", arrowId,
-                        "eb_lightning", 0,
+                        "eb_lightning",
+                        GetEntityData(arrowId, "shock_interval") * GetEntityData(arrowId, "shock_number"),
                         0.1)
+            GC.AddTimer(0.5, self.CallClients, CF.CreatePlayer(arrowId).GetRelevantPlayer(), "BindParticle",
+                        "electric_effect_emissive",
+                        arrowId)
 
     def IsEquipped(self, playerId):
         comp = CF.CreateItem(playerId)
@@ -132,7 +255,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        if message == "夜视头盔设置":
+        if message == "1":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:
