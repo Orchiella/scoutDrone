@@ -7,21 +7,25 @@
         "key": {
             "I": {
                 "data": 0,
-                "item": "minecraft:iron_ingot"
+                "item": "minecraft:iron_block"
             },
-            "S": {
+            "C": {
                 "data": 0,
-                "item": "minecraft:spyglass"
+                "item": "minecraft:coal_block"
             },
             "R": {
                 "data": 0,
                 "item": "minecraft:redstone"
+            },
+            "S": {
+                "data": 0,
+                "item": "minecraft:string"
             }
         },
         "pattern": [
-            "III",
-            "ISI",
-            " R "
+            " IS",
+            "CRS",
+            " IS"
         ],
         "result": {
             "count": 1,

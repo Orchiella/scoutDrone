@@ -4,6 +4,9 @@
     "texture_data": {
         "orchiella:electric_bow": {
             "textures": "textures/items/electric_bow"
+        },
+        "orchiella:electric_arrow": {
+            "textures": "textures/items/electric_arrow"
         }
     }
 }

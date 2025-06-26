@@ -38,12 +38,15 @@ class ElectricBowFunctions(ScreenNode):
         self.func_btn_ctrls = {}
         self.func_label_ctrls = {}
 
+        self.sight_bead_ctrl = None
+
         self.last_click = None
         self.last_move_time = 0  # 拖动模式下，开始停留在某个位置的时间戳，更新当且仅当Update检测到拖动位置变化，这样可以检测是否长期没有拖动以便强行断触，防止目前在PC端发现的莫名其妙进入拖动模式出不来的偶然事件
 
     def Update(self):
         if not self.initialized:
             return
+        self.sight_bead_ctrl.SetVisible(self.GetData("sight_bead_enabled"))
         for func_key, func_def in self.func_def.items():
             label_ctrl = self.func_label_ctrls[func_key]
             if func_def['type'] == 'shoot':
@@ -149,6 +152,8 @@ class ElectricBowFunctions(ScreenNode):
                     self.SetBtnSize(func_key, self.GetData("func_{}_size".format(func_key)))
                     self.SetBtnVisible(func_key, self.GetData("func_{}_enabled".format(func_key)))
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
+                self.sight_bead_ctrl = self.GetBaseUIControl("/sight_bead")
+                self.sight_bead_ctrl.SetVisible(self.GetData("sight_bead_enabled"))
 
                 self.initialized = True
         self.SetScreenVisible(show)

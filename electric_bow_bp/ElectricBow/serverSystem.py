@@ -45,13 +45,13 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         entityToDel = []
         for hitEntity in self.hitEntities:
             shockNumber = GetEntityData(hitEntity, "shock_number")
-            if shockNumber == 0 or not CF.CreatePos(hitEntity):
+            if shockNumber == 0 or not CF.CreatePos(hitEntity).GetPos():
                 entityToDel.append(hitEntity)
                 continue
             shooter = GetEntityData(hitEntity, "shooter")
             if time.time() - GetEntityData(hitEntity, "shock_timestamp") < GetEntityData(hitEntity, "shock_interval"):
                 continue
-            damage = (GetEntityData(hitEntity, "shock_number")) * DataManager.Get(shooter, "arrow_shock_damage")
+            damage = DataManager.Get(shooter, "arrow_shock_damage")
             CF.CreateHurt(hitEntity).Hurt(int(damage),
                                           serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
                                           None, None,
@@ -100,6 +100,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() == "minecraft:player":
                         if DataManager.Get(playerId, "arrow_shock_other_protection"):
                             continue
+                    elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                        continue
                     CF.CreateHurt(nearEntity).Hurt(int(damage),
                                                    serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
                                                    None, None,
@@ -116,6 +118,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def Shoot(self, playerId):
         if not self.IsEquipped(playerId):
+            return
+        takeItem = self.TakeItems(playerId, {"orchiella:electric_arrow": 1})
+        if GC.GetPlayerGameType(playerId) != serverApi.GetMinecraftEnum().GameType.Creative and takeItem:
+            self.SendTip(playerId, "电击箭矢已用尽！请补充", "c")
             return
         footPos = CF.CreatePos(playerId).GetFootPos()
         direction = serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())
@@ -135,11 +141,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         SetEntityData(arrowId, "hit", False)
         SetEntityData(arrowId, "shock_number", DataManager.Get(playerId, "arrow_shock_number"))
         SetEntityData(arrowId, "shock_interval", DataManager.Get(playerId, "arrow_shock_interval") / 1000.0)
+        SetEntityData(arrowId, "shock_timestamp", 0)
         self.TakeDurability(playerId, 1)
         if not DataManager.Get(playerId, "usage_informed"):
             DataManager.Set(playerId, "usage_informed", True)
             CF.CreateMsg(playerId).NotifyOneMessage(playerId,
-                                                    "§d[治疗枪模组] §f欢迎使用治疗枪模组！你可以在聊天框发送§e“治疗枪设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+                                                    "§b[电击箭复合弓] §f欢迎使用本模组！你可以在聊天框发送§e“电箭设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
 
     @Listen
     def EntityTickServerEvent(self, event):
@@ -164,6 +171,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() == "minecraft:player":
                     if DataManager.Get(shooter, "arrow_shock_other_protection"):
                         continue
+                elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                    continue
                 success = CF.CreateHurt(nearEntity).Hurt(DataManager.Get(shooter, "arrow_shock_damage"),
                                                          serverApi.GetMinecraftEnum().ActorDamageCause.Projectile, None,
                                                          None,
@@ -196,10 +205,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             elif CF.CreateEngineType(targetId).GetEngineTypeStr() in SPECIAL_ENTITIES:
                 event['cancel'] = True
                 return
-            SetEntityData(targetId, "shock_timestamp", 0)  # 确保一打中就开始电
             SetEntityData(targetId, "shooter", shooter)
             SetEntityData(targetId, "shock_number", GetEntityData(arrowId, "shock_number"))
             SetEntityData(targetId, "shock_interval", GetEntityData(arrowId, "shock_interval"))
+            SetEntityData(targetId, "shock_timestamp", GetEntityData(arrowId, "shock_timestamp"))
             self.CallClients(CF.CreatePlayer(arrowId).GetRelevantPlayer(), "AppendFrame", targetId,
                              "eb_lightning",
                              GetEntityData(arrowId, "shock_interval") * GetEntityData(arrowId, "shock_number"),
@@ -207,7 +216,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.hitEntities.append(targetId)
             self.DestroyEntity(arrowId)
         else:
-            SetEntityData(arrowId, "shock_timestamp", time.time())
             GC.AddTimer(0.5, self.CallClients, CF.CreatePlayer(arrowId).GetRelevantPlayer(), "AppendFrame", arrowId,
                         "eb_lightning",
                         GetEntityData(arrowId, "shock_interval") * GetEntityData(arrowId, "shock_number"),
@@ -227,12 +235,47 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         enum = serverApi.GetMinecraftEnum().ItemPosType.CARRIED
         item = itemComp.GetPlayerItem(enum, 0)
         if item['durability'] > value:
+            print item['durability']
             itemComp.SetItemDurability(enum, 0, item['durability'] - value)
         else:
             itemComp.SetEntityItem(enum, None, 0)
 
     def SendTip(self, playerId, message, color):
-        GC.SetOnePopupNotice(playerId, "§f" + message, "§" + color + "[夜间战术头盔]")
+        GC.SetOnePopupNotice(playerId, "§f" + message, "§" + color + "[电击箭复合弓]")
+
+    def TakeItems(self, player_id, recipe):
+        item_comp = CF.CreateItem(player_id)
+        slots_to_remove = {}
+        count_dict = {item_needed: 0 for item_needed in recipe}
+        for slot in range(36):
+            item = item_comp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY, slot)
+            if not item:
+                continue
+            item_name = item["newItemName"].replace("minecraft:", "")
+            if item["auxValue"] == 0:
+                if item_name not in recipe:
+                    continue
+            else:
+                if item_name + ":" + str(item["auxValue"]) not in recipe:
+                    continue
+                item_name = item_name + ":" + str(item["auxValue"])
+            if count_dict[item_name] >= recipe[item_name]:
+                continue
+            item_count = item["count"]
+            if count_dict[item_name] + item_count >= recipe[item_name]:
+                count_to_remove = recipe[item_name] - count_dict[item_name]
+            else:
+                count_to_remove = item_count
+            slots_to_remove[slot] = count_to_remove
+            count_dict[item_name] += count_to_remove
+        if all(count_dict[item_needed] >= recipe[item_needed] for item_needed in recipe):
+            for slot, count in slots_to_remove.items():
+                item_comp.SetInvItemNum(slot,
+                                        item_comp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
+                                                                slot)["count"] - count)
+            return {}
+        else:
+            return count_dict
 
     def SyncVarToClients(self, playerId, key, value):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVar", key, value, playerId)
@@ -251,11 +294,17 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             permittedPlayers.append(playerId)
             DataManager.Set(None, "permitted_players", permittedPlayers)
 
+    def SyncRebuild(self, playerId):
+        otherPlayers = serverApi.GetPlayerList()
+        otherPlayers.remove(playerId)
+        self.CallClients(otherPlayers, "Rebuild", playerId)
+        self.CallClient(playerId, "Rebuilds", otherPlayers)
+
     @Listen
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        if message == "1":
+        if message == "电箭设置" or message == "§f电箭复合弓设置" or message == "§f电击箭复合弓设置":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:

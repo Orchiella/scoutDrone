@@ -99,10 +99,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.BlinkVar("run_exit")
             self.UpdateAimAvailableTime(self.animLengthDict["run_exit"])
 
-    @Listen
-    def PerspChangeClientEvent(self, event):
-        self.UpdateVar("perspective", event['to'])
-
     @Listen(("LeftClickBeforeClientEvent", "TapBeforeClientEvent"))
     def LeftClick(self, event):
         if self.IsEquipped():
@@ -167,14 +163,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.SyncSoundToServer(0, "shoot")
             self.CallServer("Shoot", 0, PID)
 
-    def GetVar(self, key):
-        return QC.Get("query.mod." + DB.mn + "_" + key)
-
     def SyncVarToServer(self, delay, key, value):
         if delay == 0:
-            self.UpdateVar(key, value)
+            self.UpdateVar(key, value, PID)
         else:
-            GC.AddTimer(delay, self.UpdateVar, key, value)
+            GC.AddTimer(delay, self.UpdateVar, key, value, PID)
         self.CallServer("SyncVarToClients", delay, PID, key, value)
 
     def UpdateVar(self, key, value, playerId=PID):
@@ -182,8 +175,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     # 让变量闪烁一次，用于通知状态转换
     def BlinkVar(self, key):
-        self.UpdateVar(key, 1.0)
-        GC.AddTimer(0.05, self.UpdateVar, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到(0, 0, 0), 1, 1, False, PID)
+        self.SyncVarToServer(0, key, 1.0)
+        self.SyncVarToServer(0.05, key, 0.0)  # 如果不延迟一点，闪烁不会被检测到
 
     def ReleaseSkill(self, skill):
         if not self.IsEquipped():
@@ -204,25 +197,32 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnLocalPlayerStopLoading(self, args):
         self.CallServer("LoadData", 0, PID)
         levelQC = CF.CreateQueryVariable(levelId)
-        for key, value in {"perspective": CF.CreatePlayerView(PID).GetPerspective(),
-                           "run_enter": 0, "run_exit": 0,
+        for key, value in {"run_enter": 0, "run_exit": 0,
                            "equip": 0, "aim_enter": 0, "shoot": 0,
                            "1st_idle_pos_x": -3, "1st_idle_pos_y": -5, "1st_idle_pos_z": 8,
                            "1st_idle_rot_x": 87, "1st_idle_rot_y": 0, "1st_idle_rot_z": -132,
                            "1st_run_rot_offset_x": 0, "1st_run_rot_offset_y": 17, "1st_run_rot_offset_z": 34,
                            "1st_run_pos_offset_x": -4, "1st_run_pos_offset_y": -2, "1st_run_pos_offset_z": 0,
                            "1st_aim_rot_offset_x": -6, "1st_aim_rot_offset_y": 13, "1st_aim_rot_offset_z": -26,
-                           "1st_aim_pos_offset_x": 1.5, "1st_aim_pos_offset_y": -0.8, "1st_aim_pos_offset_z": 1.5,
+                           "1st_aim_pos_offset_x": 1.7, "1st_aim_pos_offset_y": 0.1, "1st_aim_pos_offset_z": 1.4,
                            "1st_arrow_pos_off_y": 7,
                            }.items():
             levelQC.Register('query.mod.{}_{}'.format(DB.mn, key), value)
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, key), value)
+        self.Rebuild(PID)
+        def equip():
+            if self.IsEquipped():
+                self.BlinkVar("equip")
+                self.UpdateAimAvailableTime(self.animLengthDict["equip"])
+            self.CallServer("SyncRebuild",0,PID)
 
-        actorComp = CF.CreateActorRender(PID)
-        actorComp.RebuildPlayerRender()
+        GC.AddTimer(1, equip)
+
+    def Rebuild(self, playerId):
+        actorComp = CF.CreateActorRender(playerId)
         actorComp.AddPlayerGeometry("arm", "geometry.electric_bow_arm")
         actorComp.AddPlayerRenderController("controller.render.electric_bow_arm",
-                                            "variable.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
+                                            "query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
         actorComp.AddPlayerAnimation("1st_equip", "animation.electric_bow.1st_equip")
         actorComp.AddPlayerAnimation("1st_idle", "animation.electric_bow.1st_idle")
         actorComp.AddPlayerAnimation("1st_run_enter", "animation.electric_bow.1st_run_enter")
@@ -241,9 +241,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                          "query.get_equipped_item_full_name('main_hand') == 'orchiella:electric_bow'")
         actorComp.RebuildPlayerRender()
 
-        if self.IsEquipped():
-            self.BlinkVar("equip")
-            self.UpdateAimAvailableTime(self.animLengthDict["equip"])
+    def Rebuilds(self,players):
+        for playerId in players:
+            self.Rebuild(playerId)
 
     def IsEquipped(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.CARRIED)
