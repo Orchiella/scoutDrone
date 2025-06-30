@@ -1,0 +1,41 @@
+query.mod = slider('mod')
+
+query.mod.chain_sword_1st_l_idle_pos_x = -4
+query.mod.chain_sword_1st_l_idle_pos_y = -8
+query.mod.chain_sword_1st_l_idle_pos_z = 16
+query.mod.chain_sword_1st_l_idle_rot_x = 80
+query.mod.chain_sword_1st_l_idle_rot_y = 42
+query.mod.chain_sword_1st_l_idle_rot_z = 13
+query.mod.chain_sword_1st_l_rev_rot_offset_x = -13
+query.mod.chain_sword_1st_l_rev_rot_offset_y = 14
+query.mod.chain_sword_1st_l_rev_rot_offset_z = -5
+query.mod.chain_sword_1st_l_rev_pos_offset_x = 1
+query.mod.chain_sword_1st_l_rev_pos_offset_y = -3
+query.mod.chain_sword_1st_l_rev_pos_offset_z = -4
+query.mod.chain_sword_1st_l_run_rot_offset_x = -20
+query.mod.chain_sword_1st_l_run_rot_offset_y = 0
+query.mod.chain_sword_1st_l_run_rot_offset_z = 0
+query.mod.chain_sword_1st_l_run_pos_offset_x = 0
+query.mod.chain_sword_1st_l_run_pos_offset_y = 0
+query.mod.chain_sword_1st_l_run_pos_offset_z = 0
+
+query.mod.chain_sword_1st_teeth_rev_rot_offset_z = -20
+
+query.mod.chain_sword_1st_r_idle_pos_x = 14
+query.mod.chain_sword_1st_r_idle_pos_y = -6
+query.mod.chain_sword_1st_r_idle_pos_z = 11
+query.mod.chain_sword_1st_r_idle_rot_x = 90
+query.mod.chain_sword_1st_r_idle_rot_y = 11
+query.mod.chain_sword_1st_r_idle_rot_z = -190
+query.mod.chain_sword_1st_r_rev_rot_offset_x = 60
+query.mod.chain_sword_1st_r_rev_rot_offset_y = 0
+query.mod.chain_sword_1st_r_rev_rot_offset_z = 0
+query.mod.chain_sword_1st_r_rev_pos_offset_x = 0
+query.mod.chain_sword_1st_r_rev_pos_offset_y = 0
+query.mod.chain_sword_1st_r_rev_pos_offset_z = 0
+query.mod.chain_sword_1st_r_run_rot_offset_x = 20
+query.mod.chain_sword_1st_r_run_rot_offset_y = 0
+query.mod.chain_sword_1st_r_run_rot_offset_z = 0
+query.mod.chain_sword_1st_r_run_pos_offset_x = 0
+query.mod.chain_sword_1st_r_run_pos_offset_y = 0
+query.mod.chain_sword_1st_r_run_pos_offset_z = 0

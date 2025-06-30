@@ -1,0 +1,13 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.chain_sword.default": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"chain_sword": {
+					"scale": 0
+				}
+			}
+		}
+	}
+}

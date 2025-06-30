@@ -1,0 +1,52 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "orchiella:chain_sword",
+      "materials": {
+        "default": "netease_entity_metallic",
+        "unlit": "entity_emissive_alpha",
+        "enchanted": "entity_emissive_alpha"
+      },
+      "textures": {
+        "default": "textures/entity/chain_sword",
+        "enchanted": "textures/misc/enchanted_item_glint"
+      },
+      "animations": {
+        "chain_sword_default": "animation.chain_sword.default",
+        "chain_sword_1st_equip": "animation.chain_sword.1st_equip",
+        "chain_sword_1st_idle": "animation.chain_sword.1st_idle",
+        "chain_sword_1st_slash": "animation.chain_sword.1st_slash",
+        "chain_sword_1st_slash2": "animation.chain_sword.1st_slash2",
+        "chain_sword_1st_run_enter": "animation.chain_sword.1st_run_enter",
+        "chain_sword_1st_run": "animation.chain_sword.1st_run",
+        "chain_sword_1st_run_exit": "animation.chain_sword.1st_run_exit",
+        "chain_sword_1st_rev_enter": "animation.chain_sword.1st_rev_enter",
+        "chain_sword_1st_rev": "animation.chain_sword.1st_rev",
+        "chain_sword_1st_shift_enter": "animation.chain_sword.1st_shift_enter",
+        "chain_sword_1st_shift": "animation.chain_sword.1st_shift",
+        "chain_sword_1st_shift_exit": "animation.chain_sword.1st_shift_exit",
+        "chain_sword_1st_rev_exit": "animation.chain_sword.1st_rev_exit",
+        "chain_sword_3rd_idle": "animation.chain_sword.3rd_idle",
+        "chain_sword_3rd_slash": "animation.chain_sword.3rd_slash",
+        "chain_sword_3rd_slash2": "animation.chain_sword.3rd_slash2",
+        "chain_sword_3rd_equip": "animation.chain_sword.3rd_equip",
+        "chain_sword_3rd_rev": "animation.chain_sword.3rd_rev",
+        "chain_sword_3rd_shift": "animation.chain_sword.3rd_shift",
+        "controller.chain_sword.general": "controller.animation.chain_sword.general"
+      },
+      "geometry": {
+        "arm": "geometry.chain_sword_arm",
+        "default": "geometry.chain_sword"
+      },
+      "scripts": {
+        "animate": [
+          "controller.chain_sword.general"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.chain_sword"
+      ]
+    }
+  }
+}

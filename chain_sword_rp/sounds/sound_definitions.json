@@ -1,0 +1,41 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "orchiella:chain_sword_shoot": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/chain_sword/shoot",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:chain_sword_draw": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/chain_sword/draw",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:chain_sword_hit": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/chain_sword/hit",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:chain_sword_release": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/chain_sword/release",
+          "stream": false
+        }
+      ]
+    }
+  }
+}

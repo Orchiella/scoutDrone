@@ -1,0 +1,7 @@
+{
+    "ui_defs": [
+        "ui/chain_sword_functions.json",
+        "ui/chain_sword_settings.json",
+        "ui/netease_editor_template_namespace.json"
+    ]
+}
