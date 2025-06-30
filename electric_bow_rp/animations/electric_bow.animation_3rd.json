@@ -38,6 +38,38 @@
 					"scale": 0.8
 				}
 			}
+		},
+		"animation.electric_bow.3rd_equip": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.3333,
+			"override_previous_animation": true,
+			"bones": {
+				"leftArm": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.3333": [-47.81983, 48.52813, -37.61852]
+					},
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.3333": [0, 0, 0]
+					}
+				},
+				"electric_bow": {
+					"rotation": [0, 0, 0],
+					"position": [0, -0.7, 1],
+					"scale": 0.8
+				},
+				"rightArm": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.3333": [-63.58212, 1.76175, -24.08563]
+					},
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.3333": [0, 0.29583, 0.63442]
+					}
+				}
+			}
 		}
 	}
 }

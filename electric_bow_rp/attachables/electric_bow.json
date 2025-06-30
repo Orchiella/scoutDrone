@@ -13,19 +13,20 @@
         "enchanted": "textures/misc/enchanted_item_glint"
       },
       "animations": {
-        "default": "animation.electric_bow.default",
-        "1st_equip": "animation.electric_bow.1st_equip",
-        "1st_idle": "animation.electric_bow.1st_idle",
-        "1st_run_enter": "animation.electric_bow.1st_run_enter",
-        "1st_run": "animation.electric_bow.1st_run",
-        "1st_run_exit": "animation.electric_bow.1st_run_exit",
-        "1st_aim_enter": "animation.electric_bow.1st_aim_enter",
-        "1st_aim": "animation.electric_bow.1st_aim",
-        "1st_shoot": "animation.electric_bow.1st_shoot",
-        "1st_aim_exit": "animation.electric_bow.1st_aim_exit",
-        "3rd_idle": "animation.electric_bow.3rd_idle",
-        "3rd_aim": "animation.electric_bow.3rd_aim",
-        "controller.general": "controller.animation.electric_bow.general"
+        "eb_default": "animation.electric_bow.default",
+        "eb_1st_equip": "animation.electric_bow.1st_equip",
+        "eb_1st_idle": "animation.electric_bow.1st_idle",
+        "eb_1st_run_enter": "animation.electric_bow.1st_run_enter",
+        "eb_1st_run": "animation.electric_bow.1st_run",
+        "eb_1st_run_exit": "animation.electric_bow.1st_run_exit",
+        "eb_1st_aim_enter": "animation.electric_bow.1st_aim_enter",
+        "eb_1st_aim": "animation.electric_bow.1st_aim",
+        "eb_1st_shoot": "animation.electric_bow.1st_shoot",
+        "eb_1st_aim_exit": "animation.electric_bow.1st_aim_exit",
+        "eb_3rd_idle": "animation.electric_bow.3rd_idle",
+        "eb_3rd_equip": "animation.electric_bow.3rd_equip",
+        "eb_3rd_aim": "animation.electric_bow.3rd_aim",
+        "controller.electric_bow.general": "controller.animation.electric_bow.general"
       },
       "geometry": {
         "arm": "geometry.electric_bow_arm",
@@ -33,7 +34,7 @@
       },
       "scripts": {
         "animate": [
-          "controller.general"
+          "controller.electric_bow.general"
         ]
       },
       "render_controllers": [

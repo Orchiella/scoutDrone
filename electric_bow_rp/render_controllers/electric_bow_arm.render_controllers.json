@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.electric_bow_arm": {
-      "geometry": "Geometry.arm",
+      "geometry": "Geometry.eb_arm",
       "materials": [
         {
           "*": "Material.default"

@@ -53,15 +53,28 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 continue
             damage = DataManager.Get(shooter, "arrow_shock_damage")
             CF.CreateHurt(hitEntity).Hurt(int(damage),
-                                          serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
-                                          None, None,
-                                          False)
+                                                    serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
+                                                    shooter, None,
+                                                    False)
             SetEntityData(hitEntity, "shock_number", shockNumber - 1)
             SetEntityData(hitEntity, "shock_timestamp", time.time())
             if DataManager.Get(shooter, "arrow_shock_sound_enabled"):
                 self.CallClient(shooter, "PlaySound", "hit")
         for hitEntity in entityToDel:
             self.hitEntities.remove(hitEntity)
+
+    def SyncRebuild(self, playerId):
+        otherPlayers = serverApi.GetPlayerList()
+        otherPlayers.remove(playerId)
+        blinkList = []
+        if self.IsEquipped(playerId):
+            blinkList.append("equip")
+        for otherPlayerId in otherPlayers:
+            self.CallClient(otherPlayerId, "Rebuild", playerId, blinkList)
+            otherBlinkList = []
+            if self.IsEquipped(otherPlayerId):
+                otherBlinkList.append("equip")
+            self.CallClient(playerId, "Rebuild", otherPlayerId, blinkList)
 
     def ReleaseSkill(self, playerId, skill):
         if not self.IsEquipped(playerId):
@@ -104,7 +117,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                         continue
                     CF.CreateHurt(nearEntity).Hurt(int(damage),
                                                    serverApi.GetMinecraftEnum().ActorDamageCause.EntityAttack,
-                                                   None, None,
+                                                   shooter, None,
                                                    False)
                 if CF.CreateEngineType(entityId) == "orchiella:electric_arrow":
                     self.DestroyEntity(entityId)
@@ -174,7 +187,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 elif CF.CreateEngineType(nearEntity).GetEngineTypeStr() in SPECIAL_ENTITIES:
                     continue
                 success = CF.CreateHurt(nearEntity).Hurt(DataManager.Get(shooter, "arrow_shock_damage"),
-                                                         serverApi.GetMinecraftEnum().ActorDamageCause.Projectile, None,
+                                                         serverApi.GetMinecraftEnum().ActorDamageCause.Projectile, shooter,
                                                          None,
                                                          False)
                 if success:
@@ -293,12 +306,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if DataManager.Get(None, "auto_gain_permission") and playerId not in permittedPlayers:
             permittedPlayers.append(playerId)
             DataManager.Set(None, "permitted_players", permittedPlayers)
-
-    def SyncRebuild(self, playerId):
-        otherPlayers = serverApi.GetPlayerList()
-        otherPlayers.remove(playerId)
-        self.CallClients(otherPlayers, "Rebuild", playerId)
-        self.CallClient(playerId, "Rebuilds", otherPlayers)
 
     @Listen
     def ServerChatEvent(self, args):

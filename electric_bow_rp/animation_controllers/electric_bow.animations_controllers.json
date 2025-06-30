@@ -6,7 +6,7 @@
 			"states" : {
 				"default": {
 					"animations": [
-						"default"
+						"eb_default"
                     ],
 					"transitions" : [
 						{
@@ -17,10 +17,10 @@
 				"equip": {
 					"animations": [
 						{
-							"1st_equip": "c.is_first_person??v.is_first_person"
+							"eb_1st_equip": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_equip": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -32,10 +32,10 @@
 				"idle": {
 					"animations": [
 						{
-							"1st_idle": "c.is_first_person??v.is_first_person"
+							"eb_1st_idle": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -53,10 +53,10 @@
 				"run_enter": {
 					"animations": [
 						{
-							"1st_run_enter": "c.is_first_person??v.is_first_person"
+							"eb_1st_run_enter": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -71,10 +71,10 @@
 				"run": {
 					"animations": [
 						{
-							"1st_run": "c.is_first_person??v.is_first_person"
+							"eb_1st_run": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -92,10 +92,10 @@
 				"run_exit": {
 					"animations": [
 						{
-							"1st_run_exit": "c.is_first_person??v.is_first_person"
+							"eb_1st_run_exit": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -110,10 +110,10 @@
 				"aim_enter": {
 					"animations": [
 						{
-							"1st_aim_enter": "c.is_first_person??v.is_first_person"
+							"eb_1st_aim_enter": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_aim": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_aim": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -128,10 +128,10 @@
 				"aim": {
 					"animations": [
 						{
-							"1st_aim": "c.is_first_person??v.is_first_person"
+							"eb_1st_aim": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_aim": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_aim": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -146,10 +146,10 @@
 				"shoot": {
 					"animations": [
 						{
-							"1st_shoot": "c.is_first_person??v.is_first_person"
+							"eb_1st_shoot": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
@@ -164,10 +164,10 @@
 				"aim_exit": {
 					"animations": [
 						{
-							"1st_aim_exit": "c.is_first_person??v.is_first_person"
+							"eb_1st_aim_exit": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"3rd_idle": "!(c.is_first_person??v.is_first_person)"
+							"eb_3rd_idle": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [
