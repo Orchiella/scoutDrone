@@ -201,6 +201,8 @@
 				"rightArm": {
 					"rotation": {
 						"0.0": ["q.mod.chain_sword_1st_r_idle_rot_x", "q.mod.chain_sword_1st_r_idle_rot_y", "q.mod.chain_sword_1st_r_idle_rot_z"],
+						"0.2": ["q.mod.chain_sword_1st_r_idle_rot_x", "7.5+q.mod.chain_sword_1st_r_idle_rot_y", "q.mod.chain_sword_1st_r_idle_rot_z"],
+						"0.3": ["q.mod.chain_sword_1st_r_idle_rot_x", "7.5+q.mod.chain_sword_1st_r_idle_rot_y", "q.mod.chain_sword_1st_r_idle_rot_z"],
 						"0.5": ["q.mod.chain_sword_1st_r_idle_rot_x", "q.mod.chain_sword_1st_r_idle_rot_y", "q.mod.chain_sword_1st_r_idle_rot_z"],
 						"0.7": [
 							"q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
@@ -210,6 +212,8 @@
 					},
 					"position": {
 						"0.0": ["q.mod.chain_sword_1st_r_idle_pos_x", "q.mod.chain_sword_1st_r_idle_pos_y", "q.mod.chain_sword_1st_r_idle_pos_z"],
+						"0.2": ["1+q.mod.chain_sword_1st_r_idle_pos_x", "q.mod.chain_sword_1st_r_idle_pos_y", "q.mod.chain_sword_1st_r_idle_pos_z"],
+						"0.3": ["1+q.mod.chain_sword_1st_r_idle_pos_x", "q.mod.chain_sword_1st_r_idle_pos_y", "q.mod.chain_sword_1st_r_idle_pos_z"],
 						"0.5": ["q.mod.chain_sword_1st_r_idle_pos_x", "q.mod.chain_sword_1st_r_idle_pos_y", "q.mod.chain_sword_1st_r_idle_pos_z"],
 						"0.7": [
 							"q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
@@ -234,19 +238,39 @@
 		},
 		"animation.chain_sword.1st_rev": {
 			"loop": true,
-			"animation_length": 0.0833,
+			"animation_length": 0.1667,
 			"override_previous_animation": true,
 			"bones": {
 				"leftArm": {
-					"rotation": ["67.5+q.mod.chain_sword_1st_l_idle_rot_x", "q.mod.chain_sword_1st_l_idle_rot_y", "q.mod.chain_sword_1st_l_idle_rot_z"],
-					"position": ["0.7871+q.mod.chain_sword_1st_l_idle_pos_x", "1.2119+q.mod.chain_sword_1st_l_idle_pos_y", "-0.9453+q.mod.chain_sword_1st_l_idle_pos_z"]
+					"rotation": [
+						"q.mod.chain_sword_1st_l_idle_rot_x+query.mod.chain_sword_1st_l_rev_rot_offset_x",
+						"q.mod.chain_sword_1st_l_idle_rot_y+query.mod.chain_sword_1st_l_rev_rot_offset_y",
+						"q.mod.chain_sword_1st_l_idle_rot_z+query.mod.chain_sword_1st_l_rev_rot_offset_z"
+					],
+					"position": [
+						"q.mod.chain_sword_1st_l_idle_pos_x+query.mod.chain_sword_1st_l_rev_pos_offset_x",
+						"q.mod.chain_sword_1st_l_idle_pos_y+query.mod.chain_sword_1st_l_rev_pos_offset_y",
+						"q.mod.chain_sword_1st_l_idle_pos_z+query.mod.chain_sword_1st_l_rev_pos_offset_z"
+					]
 				},
 				"rightArm": {
-					"rotation": ["-3.5084+q.mod.chain_sword_1st_r_idle_rot_x", "-48.1073+q.mod.chain_sword_1st_r_idle_rot_y", "-77.1982+q.mod.chain_sword_1st_r_idle_rot_z"],
-					"position": ["4.6532+q.mod.chain_sword_1st_r_idle_pos_x", "-0.8188+q.mod.chain_sword_1st_r_idle_pos_y", "2.7235+q.mod.chain_sword_1st_r_idle_pos_z"]
+					"rotation": [
+						"q.mod.chain_sword_1st_r_idle_rot_x+query.mod.chain_sword_1st_r_rev_rot_offset_x",
+						"q.mod.chain_sword_1st_r_idle_rot_y+query.mod.chain_sword_1st_r_rev_rot_offset_y",
+						"q.mod.chain_sword_1st_r_idle_rot_z+query.mod.chain_sword_1st_r_rev_rot_offset_z"
+					],
+					"position": [
+						"q.mod.chain_sword_1st_r_idle_pos_x+query.mod.chain_sword_1st_r_rev_pos_offset_x",
+						"q.mod.chain_sword_1st_r_idle_pos_y+query.mod.chain_sword_1st_r_rev_pos_offset_y",
+						"q.mod.chain_sword_1st_r_idle_pos_z+query.mod.chain_sword_1st_r_rev_pos_offset_z"
+					]
 				},
 				"chain_sword": {
-					"rotation": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
+					"rotation": {
+						"0.0": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.0833": [0, 0, "10+query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.1667": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
+					}
 				},
 				"toggle": {
 					"rotation": [-90, 0, 0]
@@ -254,7 +278,7 @@
 				"teeth": {
 					"position": {
 						"0.0": [0, 0, 0],
-						"0.0833": [0, 0, 1]
+						"0.1667": [0, 0, 3]
 					}
 				}
 			}
@@ -393,9 +417,9 @@
 				}
 			}
 		},
-		"animation.chain_sword.1st_shift_enter": {
+		"animation.chain_sword.1st_rev_slash": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 0.0833,
+			"animation_length": 1,
 			"override_previous_animation": true,
 			"bones": {
 				"leftArm": {
@@ -405,109 +429,59 @@
 							"q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
 							"q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
 						],
-						"0.0833": ["67.5+q.mod.chain_sword_1st_l_idle_rot_x", "q.mod.chain_sword_1st_l_idle_rot_y", "q.mod.chain_sword_1st_l_idle_rot_z"]
-					},
-					"position": {
-						"0.0": [
-							"q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
-							"q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
-							"q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						"0.25": [
+							"12.2142+q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
+							"-10.7942+q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
+							"-10.0203+q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
 						],
-						"0.0833": ["0.7871+q.mod.chain_sword_1st_l_idle_pos_x", "1.2119+q.mod.chain_sword_1st_l_idle_pos_y", "-0.9453+q.mod.chain_sword_1st_l_idle_pos_z"]
-					}
-				},
-				"rightArm": {
-					"rotation": {
-						"0.0": [
-							"q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
-							"q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
-							"q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						"0.3333": [
+							"-22.114+q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
+							"-50.3337+q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
+							"-3.0773+q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
 						],
-						"0.0833": ["-3.5084+q.mod.chain_sword_1st_r_idle_rot_x", "-48.1073+q.mod.chain_sword_1st_r_idle_rot_y", "-77.1982+q.mod.chain_sword_1st_r_idle_rot_z"]
-					},
-					"position": {
-						"0.0": [
-							"q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
-							"q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
-							"q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						"0.5833": [
+							"-22.114+q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
+							"-50.3337+q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
+							"-3.0773+q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
 						],
-						"0.0833": ["4.6532+q.mod.chain_sword_1st_r_idle_pos_x", "-0.8188+q.mod.chain_sword_1st_r_idle_pos_y", "2.7235+q.mod.chain_sword_1st_r_idle_pos_z"]
-					}
-				},
-				"chain_sword": {
-					"rotation": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
-				},
-				"toggle": {
-					"rotation": [-90, 0, 0]
-				},
-				"teeth": {
-					"position": {
-						"0.0": [0, 0, 0],
-						"0.0833": [0, 0, 1]
-					}
-				}
-			}
-		},
-		"animation.chain_sword.1st_shift": {
-			"loop": true,
-			"animation_length": 0.0833,
-			"override_previous_animation": true,
-			"bones": {
-				"leftArm": {
-					"rotation": [
-						"62.5+q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
-						"q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
-						"q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
-					],
-					"position": [
-						"-4.3665+q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
-						"6.8674+q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
-						"0.4443+q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
-					]
-				},
-				"rightArm": {
-					"rotation": [
-						"-56.9369+q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
-						"-46.8535+q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
-						"-72.6683+q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
-					],
-					"position": [
-						"2.228+q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
-						"0.8296+q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
-						"1.5322+q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
-					]
-				},
-				"chain_sword": {
-					"rotation": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
-				},
-				"toggle": {
-					"rotation": [-90, 0, 0]
-				},
-				"teeth": {
-					"position": {
-						"0.0": [0, 0, 0],
-						"0.0833": [0, 0, 1]
-					}
-				}
-			}
-		},
-		"animation.chain_sword.1st_shift_exit": {
-			"loop": "hold_on_last_frame",
-			"animation_length": 0.0833,
-			"override_previous_animation": true,
-			"bones": {
-				"leftArm": {
-					"rotation": {
-						"0.0": ["67.5+q.mod.chain_sword_1st_l_idle_rot_x", "q.mod.chain_sword_1st_l_idle_rot_y", "q.mod.chain_sword_1st_l_idle_rot_z"],
-						"0.0833": [
+						"0.75": [
+							"-38.1065+q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
+							"-37.8812+q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
+							"-18.9613+q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
+						],
+						"1.0": [
 							"q.mod.chain_sword_1st_l_idle_rot_x+q.mod.chain_sword_1st_l_rev_rot_offset_x",
 							"q.mod.chain_sword_1st_l_idle_rot_y+q.mod.chain_sword_1st_l_rev_rot_offset_y",
 							"q.mod.chain_sword_1st_l_idle_rot_z+q.mod.chain_sword_1st_l_rev_rot_offset_z"
 						]
 					},
 					"position": {
-						"0.0": ["0.7871+q.mod.chain_sword_1st_l_idle_pos_x", "1.2119+q.mod.chain_sword_1st_l_idle_pos_y", "-0.9453+q.mod.chain_sword_1st_l_idle_pos_z"],
-						"0.0833": [
+						"0.0": [
+							"q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
+							"q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
+							"q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						],
+						"0.25": [
+							"-4.8406+q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
+							"4.9138+q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
+							"-2.8706+q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						],
+						"0.3333": [
+							"-24.4905+q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
+							"8.2934+q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
+							"-13.9934+q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						],
+						"0.5833": [
+							"-24.4905+q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
+							"8.2934+q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
+							"-13.9934+q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						],
+						"0.75": [
+							"-15.2745+q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
+							"5.6525+q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
+							"-13.9001+q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
+						],
+						"1.0": [
 							"q.mod.chain_sword_1st_l_idle_pos_x+q.mod.chain_sword_1st_l_rev_pos_offset_x",
 							"q.mod.chain_sword_1st_l_idle_pos_y+q.mod.chain_sword_1st_l_rev_pos_offset_y",
 							"q.mod.chain_sword_1st_l_idle_pos_z+q.mod.chain_sword_1st_l_rev_pos_offset_z"
@@ -516,16 +490,64 @@
 				},
 				"rightArm": {
 					"rotation": {
-						"0.0": ["-3.5084+q.mod.chain_sword_1st_r_idle_rot_x", "-48.1073+q.mod.chain_sword_1st_r_idle_rot_y", "-77.1982+q.mod.chain_sword_1st_r_idle_rot_z"],
-						"0.0833": [
+						"0.0": [
+							"q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
+							"q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
+							"q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						],
+						"0.25": [
+							"-39.323+q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
+							"-8.3037+q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
+							"89.3475+q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						],
+						"0.3333": [
+							"28.177+q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
+							"-8.3037+q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
+							"89.3475+q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						],
+						"0.5833": [
+							"28.177+q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
+							"-8.3037+q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
+							"89.3475+q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						],
+						"0.75": [
+							"27.0878+q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
+							"-12.4531+q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
+							"6.9273+q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
+						],
+						"1.0": [
 							"q.mod.chain_sword_1st_r_idle_rot_x+q.mod.chain_sword_1st_r_rev_rot_offset_x",
 							"q.mod.chain_sword_1st_r_idle_rot_y+q.mod.chain_sword_1st_r_rev_rot_offset_y",
 							"q.mod.chain_sword_1st_r_idle_rot_z+q.mod.chain_sword_1st_r_rev_rot_offset_z"
 						]
 					},
 					"position": {
-						"0.0": ["4.6532+q.mod.chain_sword_1st_r_idle_pos_x", "-0.8188+q.mod.chain_sword_1st_r_idle_pos_y", "2.7235+q.mod.chain_sword_1st_r_idle_pos_z"],
-						"0.0833": [
+						"0.0": [
+							"q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
+							"q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
+							"q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						],
+						"0.25": [
+							"0.8237+q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
+							"1.9195+q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
+							"-4.9126+q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						],
+						"0.3333": [
+							"-23.1763+q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
+							"1.9195+q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
+							"-4.9126+q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						],
+						"0.5833": [
+							"-23.1763+q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
+							"1.9195+q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
+							"-4.9126+q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						],
+						"0.75": [
+							"-18.1763+q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
+							"0.9195+q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
+							"-4.9126+q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
+						],
+						"1.0": [
 							"q.mod.chain_sword_1st_r_idle_pos_x+q.mod.chain_sword_1st_r_rev_pos_offset_x",
 							"q.mod.chain_sword_1st_r_idle_pos_y+q.mod.chain_sword_1st_r_rev_pos_offset_y",
 							"q.mod.chain_sword_1st_r_idle_pos_z+q.mod.chain_sword_1st_r_rev_pos_offset_z"
@@ -533,16 +555,17 @@
 					}
 				},
 				"chain_sword": {
-					"rotation": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
+					"rotation": {
+						"0.0": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.25": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.3333": [55, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.5833": [55, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"0.75": [0, 0, "-37.5+query.mod.chain_sword_1st_teeth_rev_rot_offset_z"],
+						"1.0": [0, 0, "query.mod.chain_sword_1st_teeth_rev_rot_offset_z"]
+					}
 				},
 				"toggle": {
 					"rotation": [-90, 0, 0]
-				},
-				"teeth": {
-					"position": {
-						"0.0": [0, 0, 0],
-						"0.0833": [0, 0, 1]
-					}
 				}
 			}
 		}

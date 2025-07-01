@@ -72,21 +72,31 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, key), value)
 
     revAvailableTime = 0
-    animLengthDict = {"equip": 0.6667, "run_enter": 0.1, "run_exit": 0.2, "shoot": 0.125, "rev_enter": 0.7,
-                      "rev_exit": 0.3}
+    revSlashAvailableTime = 0
+    revFinished = False
+    animLengthDict = {"equip": 0.6667, "run_enter": 0.1, "run_exit": 0.2, "rev_slash": 1, "rev_enter": 0.7,
+                      "rev_exit": 0.3, "slash": 0.8}
 
     def UpdateRevAvailableTime(self, second):
         if time.time() > self.revAvailableTime:
             self.revAvailableTime = time.time() + second
 
     @Listen
+    def OnScriptTickClient(self):
+        if self.revSlashAvailableTime != 0 and time.time() > self.revSlashAvailableTime:
+            if not self.revFinished:
+                self.revFinished = True
+                self.UpdateRevState(True)
+
+    # 其实是从服务端传过来的，服务端版本的这个事件会帮我们忽略耐久变化的情况
     def OnCarriedNewItemChangedClientEvent(self, event):
-        item = event["itemDict"]
+        item = event["newItemDict"]
         if not item:
             return
         if item['newItemName'] == "orchiella:chain_sword":
             self.BlinkVar("equip")
             self.UpdateRevAvailableTime(self.animLengthDict["equip"])
+            self.PlaySound("equip")
         else:
             self.revAvailableTime = 0
             self.UpdateRevState(False)
@@ -108,23 +118,32 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.IsEquipped():
             return
         event['cancel'] = True
+        if time.time() < self.revAvailableTime:
+            return
         if self.isRevving:
-            self.BlinkVar("shift_enter")
+            self.BlinkVar("rev_slash")
+            self.CallServer("Attack", 0.4, PID)
+            self.UpdateRevAvailableTime(self.animLengthDict["rev_slash"])
         else:
-            self.BlinkVar("slash" if random.random() < 0.5 else "slash2")
+            self.BlinkVar("slash" if int(time.time()) % 2 == 1 else "slash2")
+            self.CallServer("Attack", 0.375, PID)
+            self.UpdateRevAvailableTime(self.animLengthDict["slash"])
+        sound = "slash{}".format(random.randint(3, 5))
+        print sound
+        self.PlaySound(sound)
 
-    revFinished = False
-
-    @Listen
-    def OnScriptTickClient(self):
-        if self.revAvailableTime != 0 and time.time() > self.revAvailableTime:
-            if not self.revFinished:
-                self.revFinished = True
-                self.UpdateRevState(True)
+    revvingSoundId = None
 
     def UpdateRevState(self, state):
         self.isRevving = state
         self.CallServer("UpdateRevState", 0, PID, state)
+        if state:
+            self.revvingSoundId = AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_revving", (0, 0, 0), 1, 1, True,
+                                                     PID)
+        else:
+            if self.revvingSoundId:
+                AC.StopCustomMusicById(self.revvingSoundId)
+                self.revvingSoundId = None
 
     def SyncVarToServer(self, delay, key, value):
         if delay == 0:
@@ -148,16 +167,18 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def ReleaseSkill(self, skill):
         if not self.IsEquipped():
             return
+        if self.revAvailableTime > time.time():
+            return
         if skill == "rev":
             if not self.revFinished:
-                if self.revAvailableTime < time.time() and self.revAvailableTime == 0:
+                if self.revSlashAvailableTime == 0:
                     self.BlinkVar("rev_enter")
-                    self.revAvailableTime = time.time() + self.animLengthDict["rev_enter"]
-                    self.UpdateRevState(True)
+                    self.revSlashAvailableTime = time.time() + self.animLengthDict["rev_enter"]
+                    self.PlaySound("toggle")
             else:
                 self.BlinkVar("rev_exit")
-                self.UpdateRevState(self.animLengthDict["rev_exit"])
-                self.revAvailableTime = 0
+                self.UpdateRevAvailableTime(self.animLengthDict["rev_exit"])
+                self.revSlashAvailableTime = 0
                 self.revFinished = False
                 self.UpdateRevState(False)
             return
@@ -171,6 +192,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.CallServer("SyncSoundToClients", delay, PID, soundName)
 
     def PlaySound(self, soundName):
+        if not self.GetData("sound_enabled"):
+            return
         AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
 
     @Listen
@@ -178,7 +201,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.CallServer("LoadData", 0, PID)
         levelQC = CF.CreateQueryVariable(levelId)
         for key, value in {"slash": 0, "slash2": 0, "run_enter": 0, "run_exit": 0,
-                           "equip": 0, "rev_enter": 0, "rev_exit": 0, "shift_enter": 0, "shift_exit": 0,
+                           "equip": 0, "rev_enter": 0, "rev_exit": 0, "rev_slash": 0,
                            "1st_l_idle_pos_x": -3, "1st_l_idle_pos_y": -5, "1st_l_idle_pos_z": 8,
                            "1st_l_idle_rot_x": 87, "1st_l_idle_rot_y": 0, "1st_l_idle_rot_z": -132,
                            "1st_l_run_rot_offset_x": 0, "1st_l_run_rot_offset_y": 17, "1st_l_run_rot_offset_z": 34,
@@ -222,9 +245,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerAnimation(prefix + "1st_run_exit", "animation.chain_sword.1st_run_exit")
         actorComp.AddPlayerAnimation(prefix + "1st_rev_enter", "animation.chain_sword.1st_rev_enter")
         actorComp.AddPlayerAnimation(prefix + "1st_rev", "animation.chain_sword.1st_rev")
-        actorComp.AddPlayerAnimation(prefix + "1st_shift_enter", "animation.chain_sword.1st_shift_enter")
-        actorComp.AddPlayerAnimation(prefix + "1st_shift", "animation.chain_sword.1st_shift")
-        actorComp.AddPlayerAnimation(prefix + "1st_shift_exit", "animation.chain_sword.1st_shift_exit")
+        actorComp.AddPlayerAnimation(prefix + "1st_rev_slash", "animation.chain_sword.1st_rev_slash")
         actorComp.AddPlayerAnimation(prefix + "1st_rev_exit", "animation.chain_sword.1st_rev_exit")
         actorComp.AddPlayerAnimation(prefix + "default", "animation.chain_sword.default")
         actorComp.AddPlayerAnimation(prefix + "3rd_idle", "animation.chain_sword.3rd_idle")
@@ -232,7 +253,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerAnimation(prefix + "3rd_slash2", "animation.chain_sword.3rd_slash2")
         actorComp.AddPlayerAnimation(prefix + "3rd_equip", "animation.chain_sword.3rd_equip")
         actorComp.AddPlayerAnimation(prefix + "3rd_rev", "animation.chain_sword.3rd_rev")
-        actorComp.AddPlayerAnimation(prefix + "3rd_shift", "animation.chain_sword.3rd_shift")
+        actorComp.AddPlayerAnimation(prefix + "3rd_rev_slash", "animation.chain_sword.3rd_rev_slash")
 
         actorComp.AddPlayerAnimationController(prefix + "arm_controller", "controller.animation.chain_sword.general")
         actorComp.AddPlayerScriptAnimate(prefix + "arm_controller",

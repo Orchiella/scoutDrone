@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import math
 import time
 
 import mod.server.extraServerApi as serverApi
 from mod.common.utils.mcmath import Vector3
 
 import config as DB
+from ChainSword import mathUtil
 from ChainSword.const import SPECIAL_ENTITIES
 from ChainSword.dataManager import DataManager
 
@@ -35,20 +37,120 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         DataManager.Check(None)
         GC.AddRepeatedTimer(0.05, self.ModTick)
 
-    def ModTick(self):
-        pass
+    lightBlockPoses = {}
 
-    def ReleaseSkill(self, playerId, skill):
-        if not self.IsEquipped(playerId):
-            return
+    def ModTick(self):
+        for playerId in serverApi.GetPlayerList():
+            if playerId in self.lightBlockPoses:
+                CF.CreateBlockInfo(levelId).SetBlockNew(self.lightBlockPoses[playerId],
+                                                        {"name": "minecraft:air", "aux": 0}, 0,
+                                                        CF.CreateDimension(playerId).GetEntityDimensionId())
+            if not self.IsEquipped(playerId):
+                continue
+            if self.revvingStateDict.get(playerId, False):
+                if time.time() > self.revDamageCoolDownDict.get(playerId, 0):
+                    isDamage = self.SectorAttack(playerId, DataManager.Get(playerId, "rev_damage"),
+                                                 DataManager.Get(playerId, "rev_angle") / 2.0,
+                                                 DataManager.Get(playerId, "rev_radius"),
+                                                 0.3)
+                    if isDamage:
+                        self.TakeDurability(playerId, DataManager.Get(playerId, "rev_durability_consumption"))
+                    self.revDamageCoolDownDict[playerId] = time.time() + DataManager.Get(playerId,
+                                                                                         "rev_interval") / 1000.0
+            if DataManager.Get(playerId, "light_enabled"):
+                dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
+                playerPos = Vector3(CF.CreatePos(playerId).GetFootPos())
+                blockComp = CF.CreateBlockInfo(levelId)
+                blockPos = (int(math.ceil(playerPos[0])), int(math.ceil(playerPos[1])), int(math.ceil(playerPos[2])))
+                posFound = None
+                for pos in mathUtil.GetSurroundingPoses(blockPos):
+                    if blockComp.GetBlockNew(pos, dimId)['name'] == "minecraft:air":
+                        posFound = pos
+                        break
+                if posFound:
+                    blockComp.SetBlockNew(posFound, {"name": "minecraft:light_block", "aux": 7}, 0,
+                                          dimId)
+                    self.lightBlockPoses[playerId] = posFound
+                else:
+                    if playerId in self.lightBlockPoses:
+                        del self.lightBlockPoses[playerId]
+
+    @Listen
+    def DelServerPlayerEvent(self, event):
+        playerId = event['id']
+        if playerId in self.lightBlockPoses:
+            CF.CreateBlockInfo(levelId).SetBlockNew(self.lightBlockPoses[playerId],
+                                                    {"name": "minecraft:air", "aux": 0}, 0,
+                                                    CF.CreateDimension(playerId).GetEntityDimensionId())
 
     revvingStateDict = {}
+
+    revDamageCoolDownDict = {}
 
     def UpdateRevState(self, playerId, state):
         self.revvingStateDict[playerId] = state
 
-    def Attack(self):
-        pass
+    @Listen
+    def OnCarriedNewItemChangedServerEvent(self, event):
+        self.CallClient(event['playerId'], "OnCarriedNewItemChangedClientEvent", event)
+
+    def Attack(self, playerId):
+        if not self.IsEquipped(playerId):
+            return
+        formatText = "rev_" if self.revvingStateDict.get(playerId, False) else ""
+        isDamage = self.SectorAttack(playerId, DataManager.Get(playerId, "{}slash_damage".format(formatText)),
+                                     DataManager.Get(playerId, "{}slash_angle".format(formatText)) / 2.0,
+                                     DataManager.Get(playerId, "{}slash_radius".format(formatText)),
+                                     DataManager.Get(playerId, "{}slash_knock".format(formatText)) / 2.0)
+        if isDamage:
+            self.TakeDurability(playerId,
+                                DataManager.Get(playerId, "{}slash_durability_consumption".format(formatText)))
+
+    attackDict = {}
+
+    def SectorAttack(self, player_id, damage, semi_angle, radius, knock):
+        entities = CF.CreateGame(player_id).GetEntitiesAround(player_id, int(math.ceil(radius)), {})
+        player_pos = Vector3(CF.CreatePos(player_id).GetFootPos())
+        if self.IsRidingHorse(player_id):
+            player_pos - Vector3(0, 1, 0)
+        isDamaged = False
+        for entity_id in entities:
+            if entity_id == player_id:
+                continue
+            if CF.CreateEngineType(entity_id).GetEngineTypeStr() in SPECIAL_ENTITIES:
+                continue
+            owner_id = CF.CreateTame(entity_id).GetOwnerId()
+            if owner_id and owner_id == player_id:
+                continue
+            entity_pos = CF.CreatePos(entity_id).GetFootPos()
+            relative_pos = Vector3(entity_pos) - player_pos
+            if relative_pos.Length() > radius:
+                continue
+            relative_pos.Set(relative_pos.x, 0, relative_pos.z)
+            forward_vector = Vector3(serverApi.GetDirFromRot(CF.CreateRot(player_id).GetRot()))
+            forward_vector.Set(forward_vector.x, 0, forward_vector.z)
+            angle = math.degrees(math.acos(Vector3.Dot(relative_pos.Normalized(), forward_vector.Normalized())))
+            if angle > semi_angle:
+                continue
+            self.attackDict[entity_id] = (
+                damage, ((relative_pos * knock) + Vector3(0, 0.2, 0)).ToTuple() if knock != 0 else (0, 0, 0))
+            CF.CreatePlayer(player_id).PlayerAttackEntity(entity_id)
+            del self.attackDict[entity_id]
+            isDamaged = True
+        return isDamaged
+
+    def IsRidingHorse(self, player_id):
+        entity_ridden = CF.CreateRide(player_id).GetEntityRider()
+        return entity_ridden != "-1" and CF.CreateEngineType(
+            entity_ridden).GetEngineTypeStr() == "minecraft:horse"
+
+    @Listen
+    def DamageEvent(self, event):
+        entityId = event["entityId"]
+        if entityId in self.attackDict:
+            event['damage'] = self.attackDict[entityId][0]
+            event['knock'] = False
+            CF.CreateActorMotion(entityId).SetMotion(self.attackDict[entityId][1])
 
     def IsEquipped(self, playerId):
         comp = CF.CreateItem(playerId)

@@ -187,56 +187,20 @@
 							"rev_exit" : "q.mod.chain_sword_rev_exit"
 						},
 						{
-							"shift_enter" : "q.mod.chain_sword_shift_enter"
+							"rev_slash" : "q.mod.chain_sword_rev_slash"
 						},
 						{
 							"default" : "q.mod.chain_sword_equip"
 						}
 					]
 				},
-				"shift_enter": {
+				"rev_slash": {
 					"animations": [
 						{
-							"chain_sword_1st_shift_enter": "c.is_first_person??v.is_first_person"
+							"chain_sword_1st_rev_slash": "c.is_first_person??v.is_first_person"
 						},
 						{
-							"chain_sword_3rd_shift": "!(c.is_first_person??v.is_first_person)"
-						}
-					],
-					"transitions" : [
-						{
-							"shift" : "q.any_animation_finished"
-						},
-						{
-							"default" : "q.mod.chain_sword_equip"
-						}
-					]
-				},
-				"shift": {
-					"animations": [
-						{
-							"chain_sword_1st_shift": "c.is_first_person??v.is_first_person"
-						},
-						{
-							"chain_sword_3rd_shift": "!(c.is_first_person??v.is_first_person)"
-						}
-					],
-					"transitions" : [
-						{
-							"shift_exit" : "q.mod.chain_sword_shift_exit"
-						},
-						{
-							"default" : "q.mod.chain_sword_equip"
-						}
-					]
-				},
-				"shift_exit": {
-					"animations": [
-						{
-							"chain_sword_1st_shift_exit": "c.is_first_person??v.is_first_person"
-						},
-						{
-							"chain_sword_3rd_shift": "!(c.is_first_person??v.is_first_person)"
+							"chain_sword_3rd_rev_slash": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [

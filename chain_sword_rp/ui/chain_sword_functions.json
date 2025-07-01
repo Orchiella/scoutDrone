@@ -2,17 +2,6 @@
     "main": {
         "controls": [
             {
-                "sight_bead": {
-                    "layer": 1,
-                    "size": [
-                        15,
-                        15
-                    ],
-                    "texture": "textures/ui/chain_sword/sight_bead",
-                    "type": "image"
-                }
-            },
-            {
                 "template@common.button": {
                     "$control_alpha": 0.6,
                     "$default_texture": "textures/ui/chain_sword/template",

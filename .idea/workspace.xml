@@ -4,68 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ace9590f-ed92-4f9a-ad12-bd9d8384fa76" name="Changes" comment="">
+    <list default="true" id="ace9590f-ed92-4f9a-ad12-bd9d8384fa76" name="Changes" comment="1">
+      <change afterPath="$PROJECT_DIR$/.idea/chainSword.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/equip.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/revving.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash3.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash4.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash5.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/toggle.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/rev.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/mathUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/modMain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/preview" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/preview" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/electricBowFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/electricBowSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordSettings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/uiDef.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/uiDef.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/ElectricBow/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/uiMgr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/entities/electric_arrow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/netease_items_beh/electric_arrow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/netease_items_beh/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/netease_items_beh/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/recipes/electric_arrow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_bp/recipes/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/recipes/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animation_controllers/electric_bow.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_arrow.animation.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/animations/electric_bow.animation_default.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_default.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/attachables/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/effects/eb_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/effects/eb_frame.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/effects/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/effects/eb_lightning.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/entity/electric_arrow.entity.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_arrow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/models/entity/electric_bow_arm.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword_arm.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/netease_items_res/electric_arrow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/netease_items_res/electric_bow.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/netease_items_res/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/particles/electric_bow/electric_effect_emissive.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/particles/chain_sword/electric_effect_emissive.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_arrow.render_controllers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/render_controllers/chain_sword.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/render_controllers/electric_bow_arm.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/render_controllers/chain_sword_arm.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/draw.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/draw.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/hit.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/hit.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/release.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/release.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/electric_bow/shoot.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/shoot.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/texts/zh_CN.lang" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/texts/zh_CN.lang" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/entity/electric_bow.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/entity/chain_sword.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/item_texture.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/items/electric_arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/items/electric_bow.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_frame.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_frame.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_lightning.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/sfxs/eb_lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_lightning.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/release.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/release.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/sensing.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sensing.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/textures/ui/electric_bow/sight_bead.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sight_bead.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/ui/_ui_defs.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/_ui_defs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/ui/electric_bow_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/ui/electric_bow_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electric_bow_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/draw.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/hit.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/release.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/shoot.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/release.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sensing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sight_bead.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,22 +50,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2zDBP6xkVoD2etasyjuQZs2Jolv" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/chainSword"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/chainSword&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -101,6 +75,19 @@
       <option name="presentableId" value="Default" />
       <updated>1751255736346</updated>
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1751291807730</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751291807730</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>
