@@ -1,0 +1,119 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+		"controller.animation.sraw.general": {
+			"initial_state" : "idle",
+			"states" : {
+				"equip": {
+					"animations": [
+						{
+							"sraw_1st_equip": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_equip": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"idle" : "q.any_animation_finished"
+						}
+					]
+				},
+				"idle": {
+					"transitions" : [
+						{
+							"transition": "q.mod.sraw_transition"
+						},
+						{
+							"equip": "q.mod.sraw_equip"
+						}
+					]
+				},
+				"transition": {
+					"animations": [
+						{
+							"sraw_1st_transition": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_transition": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"idle" : "!q.mod.sraw_transition && q.mod.sraw_idle"
+						},
+						{
+							"run" : "!q.mod.sraw_transition && q.mod.sraw_run"
+						},
+						{
+							"aim" : "!q.mod.sraw_transition && q.mod.sraw_aim"
+						},
+						{
+							"transition2" : "q.mod.sraw_re_transition"
+						}
+					]
+				},
+				"transition2": {
+					"animations": [
+						{
+							"sraw_1st_transition": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_transition": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"idle" : "!q.mod.sraw_transition && q.mod.sraw_idle"
+						},
+						{
+							"run" : "!q.mod.sraw_transition && q.mod.sraw_run"
+						},
+						{
+							"aim" : "!q.mod.sraw_transition && q.mod.sraw_aim"
+						},
+						{
+							"transition" : "q.mod.sraw_re_transition"
+						}
+					]
+				},
+				"run": {
+					"animations": [
+						{
+							"sraw_1st_run": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_run": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"transition": "q.mod.sraw_transition"
+						},
+						{
+							"equip": "q.mod.sraw_equip"
+						}
+					]
+				},
+				"aim": {
+					"animations": [
+						{
+							"sraw_1st_aim": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_aim": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"transition": "q.mod.sraw_transition"
+						},
+						{
+							"equip": "q.mod.sraw_equip"
+						}
+					]
+				}
+			}
+		}
+	}
+}

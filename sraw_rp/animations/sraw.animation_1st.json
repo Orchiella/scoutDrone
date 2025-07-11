@@ -1,0 +1,74 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.sraw.1st_equip": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.5833,
+			"override_previous_animation": true,
+			"bones": {
+				"sraw_left_offset": {
+					"rotation": {
+						"0.0": [27.47766, -1.15408, 2.21783],
+						"0.5833": [0, 0, 0]
+					},
+					"position": {
+						"0.0": [-0.2706, -0.78633, -0.5554],
+						"0.5833": [0, 0, 0]
+					}
+				},
+				"sraw_right_offset": {
+					"rotation": {
+						"0.0": [31.31893, 13.80192, 10.86531],
+						"0.5833": [0, 0, 0]
+					},
+					"position": {
+						"0.0": [0, -0.79335, -0.60876],
+						"0.5833": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.sraw.1st_run": {
+			"loop": true,
+			"animation_length": 0.5,
+			"override_previous_animation": true,
+			"bones": {
+				"sraw_right_offset": {
+					"rotation": {
+						"0.0": [12.5, 0, 0],
+						"0.25": [17.48436, 0.75155, -2.38443],
+						"0.5": [12.5, 0, 0]
+					}
+				},
+				"sraw": {
+					"rotation": [0, 0, 0],
+					"position": [0, 1, 0]
+				},
+				"sraw_left_offset": {
+					"rotation": {
+						"0.0": [19.8423, 2.55868, -7.05239],
+						"0.25": [42.39865, -0.81209, -3.35848],
+						"0.5": [19.8423, 2.55868, -7.05239]
+					}
+				}
+			}
+		},
+		"animation.sraw.1st_aim": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"sraw_right_offset": {
+					"rotation": [-1.00015, 0.99985, -0.01745],
+					"position": [0, 6, 0]
+				},
+				"sraw_left_offset": {
+					"rotation": [-12.5, 0, 0],
+					"position": [0, 9, 1]
+				},
+				"sraw": {
+					"rotation": [-6.9905, 0.36544, 2.97768],
+					"position": [0, 0, -1.5]
+				}
+			}
+		}
+	}
+}

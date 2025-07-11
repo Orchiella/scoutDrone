@@ -4,42 +4,118 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ace9590f-ed92-4f9a-ad12-bd9d8384fa76" name="Changes" comment="1">
-      <change afterPath="$PROJECT_DIR$/.idea/chainSword.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/equip.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/revving.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/toggle.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/rev.png" afterDir="false" />
+    <list default="true" id="29c1a3e7-ca33-4813-a11f-1bcf9d24a401" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/SRAW.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/animationHelper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/clientSystem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/const.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/dataManager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/mathUtil.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/modMain.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/serverSystem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawFunctions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawSettings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/uiDef.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/uiMgr.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/entities/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_bp/recipes/sraw.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animation_controllers/sraw.animations_controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st_base.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd_base.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/attachables/sraw.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/entity/sraw_missile.entity.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_arm.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/netease_items_res/sraw.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_hit.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw.render_controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_arm.render_controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sound_definitions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/equip.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/revving.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash3.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash4.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash5.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/sounds/sraw/toggle.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/texts/zh_CN.lang" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw_missile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/item_texture.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/items/sraw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/items/sraw_missile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/rev.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/ui/_ui_defs.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/ui/sraw_functions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/ui/sraw_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/chainSword.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/draw.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/hit.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/release.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/shoot.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/release.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sensing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/sight_bead.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/clientSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/const.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/dataManager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/mathUtil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/modMain.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/preview" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/serverSystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordFunctions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/chainSwordSettings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/uiDef.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/ChainSword/ui/uiMgr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/netease_items_beh/chain_sword.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_bp/recipes/chain_sword.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animation_controllers/chain_sword.animations_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_1st.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_3rd.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/animations/chain_sword.animation_default.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/attachables/chain_sword.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/effects/eb_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/effects/sraw_missile.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/effects/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/effects/sraw_aim.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/models/entity/chain_sword_arm.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/netease_items_res/chain_sword.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/particles/chain_sword/electric_effect_emissive.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/render_controllers/chain_sword.render_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/render_controllers/chain_sword_arm.render_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/equip.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/revving.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash4.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/slash5.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/chain_sword/toggle.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/sounds/sound_definitions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/texts/zh_CN.lang" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/entity/chain_sword.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/item_texture.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/items/chain_sword.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_frame.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_lightning.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/sfxs/eb_lightning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/textures/ui/chain_sword/rev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/_ui_defs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_functions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/chain_sword_settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chain_sword_rp/ui/netease_editor_template_namespace.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,47 +123,56 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2zDBP6xkVoD2etasyjuQZs2Jolv" />
+  <component name="ProjectId" id="2zgJTZwPSZpQDfVPOkAnJgKHvHV" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/chainSword&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/SRAW/sraw_rp/textures/sfxs"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\sfxs" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\effects" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\items" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\entity" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\render_controllers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ace9590f-ed92-4f9a-ad12-bd9d8384fa76" name="Changes" comment="" />
-      <created>1751255736346</created>
+      <changelist id="29c1a3e7-ca33-4813-a11f-1bcf9d24a401" name="Changes" comment="" />
+      <created>1752146790847</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1751255736346</updated>
+      <updated>1752146790847</updated>
     </task>
-    <task id="LOCAL-00001" summary="1">
-      <option name="closed" value="true" />
-      <created>1751291807730</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1751291807730</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>
