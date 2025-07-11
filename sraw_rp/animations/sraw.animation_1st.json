@@ -57,16 +57,16 @@
 			"loop": "hold_on_last_frame",
 			"bones": {
 				"sraw_right_offset": {
-					"rotation": [-1.00015, 0.99985, -0.01745],
-					"position": [0, 6, 0]
+					"rotation": [0, 0, 0],
+					"position": [0, 5, 0]
 				},
 				"sraw_left_offset": {
-					"rotation": [-12.5, 0, 0],
-					"position": [0, 9, 1]
+					"rotation": [-5, 0, 0],
+					"position": [0, 7, 2]
 				},
 				"sraw": {
-					"rotation": [-6.9905, 0.36544, 2.97768],
-					"position": [0, 0, -1.5]
+					"rotation": [-20, 0, 5],
+					"position": [0, 0, 0]
 				}
 			}
 		}

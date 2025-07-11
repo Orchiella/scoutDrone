@@ -44,7 +44,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.settingsScreen = None
         self.functionsScreen = None
         self.settings = {}
-        self.frameDataDict = {"aim": {},"missile": {}}
+        self.frameDataDict = {"aim": {}, "missile": {}}
         self.animationCache = {}
         GC.AddRepeatedTimer(0.05, self.UpdateFrame)
         GC.AddRepeatedTimer(0.05, self.CheckTransition)
@@ -73,7 +73,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             return
         event['cancel'] = True
         if self.nowState == "aim":
-            self.CallServer("Shoot",0, PID)
+            self.CallServer("Shoot", 0, PID)
 
     @Listen(("RightClickBeforeClientEvent", "HoldBeforeClientEvent"))
     def RightClick(self, event):
@@ -82,10 +82,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         event['cancel'] = True
         if self.nowState != "aim":
             self.SwitchState("aim")
-            self.CallServer("UpdateAimState",0, PID, True)
+            self.CallServer("UpdateAimState", 0, PID, True)
         else:
             self.SwitchState("idle")
-            self.CallServer("UpdateAimState",0, PID, False)
+            self.CallServer("UpdateAimState", 0, PID, False)
 
     nowState = "idle"
     transitionFinishTime = 0
@@ -187,7 +187,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         parId = PC.Create("orchiella:" + effectName)
         PC.BindEntity(parId, entityId, locator, (0, 0, 0), (0, 0, 0))
 
-    def AppendFrame(self, entityId, frameType, duration, height, heightAmplifier):
+    def AppendFrame(self, entityId, frameType, duration, height, heightAmplifier, scaleAmplifier=1):
         if isinstance(self.frameDataDict[frameType], dict) and self.frameDataDict[frameType]:
             self.frameDataDict[frameType]['time'] = time.time() + duration
             self.frameDataDict[frameType]['entityId'] = entityId
@@ -202,7 +202,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         frameTypeId = self.CreateEngineSfxFromEditor("effects/" + DB.mod_name + "_" + frameType + ".json")
         frameAniTransComp = CF.CreateFrameAniTrans(frameTypeId)
         frameAniControlComp = CF.CreateFrameAniControl(frameTypeId)
-        scale = 0.25 * self.GetData("{}_sign_size_percentage".format(frameType)) / 100.0
+        scale = 0.5 * self.GetData("{}_sign_size_percentage".format(frameType)) / 100.0 * scaleAmplifier
         frameAniTransComp.SetScale((scale, scale, scale))
         frameAniControlComp.Play()
         frameData = {"time": time.time() + duration,

@@ -1,0 +1,35 @@
+{
+    "format_version": "1.12",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "orchiella:sraw"
+        },
+        "key": {
+            "I": {
+                "data": 0,
+                "item": "minecraft:iron_block"
+            },
+            "D": {
+                "data": 0,
+                "item": "minecraft:diamond"
+            },
+            "R": {
+                "data": 0,
+                "item": "minecraft:redstone_block"
+            }
+        },
+        "pattern": [
+            "DID",
+            "DID",
+            " R "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "orchiella:sraw"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}
