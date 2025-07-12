@@ -10,7 +10,8 @@
       },
       "identifier": "orchiella:sraw_missile",
       "materials": {
-        "default": "entity_emissive_alpha"
+        "default": "netease_entity_metallic",
+        "unlit": "entity_emissive_alpha"
       },
       "render_controllers": [
         "controller.render.sraw_missile"
@@ -25,7 +26,7 @@
         ]
       },
       "textures": {
-        "default": "textures/entity/sraw_missile"
+        "default": "textures/entity/sraw"
       }
     }
   }

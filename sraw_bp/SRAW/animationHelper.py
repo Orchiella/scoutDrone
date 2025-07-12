@@ -1,10 +1,13 @@
 # coding=utf-8
 import json
 
-target_bones = {"sraw", "sraw_right_offset", "sraw_left_offset"}
+# perspective = "3rd"
+perspective = "1st"
+
+target_bones = {"sraw", "rightArm", "leftArm"}
 
 animation_cache = {}
-with open("../../sraw_rp/animations/sraw.animation_1st.json", "r") as f:
+with open("../../sraw_rp/animations/sraw.animation_{}.json".format(perspective), "r") as f:
     json_data = json.load(f)
 
 for anim_name, anim in json_data.get("animations", {}).items():
@@ -21,10 +24,9 @@ for anim_name, anim in json_data.get("animations", {}).items():
                     elif isinstance(transforms[attr], dict):
                         for k, v in transforms[attr].items():
                             bone_data[bone_name][attr][float(k)] = v
-    animation_cache[anim_name.split(".")[2][4:]] = {
+    animation_cache[perspective + "_" + anim_name.split(".")[2][4:]] = {
         "length": length,
         "bones": bone_data
     }
-animation_cache["idle"] = {"bones": {}, "length": 0.0}
 
 print(json.dumps(animation_cache, indent=4))

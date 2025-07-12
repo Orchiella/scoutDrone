@@ -20,6 +20,14 @@
 					]
 				},
 				"idle": {
+					"animations": [
+						{
+							"sraw_1st_idle": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
 					"transitions" : [
 						{
 							"transition": "q.mod.sraw_transition"

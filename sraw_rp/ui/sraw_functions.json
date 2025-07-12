@@ -1,8 +1,72 @@
 {
     "main": {
+        "type": "screen",
         "controls": [
             {
+                "sight_bead": {
+                    "type": "image",
+                    "size": [
+                        15,
+                        15
+                    ],
+                    "layer": 1,
+                    "texture": "textures/ui/sraw/sight_bead"
+                }
+            },
+            {
+                "info": {
+                    "type": "panel",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "size": [
+                        50,
+                        50
+                    ],
+                    "controls": [
+                        {
+                            "netease_paper_doll": {
+                                "type": "custom",
+                                "renderer": "netease_paper_doll_renderer",
+                                "offset": [
+                                    -25.0,
+                                    12.0
+                                ],
+                                "size": [
+                                    40,
+                                    40
+                                ],
+                                "layer": 1,
+                                "enable_scissor_test": false,
+                                "rotation": "gesture_x",
+                                "screen_scale": 1,
+                                "controls": [
+                                    {
+                                        "label": {
+                                            "type": "label",
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                7.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                100
+                                            ],
+                                            "font_type": "default",
+                                            "text": "选中目标：\n文本文本文本",
+                                            "text_alignment": "center"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
                 "template@common.button": {
+                    "type": "button",
                     "$control_alpha": 0.6,
                     "$default_texture": "textures/ui/sraw/template",
                     "$hover_texture": "textures/ui/sraw/template",
@@ -33,11 +97,20 @@
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/sraw/template",
                     "$texture_layer": 2,
+                    "size": [
+                        35,
+                        35
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
                     "bindings": [
                         {
+                            "binding_type": "collection_details",
                             "binding_collection_name": "",
-                            "binding_condition": "always_when_visible",
-                            "binding_type": "collection_details"
+                            "binding_condition": "always_when_visible"
                         }
                     ],
                     "controls": [
@@ -55,33 +128,22 @@
                         },
                         {
                             "label": {
+                                "type": "label",
                                 "anchor_from": "bottom_middle",
                                 "anchor_to": "top_middle",
-                                "font_type": "default",
                                 "size": [
                                     100,
                                     10
                                 ],
+                                "font_type": "default",
                                 "text": "技能(n.0s)",
-                                "text_alignment": "center",
-                                "type": "label"
+                                "text_alignment": "center"
                             }
                         }
-                    ],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "layer": 2,
-                    "pressed_control": "pressed",
-                    "size": [
-                        35,
-                        35
-                    ],
-                    "type": "button"
+                    ]
                 }
             }
-        ],
-        "type": "screen"
+        ]
     },
     "namespace": "sraw_functions"
 }

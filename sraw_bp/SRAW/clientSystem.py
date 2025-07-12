@@ -4,7 +4,8 @@ import time
 import mod.client.extraClientApi as clientApi
 
 import config as DB
-from SRAW.const import STATES, ANIM_CACHE
+from SRAW import mathUtil
+from SRAW.const import STATES, ANIM_CACHE, TRANSITION_DURATION
 from SRAW.mathUtil import set_transition_molang_vars
 from SRAW.ui import uiMgr
 from SRAW.ui.uiDef import UIDef
@@ -17,6 +18,7 @@ AC = CF.CreateCustomAudio(levelId)
 GC = CF.CreateGame(levelId)
 QC = CF.CreateQueryVariable(PID)
 CC = CF.CreateCamera(PID)
+PPC = CF.CreatePostProcess(levelId)
 eventList = []
 
 
@@ -44,7 +46,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.settingsScreen = None
         self.functionsScreen = None
         self.settings = {}
-        self.frameDataDict = {"aim": {}, "missile": {}}
+        self.frameDataDict = {"aim": {}, "missile": []}
         self.animationCache = {}
         GC.AddRepeatedTimer(0.05, self.UpdateFrame)
         GC.AddRepeatedTimer(0.05, self.CheckTransition)
@@ -56,6 +58,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.PlaySound("equip")
             self.SyncVarToServer(0, "equip", 1)
             self.SyncVarToServer(0.05, "equip", 0)
+        else:
+            self.SwitchState("idle", False)
 
     # 切换疾跑事件，其实有专门的原生molang表达式可以判断，但为了管理，由模组来控制
     @Listen("OnLocalPlayerActionClientEvent")
@@ -65,54 +69,67 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if event['actionType'] == clientApi.GetMinecraftEnum().PlayerActionType.StartSprinting:
             self.SwitchState("run")
         elif event['actionType'] == clientApi.GetMinecraftEnum().PlayerActionType.StopSprinting:
-            self.SwitchState("idle")
+            if self.nowState != "aim":
+                self.SwitchState("idle")
 
     @Listen(("LeftClickBeforeClientEvent", "TapBeforeClientEvent"))
     def LeftClick(self, event):
         if not self.IsEquipped():
             return
         event['cancel'] = True
-        if self.nowState == "aim":
-            self.CallServer("Shoot", 0, PID)
 
     @Listen(("RightClickBeforeClientEvent", "HoldBeforeClientEvent"))
     def RightClick(self, event):
         if not self.IsEquipped():
             return
         event['cancel'] = True
-        if self.nowState != "aim":
-            self.SwitchState("aim")
-            self.CallServer("UpdateAimState", 0, PID, True)
-        else:
-            self.SwitchState("idle")
-            self.CallServer("UpdateAimState", 0, PID, False)
 
     nowState = "idle"
+    beforeState = "idle"
     transitionFinishTime = 0
     targetState = None
     nowAnimationStartTime = 0
+    fovBeforeAim = 60
 
     def CheckTransition(self):
         if self.transitionFinishTime != 0 and time.time() > self.transitionFinishTime:
+            if self.beforeState != "aim" and self.targetState == "aim":
+                self.PlaySound("aim")
+                self.CallServer("UpdateAimState", 0, PID, True)
+                self.fovBeforeAim = CC.GetFov()
+                PPC.SetColorAdjustmentTint(0.3, (0, 255, 0))
+                PPC.SetEnableLensStain(True)
+                CC.SetFov(self.GetData("func_aim_fov"))
             self.nowState = self.targetState
             self.transitionFinishTime = 0
             self.SyncVarToServer(0, "transition", 0)
             self.nowAnimationStartTime = time.time()
+            self.beforeState = None
+            self.targetState = None
 
     def SwitchState(self, _state, isTransition=True):
-        print self.nowState, _state
+        if self.nowState == _state:
+            return False
         for state in STATES:
             self.SyncVarToServer(0, state, 1 if state == _state else 0)
+        if self.nowState == "aim" and _state != "aim":
+            CC.SetFov(self.fovBeforeAim)
+            self.CallServer("UpdateAimState", 0, PID, False)
+            PPC.SetColorAdjustmentTint(0, (0, 255, 0))
+            PPC.SetEnableLensStain(False)
+
         if isTransition:
             set_transition_molang_vars(QC, self.animationCache, self.nowState, self.nowAnimationStartTime, _state)
             if self.nowState == "transition":
                 self.SyncVarToServer(0, "re_transition", 1)
                 self.SyncVarToServer(0.05, "re_transition", 0)
+            else:
+                self.beforeState = self.nowState
             self.SyncVarToServer(0, "transition", 1)
             self.nowAnimationStartTime = time.time()
-            self.nowState = "transition"
-            self.transitionFinishTime = self.nowAnimationStartTime + 0.5
             self.targetState = _state
+            self.nowState = "transition"
+            self.transitionFinishTime = self.nowAnimationStartTime + TRANSITION_DURATION
         else:
             self.nowState = _state
         return True
@@ -122,10 +139,22 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             return
         if self.nowState == "equip":
             return
-        self.CallServer("ReleaseSkill", 0, PID, skill)
+        if skill == "aim":
+            if self.nowState == "aim" or self.targetState == "aim":
+                self.SwitchState("idle")
+            else:
+                self.SwitchState("aim")
+        elif skill == "fire":
+            if self.nowState == "aim":
+                self.CallServer("Shoot", 0, PID)
+            else:
+                self.CallServer("SendTip", 0, PID, "发射前请先打开瞄准镜", "c")
+        elif skill == "explode":
+            self.CallServer("ExplodeByPlayerId", 0, PID)
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
+        PPC.SetEnableColorAdjustment(True)
         self.CallServer("LoadData", 0, PID)
         levelQC = CF.CreateQueryVariable(levelId)
         for perspective in ("1st", "3rd"):
@@ -155,18 +184,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerGeometry(prefix + "arm", "geometry.{}_arm".format(DB.mod_name))
         actorComp.AddPlayerRenderController("controller.render.{}_arm".format(DB.mod_name),
                                             "v.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:sraw'")
-        for aniName in {"base"} | STATES:
+        for aniName in STATES - {"re_transition"}:
             actorComp.AddPlayerAnimation(prefix + "1st_" + aniName, "animation." + DB.mod_name + ".1st_" + aniName)
             actorComp.AddPlayerAnimation(prefix + "3rd_" + aniName, "animation." + DB.mod_name + ".3rd_" + aniName)
 
-        actorComp.AddPlayerAnimationController(prefix + "arm_controller", "controller.animation.sraw.general")
+        actorComp.AddPlayerAnimationController(prefix + "arm_controller",
+                                               "controller.animation.{}.general".format(DB.mod_name))
         actorComp.AddPlayerScriptAnimate(prefix + "arm_controller",
                                          "query.get_equipped_item_full_name('main_hand') == 'orchiella:sraw'")
-        actorComp.AddPlayerScriptAnimate(prefix + "1st_base",
-                                         "v.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:sraw'")
-        actorComp.AddPlayerScriptAnimate(prefix + "3rd_base",
-                                         "!v.is_first_person && query.get_equipped_item_full_name('main_hand') == 'orchiella:sraw'")
-
         actorComp.RebuildPlayerRender()
 
     def IsEquipped(self):
@@ -187,26 +212,20 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         parId = PC.Create("orchiella:" + effectName)
         PC.BindEntity(parId, entityId, locator, (0, 0, 0), (0, 0, 0))
 
-    def AppendFrame(self, entityId, frameType, duration, height, heightAmplifier, scaleAmplifier=1):
+    def AppendFrame(self, entityId, frameType, duration, height):
         if isinstance(self.frameDataDict[frameType], dict) and self.frameDataDict[frameType]:
-            self.frameDataDict[frameType]['time'] = time.time() + duration
+            self.frameDataDict[frameType]['time'] = time.time()
+            self.frameDataDict[frameType]['duration'] = duration
             self.frameDataDict[frameType]['entityId'] = entityId
             if isinstance(entityId, tuple):
-                self.frameDataDict[frameType]["aniTransComp"].SetPos((
-                    entityId[0],
-                    entityId[1] + height * (
-                        0.5 if heightAmplifier == 0.0 else heightAmplifier),
-                    entityId[2]
-                ))
+                self.frameDataDict[frameType]["aniTransComp"].SetPos(
+                    (entityId[0], entityId[1] + height * 0.5, entityId[2]))
             return
         frameTypeId = self.CreateEngineSfxFromEditor("effects/" + DB.mod_name + "_" + frameType + ".json")
         frameAniTransComp = CF.CreateFrameAniTrans(frameTypeId)
         frameAniControlComp = CF.CreateFrameAniControl(frameTypeId)
-        scale = 0.5 * self.GetData("{}_sign_size_percentage".format(frameType)) / 100.0 * scaleAmplifier
-        frameAniTransComp.SetScale((scale, scale, scale))
         frameAniControlComp.Play()
-        frameData = {"time": time.time() + duration,
-                     "entityId": entityId, "height": height, "heightAmplifier": heightAmplifier,
+        frameData = {"time": time.time(), "duration": duration, "entityId": entityId, "height": height,
                      "aniTransComp": frameAniTransComp, "aniControlComp": frameAniControlComp}
         if isinstance(self.frameDataDict[frameType], list):
             self.frameDataDict[frameType].append(frameData)
@@ -221,23 +240,23 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 if not frameDataList: continue
                 frameDataToRemove = []
                 for i, frameData in enumerate(frameDataList):
-                    toDel = self.DealFrame(frameData)
+                    toDel = self.DealFrame(frameType, frameData)
                     if toDel:
                         frameDataToRemove.append(i)
                 for index in reversed(frameDataToRemove):
                     del frameDataList[index]  # 倒序删除，避免索引错误
             elif isinstance(self.frameDataDict[frameType], dict):
                 if not self.frameDataDict[frameType]: continue
-                result = self.DealFrame(self.frameDataDict[frameType])
+                result = self.DealFrame(frameType, self.frameDataDict[frameType])
                 if result:
                     self.frameDataDict[frameType] = {}
 
-    def DealFrame(self, frameData):
-        nowTime = time.time()
+    def DealFrame(self, frameType, frameData):
         isBindEntity = not isinstance(frameData["entityId"], tuple)
         pos = CF.CreatePos(frameData["entityId"]).GetFootPos() if isBindEntity else \
             frameData["entityId"]
-        if nowTime >= frameData["time"] or not pos:
+        if time.time() - frameData['time'] >= frameData["duration"] or (
+                not pos and time.time() - frameData['time'] >= 0.5):
             # 若序列帧已过期，则清理该序列帧
             aniControlComp = frameData["aniControlComp"]
             aniControlComp.Stop()
@@ -245,11 +264,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif pos:
             # 若序列帧未过期，则更新位置
             aniTransComp = frameData["aniTransComp"]
-            heightAmplifier = frameData["heightAmplifier"]
+            scale = 0.5 * self.GetData(
+                "{}_sign_size_percentage".format(frameType)) / 100.0 * mathUtil.get_scale_by_distance(
+                CF.CreatePos(PID).GetFootPos(), pos)
+            aniTransComp.SetScale((scale, scale, scale))
             aniTransComp.SetPos((
                 pos[0],
-                pos[1] + frameData["height"] * (
-                    0.5 if heightAmplifier == 0.0 else heightAmplifier),
+                pos[1] + frameData["height"],
                 pos[2]
             ))
         return False
@@ -322,8 +343,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def CallAllClient(self, funcName, *args, **kwargs):
         self.CallServer('CallAllClient', funcName, *args, **kwargs)
 
-    def GetData(self, key):
-        return self.settings[key]
+    def GetData(self, key, default=None):
+        return self.settings.get(key, default)
 
     def SetData(self, key, value):
         self.settings[key] = value

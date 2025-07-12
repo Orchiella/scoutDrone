@@ -47,7 +47,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 continue
             if not self.aimStateDict.get(playerId, False):
                 continue
-            playerPos = CF.CreatePos(playerId).GetFootPos()
+            CF.CreateEffect(playerId).AddEffectToEntity("night_vision", 11, 1, False)
             blocks = serverApi.getEntitiesOrBlockFromRay(CF.CreateDimension(playerId).GetEntityDimensionId(),
                                                          CF.CreatePos(playerId).GetPos(),
                                                          serverApi.GetDirFromRot(
@@ -66,16 +66,29 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                     aimPos = penetratedBlock["pos"]
             if not aimPos:
                 continue
-            print (Vector3(aimPos) - Vector3(playerPos)).Length()
-            self.CallClient(playerId, "AppendFrame", (aimPos[0], aimPos[1] + 0.2, aimPos[2]), "aim", 0.3, 0, 1,
-                            min((Vector3(aimPos) - Vector3(playerPos)).Length() / 10, 5))
-            self.aimStateDict[playerId] = aimPos
+            self.CallClient(playerId, "AppendFrame", (aimPos[0], aimPos[1] + 0.2, aimPos[2]), "aim", 0.3, 0)
+            self.aimPosDict[playerId] = aimPos
 
     aimStateDict = {}
     aimPosDict = {}
 
     def UpdateAimState(self, playerId, state):
         self.aimStateDict[playerId] = state
+        if state:
+            if playerId not in self.missileDict.values():
+                self.SendTip(playerId, "现在可以发射", "a")
+            else:
+                self.SendTip(playerId, "现在可以继续控制", "e")
+        else:
+            effects = CF.CreateEffect(playerId).GetAllEffects()
+            if effects:
+                for effect in effects:
+                    if effect["effectName"] == "night_vision" and effect["duration"] <= 11:
+                        CF.CreateEffect(playerId).RemoveEffectFromEntity("night_vision")
+            if playerId not in self.missileDict.values():
+                self.SendTip(playerId, "已退出发射预备状态", "e")
+            else:
+                self.SendTip(playerId, "可以重新进入瞄准状态以控制", "e")
 
     @Listen
     def OnCarriedNewItemChangedServerEvent(self, event):
@@ -105,7 +118,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                                         "orchiella:sraw_missile",
                                                                         {
                                                                             "power": DataManager.Get(playerId,
-                                                                                                     "velocity") / 2.0,
+                                                                                                     "velocity") / 4.0,
                                                                             "gravity": 0,
                                                                             'position': shootPos,
                                                                             'direction': direction})
@@ -116,8 +129,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         SetEntityData(missileId, "distance", 0)
         SetEntityData(missileId, "distanceRecordTime", time.time() + 0.5)
         SetEntityData(missileId, "distanceRecordPos", shootPos)
-        self.CallClient(playerId, "AppendFrame", missileId, "missile", DataManager.Get(playerId, "max_time"), 0, 1)
+        self.CallRelevantClients(playerId, "AppendFrame", missileId, "missile", DataManager.Get(playerId, "max_time"),
+                                 0)
+        self.CallRelevantClients(playerId, "BindParticle", "sraw_plume", missileId)
+        self.CallRelevantClients(playerId, "PlaySound", "fire")
         self.TakeDurability(playerId, 1)
+        self.SendTip(playerId, "发射成功，移动准星来实时调整导弹方向", "a")
         if not DataManager.Get(playerId, "usage_informed"):
             DataManager.Set(playerId, "usage_informed", True)
             CF.CreateMsg(playerId).NotifyOneMessage(playerId,
@@ -132,9 +149,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         shooterId = GetEntityData(missileId, "shooter")
         if time.time() - GetEntityData(missileId, "shootTime") > DataManager.Get(shooterId, "max_time"):
-            del self.missileDict[missileId]
-            self.DestroyEntity(missileId)
-            self.SendTip(shooterId, "飞行时间过久，已销毁", "c")
+            self.Explode(missileId)
+            self.SendTip(shooterId, "飞行时间过久，自动启动爆炸程序", "c")
             return
         if time.time() > GetEntityData(missileId, "distanceRecordTime"):
             nowPos = CF.CreatePos(missileId).GetFootPos()
@@ -142,23 +158,37 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             SetEntityData(missileId, "distance", GetEntityData(missileId, "distance") + (
                     Vector3(nowPos) - Vector3(GetEntityData(missileId, "distanceRecordPos"))).Length())
             SetEntityData(missileId, "distanceRecordPos", nowPos)
+            if self.aimStateDict.get(shooterId, False):
+                self.CallClient(shooterId, "functionsScreen.UpdateLock", missileId,
+                                "线控导弹\n坐标:({},{},{})\n速率:{}单位\n记录:{}米,{}秒\n水平方向:{}".format(
+                                    int(math.floor(nowPos[0])), int(math.floor(nowPos[1])), int(math.floor(nowPos[2])),
+                                    round(Vector3(CF.CreateActorMotion(missileId).GetMotion()).Length(), 1),
+                                    round(GetEntityData(missileId, "distance"), 1),
+                                    round(time.time() - GetEntityData(missileId, "shootTime"), 1),
+                                    mathUtil.get_direction(CF.CreateActorMotion(missileId).GetMotion())),
+                                )
+            else:
+                self.CallClient(shooterId, "functionsScreen.UpdateLock", None)
         if time.time() > GetEntityData(missileId, "turnTime"):
             SetEntityData(missileId, "turnTime", time.time() + 1 / DataManager.Get(shooterId, "turn_rate"))
             motionCamp = CF.CreateActorMotion(missileId)
-            motionLength = DataManager.Get(shooterId, "velocity") / 2.0
+            velocity = DataManager.Get(shooterId, "velocity") / 4.0
             if self.aimStateDict.get(shooterId, False):
-                print "转向"
+                nowPos = CF.CreatePos(missileId).GetFootPos()
                 if shooterId in self.aimPosDict:
-                    nowPos = CF.CreatePos(missileId).GetFootPos()
                     motionCamp.SetMotion(
-                        ((Vector3(self.aimPosDict[shooterId]) - Vector3(nowPos)) * motionLength).ToTuple())
+                        ((Vector3(self.aimPosDict[shooterId]) - Vector3(nowPos)).Normalized() * velocity).ToTuple())
                 else:
                     playerDir = serverApi.GetDirFromRot(CF.CreateRot(shooterId).GetRot())
-                    motionCamp.SetMotion(
-                        (Vector3(playerDir) * motionLength - Vector3(motionCamp.GetMotion())).ToTuple())
+                    relativeVec = (Vector3(nowPos) - Vector3(CF.CreatePos(shooterId).GetPos())).Normalized()
+                    deltaVec = Vector3(playerDir) - relativeVec
+                    if deltaVec.Length() < 0.1:
+                        motionVec = relativeVec * velocity
+                    else:
+                        motionVec = deltaVec.Normalized() * velocity
+                    motionCamp.SetMotion(motionVec.ToTuple())
             else:
-                print "控速"
-                motionCamp.SetMotion((Vector3(motionCamp.GetMotion()) * motionLength).ToTuple())
+                motionCamp.SetMotion((Vector3(motionCamp.GetMotion()).Normalized() * velocity).ToTuple())
 
     @Listen
     def ProjectileDoHitEffectEvent(self, event):
@@ -167,19 +197,40 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         if time.time() - GetEntityData(missileId, "shootTime") < 1:
             event['cancel'] = True
-            print "过早"
         else:
-            shooterId = GetEntityData(missileId, "shooter")
-            CF.CreateExplosion(levelId).CreateExplosion((event['x'], event['y'], event['z']),
-                                                        DataManager.Get(shooterId, "explode_radius"),
-                                                        DataManager.Get(shooterId, "explode_fire_enabled"),
-                                                        DataManager.Get(shooterId, "explode_break_enabled"), shooterId,
-                                                        shooterId)
-            del self.missileDict[missileId]
-            self.DestroyEntity(missileId)
-            self.SendTip(shooterId, "§f命中！飞行§6{}§f秒,§e{}§f米".format(
-                round(time.time() - GetEntityData(missileId, "shootTime"), 1),
-                round(GetEntityData(missileId, "distance")), 1), "a")
+            self.Explode(missileId)
+
+    def ExplodeByPlayerId(self, playerId):
+        for missileId in self.missileDict:
+            if self.missileDict[missileId] == playerId:
+                self.Explode(missileId)
+                return
+
+    def Explode(self, missileId):
+        pos = CF.CreatePos(missileId).GetFootPos()
+        shooterId = GetEntityData(missileId, "shooter")
+        self.isExploding = shooterId
+        CF.CreateExplosion(levelId).CreateExplosion(pos,
+                                                    DataManager.Get(shooterId, "explode_radius"),
+                                                    DataManager.Get(shooterId, "explode_fire_enabled"),
+                                                    DataManager.Get(shooterId, "explode_break_enabled"), shooterId,
+                                                    shooterId)
+        self.isExploding = None
+        del self.missileDict[missileId]
+        self.DestroyEntity(missileId)
+        self.CallClient(shooterId, "functionsScreen.UpdateLock", None)
+
+    isExploding = None
+
+    @Listen
+    def DamageEvent(self, event):
+        if not self.isExploding or event['cause'] != serverApi.GetMinecraftEnum().ActorDamageCause.EntityExplosion:
+            return
+        if CF.CreateEngineType(event['entityId']).GetEngineTypeStr() in {"minecraft:item", "minecraft:xp_orb"}:
+            event['damage'] = 0
+            return
+        event["damage"] = int(
+            event["damage"] * DataManager.Get(self.isExploding, 'explode_damage_percentage') / 100.0)
 
     def IsEquipped(self, playerId):
         comp = CF.CreateItem(playerId)

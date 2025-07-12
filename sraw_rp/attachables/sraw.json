@@ -5,20 +5,19 @@
       "identifier": "orchiella:sraw",
       "materials": {
         "default": "netease_entity_metallic",
-        "unlit": "entity_emissive_alpha",
-        "enchanted": "entity_emissive_alpha"
+        "unlit": "entity_emissive_alpha"
       },
       "textures": {
         "default": "textures/entity/sraw",
         "enchanted": "textures/misc/enchanted_item_glint"
       },
       "animations": {
-        "sraw_1st_base": "animation.sraw.1st_base",
+        "sraw_1st_idle": "animation.sraw.1st_idle",
         "sraw_1st_transition": "animation.sraw.1st_transition",
         "sraw_1st_equip": "animation.sraw.1st_equip",
         "sraw_1st_aim": "animation.sraw.1st_aim",
         "sraw_1st_run": "animation.sraw.1st_run",
-        "sraw_3rd_base": "animation.sraw.3rd_base",
+        "sraw_3rd_idle": "animation.sraw.3rd_idle",
         "sraw_3rd_transition": "animation.sraw.3rd_transition",
         "sraw_3rd_equip": "animation.sraw.3rd_equip",
         "sraw_3rd_aim": "animation.sraw.3rd_aim",
@@ -31,13 +30,7 @@
       },
       "scripts": {
         "animate": [
-          "controller.sraw.general",
-          {
-            "sraw_1st_base": "c.is_first_person"
-          },
-          {
-            "sraw_3rd_base": "!c.is_first_person"
-          }
+          "controller.sraw.general"
         ]
       },
       "render_controllers": [

@@ -5,13 +5,10 @@
       "geometry": "geometry.default",
       "materials": [
         {
-          "handle": "Material.default"
+          "*": "Material.default"
         },
         {
           "unlit": "Material.unlit"
-        },
-        {
-          "teeth": "Material.unlit"
         }
       ],
       "textures": [

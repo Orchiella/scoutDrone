@@ -10,47 +10,20 @@
         }
       ]
     },
-    "orchiella:sraw_slash3": {
+    "orchiella:sraw_aim": {
       "category": "player",
       "sounds": [
         {
-          "name": "sounds/sraw/slash3",
+          "name": "sounds/sraw/aim",
           "stream": false
         }
       ]
     },
-    "orchiella:sraw_slash4": {
+    "orchiella:sraw_fire": {
       "category": "player",
       "sounds": [
         {
-          "name": "sounds/sraw/slash4",
-          "stream": false
-        }
-      ]
-    },
-    "orchiella:sraw_slash5": {
-      "category": "player",
-      "sounds": [
-        {
-          "name": "sounds/sraw/slash5",
-          "stream": false
-        }
-      ]
-    },
-    "orchiella:sraw_revving": {
-      "category": "player",
-      "sounds": [
-        {
-          "name": "sounds/sraw/revving",
-          "stream": false
-        }
-      ]
-    },
-    "orchiella:sraw_toggle": {
-      "category": "player",
-      "sounds": [
-        {
-          "name": "sounds/sraw/toggle",
+          "name": "sounds/sraw/fire",
           "stream": false
         }
       ]

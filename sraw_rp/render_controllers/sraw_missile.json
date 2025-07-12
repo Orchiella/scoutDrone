@@ -6,6 +6,9 @@
       "materials": [
         {
           "*": "Material.default"
+        },
+        {
+          "unlit": "Material.unlit"
         }
       ],
       "textures": [
