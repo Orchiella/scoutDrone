@@ -6,7 +6,7 @@ import mod.client.extraClientApi as clientApi
 import config as DB
 from SRAW import mathUtil
 from SRAW.const import STATES, ANIM_CACHE, TRANSITION_DURATION
-from SRAW.mathUtil import set_transition_molang_vars
+from SRAW.mathUtil import GetTransitionMolangDict
 from SRAW.ui import uiMgr
 from SRAW.ui.uiDef import UIDef
 
@@ -55,7 +55,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnCarriedNewItemChangedClientEvent(self, event):
         newItem = event["newItemDict"]
         if newItem and newItem['newItemName'] == "orchiella:sraw":
-            self.PlaySound("equip")
             self.SyncVarToServer(0, "equip", 1)
             self.SyncVarToServer(0.05, "equip", 0)
         else:
@@ -95,12 +94,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.transitionFinishTime != 0 and time.time() > self.transitionFinishTime:
             if self.beforeState != "aim" and self.targetState == "aim":
                 self.PlaySound("aim")
-                self.CallServer("UpdateAimState", 0, PID, True)
+                self.functionsScreen.GetBaseUIControl("/screen").SetVisible(True)
                 self.fovBeforeAim = CC.GetFov()
-                PPC.SetColorAdjustmentTint(0.3, (0, 255, 0))
-                PPC.SetEnableLensStain(True)
+                PPC.SetColorAdjustmentTint(self.GetData("func_aim_green_intense") / 100.0, (0, 255, 0))
                 CC.SetFov(self.GetData("func_aim_fov"))
             self.nowState = self.targetState
+            self.CallServer("UpdateState", 0, PID, self.targetState)
             self.transitionFinishTime = 0
             self.SyncVarToServer(0, "transition", 0)
             self.nowAnimationStartTime = time.time()
@@ -112,26 +111,26 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             return False
         for state in STATES:
             self.SyncVarToServer(0, state, 1 if state == _state else 0)
+
         if self.nowState == "aim" and _state != "aim":
             CC.SetFov(self.fovBeforeAim)
-            self.CallServer("UpdateAimState", 0, PID, False)
+            self.functionsScreen.GetBaseUIControl("/screen").SetVisible(False)
             PPC.SetColorAdjustmentTint(0, (0, 255, 0))
             PPC.SetEnableLensStain(False)
 
-        if isTransition:
-            set_transition_molang_vars(QC, self.animationCache, self.nowState, self.nowAnimationStartTime, _state)
-            if self.nowState == "transition":
-                self.SyncVarToServer(0, "re_transition", 1)
-                self.SyncVarToServer(0.05, "re_transition", 0)
-            else:
-                self.beforeState = self.nowState
-            self.SyncVarToServer(0, "transition", 1)
-            self.nowAnimationStartTime = time.time()
-            self.targetState = _state
-            self.nowState = "transition"
-            self.transitionFinishTime = self.nowAnimationStartTime + TRANSITION_DURATION
+        varDict = GetTransitionMolangDict(QC, self.animationCache, self.nowState, self.nowAnimationStartTime, _state)
+        self.SyncVarDictToServer(0, varDict)
+        if self.nowState == "transition":
+            self.SyncVarToServer(0, "re_transition", 1)
+            self.SyncVarToServer(0.05, "re_transition", 0)
         else:
-            self.nowState = _state
+            self.beforeState = self.nowState
+        self.SyncVarToServer(0, "transition", 1)
+        self.nowAnimationStartTime = time.time()
+        self.targetState = _state
+        self.nowState = "transition"
+        self.CallServer("UpdateState", 0, PID, "transition")
+        self.transitionFinishTime = self.nowAnimationStartTime + (TRANSITION_DURATION if isTransition else 0)
         return True
 
     def ReleaseSkill(self, skill):
@@ -140,15 +139,20 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.nowState == "equip":
             return
         if skill == "aim":
-            if self.nowState == "aim" or self.targetState == "aim":
+            if self.nowState == skill or self.targetState == skill:
                 self.SwitchState("idle")
             else:
-                self.SwitchState("aim")
+                self.SwitchState(skill)
+        elif skill == "inspect":
+            if self.nowState == skill or self.targetState == skill:
+                self.SwitchState("idle")
+            else:
+                self.SwitchState(skill, self.nowState != "idle")
         elif skill == "fire":
             if self.nowState == "aim":
                 self.CallServer("Shoot", 0, PID)
             else:
-                self.CallServer("SendTip", 0, PID, "发射前请先打开瞄准镜", "c")
+                self.CallServer("SendTip", 0, PID, "发射前请先开镜", "c")
         elif skill == "explode":
             self.CallServer("ExplodeByPlayerId", 0, PID)
 
@@ -178,7 +182,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
         GC.AddTimer(1, equip)
 
-    def Rebuild(self, playerId):
+    def Rebuild(self, playerId=PID, state=None):
         actorComp = CF.CreateActorRender(playerId)
         prefix = DB.mod_name + "_"
         actorComp.AddPlayerGeometry(prefix + "arm", "geometry.{}_arm".format(DB.mod_name))
@@ -194,19 +198,36 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                          "query.get_equipped_item_full_name('main_hand') == 'orchiella:sraw'")
         actorComp.RebuildPlayerRender()
 
+        if state:
+            for _state in STATES:
+                self.UpdateVar(_state, 1 if _state == state else 0, playerId)
+
     def IsEquipped(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.CARRIED)
         return item and item['newItemName'] == "orchiella:sraw"
 
     def SyncVarToServer(self, delay, key, value):
         if delay == 0:
-            self.UpdateVar(key, value, PID)
+            self.UpdateVar(key, value, PID)  # 我发现这里的PID参数不能去除，否则会是-1，不知道为何
         else:
             GC.AddTimer(delay, self.UpdateVar, key, value, PID)
+
         self.CallServer("SyncVarToClients", delay, PID, key, value)
+
+    def SyncVarDictToServer(self, delay, varDict):
+        if delay == 0:
+            self.UpdateVarDict(varDict, PID)
+        else:
+            GC.AddTimer(delay, self.UpdateVarDict, varDict, PID)
+        self.CallServer("SyncVarDictToClients", delay, PID, varDict)
 
     def UpdateVar(self, key, value, playerId=PID):
         CF.CreateQueryVariable(playerId).Set("query.mod." + DB.mod_name + "_" + key, value)
+
+    def UpdateVarDict(self, varDict, playerId=PID):
+        QueryComp = CF.CreateQueryVariable(playerId)
+        for key, value in varDict.items():
+            QueryComp.Set("query.mod." + DB.mod_name + "_" + key, value)
 
     def BindParticle(self, effectName, entityId, locator="locator"):
         parId = PC.Create("orchiella:" + effectName)
@@ -257,7 +278,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             frameData["entityId"]
         if time.time() - frameData['time'] >= frameData["duration"] or (
                 not pos and time.time() - frameData['time'] >= 0.5):
-            # 若序列帧已过期，则清理该序列帧
+            # 若序列帧已过期则清理该序列帧，若绑定实体死亡则先隐藏，10秒后还是不对再清理
+            if not pos and time.time() - frameData['time'] < 10:
+                aniTransComp = frameData["aniTransComp"]
+                aniTransComp.SetScale((0, 0, 0))
+                return False
             aniControlComp = frameData["aniControlComp"]
             aniControlComp.Stop()
             return True
@@ -356,6 +381,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             elif key == s2.format(func_key):
                 self.functionsScreen.SetBtnSize(func_key, value)
                 break
+        if key == 'sight_bead_enabled':
+            self.functionsScreen.GetBaseUIControl("/sight_bead").SetVisible(value)
 
     def LoadData(self, settings):
         self.settings = settings

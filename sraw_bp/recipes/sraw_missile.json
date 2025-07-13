@@ -2,31 +2,31 @@
     "format_version": "1.12",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "orchiella:sraw"
+            "identifier": "orchiella:sraw_missile"
         },
         "key": {
             "I": {
                 "data": 0,
-                "item": "minecraft:iron_block"
+                "item": "minecraft:iron_ingot"
             },
-            "S": {
+            "E": {
                 "data": 0,
-                "item": "minecraft:spyglass"
+                "item": "minecraft:ender_pearl"
             },
             "R": {
                 "data": 0,
-                "item": "minecraft:redstone_block"
+                "item": "minecraft:redstone"
             }
         },
         "pattern": [
-            "IIR",
-            " SI",
-            "   "
+            "  I",
+            "ERI",
+            "  I"
         ],
         "result": {
-            "count": 1,
+            "count": 4,
             "data": 0,
-            "item": "orchiella:sraw"
+            "item": "orchiella:sraw_missile"
         },
         "tags": [
             "crafting_table"

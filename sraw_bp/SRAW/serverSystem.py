@@ -45,7 +45,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 del self.aimPosDict[playerId]
             if not self.IsEquipped(playerId):
                 continue
-            if not self.aimStateDict.get(playerId, False):
+            if self.stateDict.get(playerId, "idle") != "aim":
                 continue
             CF.CreateEffect(playerId).AddEffectToEntity("night_vision", 11, 1, False)
             blocks = serverApi.getEntitiesOrBlockFromRay(CF.CreateDimension(playerId).GetEntityDimensionId(),
@@ -69,17 +69,18 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.CallClient(playerId, "AppendFrame", (aimPos[0], aimPos[1] + 0.2, aimPos[2]), "aim", 0.3, 0)
             self.aimPosDict[playerId] = aimPos
 
-    aimStateDict = {}
+    stateDict = {}
     aimPosDict = {}
 
-    def UpdateAimState(self, playerId, state):
-        self.aimStateDict[playerId] = state
-        if state:
+    def UpdateState(self, playerId, state):
+        stateBefore = self.stateDict.get(playerId, "idle")
+        self.stateDict[playerId] = state
+        if state == "aim" and stateBefore != "aim":
             if playerId not in self.missileDict.values():
                 self.SendTip(playerId, "现在可以发射", "a")
             else:
                 self.SendTip(playerId, "现在可以继续控制", "e")
-        else:
+        elif state != "aim" and stateBefore == "aim":
             effects = CF.CreateEffect(playerId).GetAllEffects()
             if effects:
                 for effect in effects:
@@ -97,10 +98,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def Shoot(self, playerId):
         if not self.IsEquipped(playerId):
             return
-        if not self.aimStateDict.get(playerId, False):
+        if self.stateDict.get(playerId, "idle") != "aim":
             return
         if playerId in self.missileDict.values():
-            self.SendTip(playerId, "你同时只能控制一枚线控导弹", "c")
+            self.SendTip(playerId, "你同时只能控制一枚线控导弹。也可以强制引爆上一枚", "c")
             return
         takeItem = self.TakeItems(playerId, {"orchiella:sraw_missile": 1})
         if GC.GetPlayerGameType(playerId) != serverApi.GetMinecraftEnum().GameType.Creative and takeItem:
@@ -129,16 +130,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         SetEntityData(missileId, "distance", 0)
         SetEntityData(missileId, "distanceRecordTime", time.time() + 0.5)
         SetEntityData(missileId, "distanceRecordPos", shootPos)
-        self.CallRelevantClients(playerId, "AppendFrame", missileId, "missile", DataManager.Get(playerId, "max_time"),
+        self.CallClients(serverApi.GetPlayerList(), "AppendFrame", missileId, "missile", DataManager.Get(playerId, "max_time"),
                                  0)
-        self.CallRelevantClients(playerId, "BindParticle", "sraw_plume", missileId)
-        self.CallRelevantClients(playerId, "PlaySound", "fire")
-        self.TakeDurability(playerId, 1)
+        GC.AddTimer(0.2, self.CallRelevantClients, playerId, "BindParticle", "sraw_plume", missileId)
+        self.CallClients(serverApi.GetPlayerList(), "PlaySound", "fire")
+        self.TakeDurability(playerId, DataManager.Get(playerId, "durability_consumption"))
         self.SendTip(playerId, "发射成功，移动准星来实时调整导弹方向", "a")
         if not DataManager.Get(playerId, "usage_informed"):
             DataManager.Set(playerId, "usage_informed", True)
             CF.CreateMsg(playerId).NotifyOneMessage(playerId,
-                                                    "§b[电击箭复合弓] §f欢迎使用本模组！你可以在聊天框发送§e“电箭设置”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。若有任何想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
+                                                    "§a[线控导弹] §f欢迎使用本模组！你可以在聊天框发送§e“线控导弹设置”§f或其拼音缩写§e“xkddsz”§f打开设置面板，自定义各种数值，定制你的使用体验。如果觉得按钮挡也可以§a长按拖动§f。对于瞄准镜视角，默认是50，调小可以看得更精准，调大可以看得更全面，取决于个人需求。若有任何其他想法建议或BUG反馈，欢迎进入§6995126773§f群交流")
 
     missileDict = {}
 
@@ -158,7 +159,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             SetEntityData(missileId, "distance", GetEntityData(missileId, "distance") + (
                     Vector3(nowPos) - Vector3(GetEntityData(missileId, "distanceRecordPos"))).Length())
             SetEntityData(missileId, "distanceRecordPos", nowPos)
-            if self.aimStateDict.get(shooterId, False):
+            if self.stateDict.get(shooterId, "idle") == "aim":
                 self.CallClient(shooterId, "functionsScreen.UpdateLock", missileId,
                                 "线控导弹\n坐标:({},{},{})\n速率:{}单位\n记录:{}米,{}秒\n水平方向:{}".format(
                                     int(math.floor(nowPos[0])), int(math.floor(nowPos[1])), int(math.floor(nowPos[2])),
@@ -173,7 +174,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             SetEntityData(missileId, "turnTime", time.time() + 1 / DataManager.Get(shooterId, "turn_rate"))
             motionCamp = CF.CreateActorMotion(missileId)
             velocity = DataManager.Get(shooterId, "velocity") / 4.0
-            if self.aimStateDict.get(shooterId, False):
+            if self.stateDict.get(shooterId, "idle") == "aim":
                 nowPos = CF.CreatePos(missileId).GetFootPos()
                 if shooterId in self.aimPosDict:
                     motionCamp.SetMotion(
@@ -195,7 +196,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         missileId = event["id"]
         if CF.CreateEngineType(missileId).GetEngineTypeStr() != "orchiella:sraw_missile":
             return
-        if time.time() - GetEntityData(missileId, "shootTime") < 1:
+        if time.time() - GetEntityData(missileId, "shootTime") < 0.5:
             event['cancel'] = True
         else:
             self.Explode(missileId)
@@ -204,11 +205,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         for missileId in self.missileDict:
             if self.missileDict[missileId] == playerId:
                 self.Explode(missileId)
+                self.SendTip(playerId, "引爆成功", "a")
                 return
+        self.SendTip(playerId, "没有正在飞行的导弹", "c")
 
     def Explode(self, missileId):
         pos = CF.CreatePos(missileId).GetFootPos()
         shooterId = GetEntityData(missileId, "shooter")
+        self.CallRelevantClients(missileId, "PlaySound", "explode")
         self.isExploding = shooterId
         CF.CreateExplosion(levelId).CreateExplosion(pos,
                                                     DataManager.Get(shooterId, "explode_radius"),
@@ -288,18 +292,21 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def SyncRebuild(self, playerId):
         otherPlayers = serverApi.GetPlayerList()
         otherPlayers.remove(playerId)
-        blinkList = []
+        state = "idle"
         if self.IsEquipped(playerId):
-            blinkList.append("equip")
+            state = self.stateDict.get(playerId, "idle")
         for otherPlayerId in otherPlayers:
-            self.CallClient(otherPlayerId, "Rebuild", playerId, blinkList)
-            otherBlinkList = []
+            self.CallClient(otherPlayerId, "Rebuild", playerId, state)
+            otherState = "idle"
             if self.IsEquipped(otherPlayerId):
-                otherBlinkList.append("equip")
-            self.CallClient(playerId, "Rebuild", otherPlayerId, blinkList)
+                otherState = self.stateDict.get(otherPlayerId, "idle")
+            self.CallClient(playerId, "Rebuild", otherPlayerId, otherState)
 
     def SyncVarToClients(self, playerId, key, value):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVar", key, value, playerId)
+
+    def SyncVarDictToClients(self, playerId, varDict):
+        self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "UpdateVarDict", varDict, playerId)
 
     def SyncSoundToClients(self, playerId, soundName):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "PlaySound", soundName)
@@ -319,8 +326,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def ServerChatEvent(self, args):
         message = args["message"]
         playerId = args["playerId"]
-        self.TakeDurability(playerId, 1)
-        if message == "1":
+        if message == "线控导弹设置" or message == "xkddsz":
             args["cancel"] = True
             ownerId = DataManager.Get(None, "owner")
             if playerId == ownerId:
@@ -378,8 +384,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         for playerId in players:
             self.CallClient(playerId, funcName, *args, **kwargs)
 
-    def CallRelevantClients(self, centerPlayerId, funcName, *args, **kwargs):
-        for playerId in CF.CreatePlayer(centerPlayerId).GetRelevantPlayer():
+    def CallRelevantClients(self, entityId, funcName, *args, **kwargs):
+        players = CF.CreatePlayer(entityId).GetRelevantPlayer()
+        if not players: return
+        for playerId in players:
             self.CallClient(playerId, funcName, *args, **kwargs)
 
     def CallAllClient(self, funcName, *args, **kwargs):

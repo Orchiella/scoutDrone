@@ -80,6 +80,23 @@
 					"scale": 0.8
 				}
 			}
+		},
+		"animation.sraw.3rd_inspect": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"sraw": {
+					"scale": 0.8
+				},
+				"rightArm": {
+					"rotation": [-57.5, 0, 0],
+					"position": [-1, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-48.65802, 13.31791, 11.45696],
+					"position": [-0.30071, -0.61304, -0.73059]
+				}
+			}
 		}
 	}
 }

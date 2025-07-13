@@ -142,6 +142,17 @@
                         }
                     ]
                 }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "size": [
+                        300.0,
+                        225.0
+                    ],
+                    "alpha": 0.35,
+                    "texture": "textures/ui/sraw/screen"
+                }
             }
         ]
     },

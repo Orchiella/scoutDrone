@@ -1,11 +1,11 @@
 {
   "format_version": "1.14.0",
   "sound_definitions": {
-    "orchiella:sraw_equip": {
+    "orchiella:sraw_explode": {
       "category": "player",
       "sounds": [
         {
-          "name": "sounds/sraw/equip",
+          "name": "sounds/sraw/explode",
           "stream": false
         }
       ]

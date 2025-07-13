@@ -34,6 +34,7 @@ class SRAWFunctions(ScreenNode):
         self.func_def = {
             "aim": {"name": "§{color}瞄准{cd}", "type": "skill"},
             "fire": {"name": "§{color}发射{cd}", "type": "skill"},
+            "inspect": {"name": "§{color}检视{cd}", "type": "skill"},
             "explode": {"name": "§{color}强制引爆{cd}", "type": "skill"}
         }
         self.use_cd = {func_key: 0 for func_key, func_def in self.func_def.items() if
@@ -160,6 +161,7 @@ class SRAWFunctions(ScreenNode):
                 self.info_label_ctrl = self.GetBaseUIControl("/info/netease_paper_doll/label").asLabel()
                 self.doll_ctrl.SetVisible(False)
                 self.GetBaseUIControl("/sight_bead").SetVisible(self.GetData("sight_bead_enabled"))
+                self.GetBaseUIControl("/screen").SetVisible(False)
 
                 self.initialized = True
         self.SetScreenVisible(show)

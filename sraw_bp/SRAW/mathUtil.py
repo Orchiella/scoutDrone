@@ -8,12 +8,13 @@ from SRAW.config import mod_name
 from SRAW.const import PENETRABLE_BLOCK_TYPE
 
 
-def set_transition_molang_vars(QC, animation_cache, now_state, now_state_start_time, next_state):
+def GetTransitionMolangDict(QC, animation_cache, now_state, now_state_start_time, next_state):
     t_now = time.time()
     t_anim = t_now - now_state_start_time  # 不管是不是过渡动画都需要
 
     is_transition = now_state == "transition"
 
+    varDict = {}
     for perspective, bone_map in [
         ("1st", {
             "right": "rightArm",
@@ -78,18 +79,19 @@ def set_transition_molang_vars(QC, animation_cache, now_state, now_state_start_t
 
                 # ===== 设置 molang 起始值 =====
                 for i, coord in enumerate("xyz"):
-                    var_s = "query.mod.{}_trans_{}_{}_{}_s_{}".format(
-                        mod_name, perspective, bone_key, attr[:3], coord)
-                    QC.Set(var_s, value[i])
+                    var_s = "trans_{}_{}_{}_s_{}".format(
+                        perspective, bone_key, attr[:3], coord)
+                    varDict[var_s] = value[i]
                     #print "s: {} {}".format(var_s, value[i])
 
                 # ===== 设置 molang 终止值（目标动画的 0.0 帧）=====
                 end_val = next_bone.get(attr, {}).get("0.0", [0.0, 0.0, 0.0])
                 for i, coord in enumerate("xyz"):
-                    var_e = "query.mod.{}_trans_{}_{}_{}_e_{}".format(
-                        mod_name, perspective, bone_key, attr[:3], coord)
-                    QC.Set(var_e, end_val[i])
+                    var_e = "trans_{}_{}_{}_e_{}".format(
+                        perspective, bone_key, attr[:3], coord)
+                    varDict[var_e] = end_val[i]
                     #print "e: {} {}".format(var_e, end_val[i])
+    return varDict
 
 
 def get_scale_by_distance(player_pos, frame_pos):

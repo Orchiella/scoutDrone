@@ -17,11 +17,13 @@
         "sraw_1st_equip": "animation.sraw.1st_equip",
         "sraw_1st_aim": "animation.sraw.1st_aim",
         "sraw_1st_run": "animation.sraw.1st_run",
+        "sraw_1st_inspect": "animation.sraw.1st_inspect",
         "sraw_3rd_idle": "animation.sraw.3rd_idle",
         "sraw_3rd_transition": "animation.sraw.3rd_transition",
         "sraw_3rd_equip": "animation.sraw.3rd_equip",
         "sraw_3rd_aim": "animation.sraw.3rd_aim",
         "sraw_3rd_run": "animation.sraw.3rd_run",
+        "sraw_3rd_inspect": "animation.sraw.3rd_inspect",
         "controller.sraw.general": "controller.animation.sraw.general"
       },
       "geometry": {

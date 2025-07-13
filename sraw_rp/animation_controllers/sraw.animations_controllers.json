@@ -57,6 +57,9 @@
 							"aim" : "!q.mod.sraw_transition && q.mod.sraw_aim"
 						},
 						{
+							"inspect" : "!q.mod.sraw_transition && q.mod.sraw_inspect"
+						},
+						{
 							"transition2" : "q.mod.sraw_re_transition"
 						}
 					]
@@ -79,6 +82,9 @@
 						},
 						{
 							"aim" : "!q.mod.sraw_transition && q.mod.sraw_aim"
+						},
+						{
+							"inspect" : "!q.mod.sraw_transition && q.mod.sraw_inspect"
 						},
 						{
 							"transition" : "q.mod.sraw_re_transition"
@@ -110,6 +116,24 @@
 						},
 						{
 							"sraw_3rd_aim": "!(c.is_first_person??v.is_first_person)"
+						}
+					],
+					"transitions" : [
+						{
+							"transition": "q.mod.sraw_transition"
+						},
+						{
+							"equip": "q.mod.sraw_equip"
+						}
+					]
+				},
+				"inspect": {
+					"animations": [
+						{
+							"sraw_1st_inspect": "c.is_first_person??v.is_first_person"
+						},
+						{
+							"sraw_3rd_inspect": "!(c.is_first_person??v.is_first_person)"
 						}
 					],
 					"transitions" : [

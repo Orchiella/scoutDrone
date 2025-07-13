@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "orchiella:sraw_missile"
+        },
+        "components": {
+            "minecraft:icon": "orchiella:sraw_missile"
+        }
+    }
+}

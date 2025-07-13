@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="29c1a3e7-ca33-4813-a11f-1bcf9d24a401" name="Changes" comment="2">
-      <change afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd_transition.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/aim.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/explode.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/fire.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/sight_bead.png" afterDir="false" />
+    <list default="true" id="29c1a3e7-ca33-4813-a11f-1bcf9d24a401" name="Changes" comment="3">
+      <change afterPath="$PROJECT_DIR$/sraw_bp/recipes/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/netease_items_res/sraw_missile.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/particle/sraw_plume.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/inspect.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/screen.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/SRAW/animationHelper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/SRAW/clientSystem.py" afterDir="false" />
@@ -18,37 +18,22 @@
       <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/SRAW/mathUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/SRAW/serverSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_bp/recipes/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_bp/recipes/sraw.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/animation_controllers/sraw.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/animation_controllers/sraw.animations_controllers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st_base.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st_transition.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd_base.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/attachables/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/attachables/sraw.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/effects/sraw_aim.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/effects/sraw_aim.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/entity/sraw_missile.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/entity/sraw_missile.entity.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_arm.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_arm.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_missile.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_hit.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_plume.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_missile.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_plume.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_plume.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/sounds/sound_definitions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/equip.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/revving.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash3.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash4.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/slash5.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sraw/toggle.ogg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw_missile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/items/sraw.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/items/sraw.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/items/sraw_missile.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/items/sraw_missile.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/rev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/explode.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/explode.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/fire.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sraw_rp/ui/sraw_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/sraw_rp/ui/sraw_functions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world_behavior_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_behavior_packs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world_resource_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_resource_packs.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,16 +66,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/SRAW/sraw_rp/animation_controllers"
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/SRAW/sraw_rp/netease_items_res"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\animation_controllers" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\netease_items_res" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_bp\recipes" />
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\ui\sraw" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\sfxs" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\effects" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\items" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\textures\particle" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp\animation_controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\SRAW\sraw_rp" />
@@ -121,12 +106,21 @@
       <option name="project" value="LOCAL" />
       <updated>1752248647792</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="3">
+      <option name="closed" value="true" />
+      <created>1752338219316</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752338219316</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
     <MESSAGE value="2" />
-    <option name="LAST_COMMIT_MESSAGE" value="2" />
+    <MESSAGE value="3" />
+    <option name="LAST_COMMIT_MESSAGE" value="3" />
   </component>
 </project>
