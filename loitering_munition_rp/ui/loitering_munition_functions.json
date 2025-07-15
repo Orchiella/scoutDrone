@@ -1,0 +1,160 @@
+{
+    "main": {
+        "type": "screen",
+        "controls": [
+            {
+                "sight_bead": {
+                    "type": "image",
+                    "size": [
+                        15,
+                        15
+                    ],
+                    "layer": 1,
+                    "texture": "textures/ui/loitering_munition/sight_bead"
+                }
+            },
+            {
+                "info": {
+                    "type": "panel",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "size": [
+                        50,
+                        50
+                    ],
+                    "controls": [
+                        {
+                            "netease_paper_doll": {
+                                "type": "custom",
+                                "renderer": "netease_paper_doll_renderer",
+                                "offset": [
+                                    -25.0,
+                                    12.0
+                                ],
+                                "size": [
+                                    40,
+                                    40
+                                ],
+                                "layer": 1,
+                                "enable_scissor_test": false,
+                                "rotation": "gesture_x",
+                                "screen_scale": 1,
+                                "controls": [
+                                    {
+                                        "label": {
+                                            "type": "label",
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                7.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                100
+                                            ],
+                                            "font_type": "default",
+                                            "text": "选中目标：\n文本文本文本",
+                                            "text_alignment": "center"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "template@common.button": {
+                    "type": "button",
+                    "$control_alpha": 0.6,
+                    "$default_texture": "textures/ui/loitering_munition/template",
+                    "$hover_texture": "textures/ui/loitering_munition/template",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/loitering_munition/template",
+                    "$texture_layer": 2,
+                    "size": [
+                        35,
+                        35
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        },
+                        {
+                            "label": {
+                                "type": "label",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "size": [
+                                    100,
+                                    10
+                                ],
+                                "font_type": "default",
+                                "text": "技能(n.0s)",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "size": [
+                        300.0,
+                        225.0
+                    ],
+                    "alpha": 0.35,
+                    "texture": "textures/ui/loitering_munition/screen"
+                }
+            }
+        ]
+    },
+    "namespace": "loitering_munition_functions"
+}

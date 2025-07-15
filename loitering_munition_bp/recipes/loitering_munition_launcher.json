@@ -1,0 +1,35 @@
+{
+    "format_version": "1.12",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "orchiella:loitering_munition_launcher"
+        },
+        "key": {
+            "I": {
+                "data": 0,
+                "item": "minecraft:iron_block"
+            },
+            "S": {
+                "data": 0,
+                "item": "minecraft:spyglass"
+            },
+            "R": {
+                "data": 0,
+                "item": "minecraft:redstone_block"
+            }
+        },
+        "pattern": [
+            "IIR",
+            " SI",
+            "   "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "orchiella:loitering_munition_launcher"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

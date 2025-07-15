@@ -1,0 +1,7 @@
+{
+    "ui_defs": [
+        "ui/loitering_munition_functions.json",
+        "ui/loitering_munition_settings.json",
+        "ui/netease_editor_template_namespace.json"
+    ]
+}
