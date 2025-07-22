@@ -2,68 +2,10 @@
 import math
 import time
 
-from mod.common.utils.mcmath import Vector3
+from mod.common.utils.mcmath import Vector3, Matrix
 
 from LoiteringMunition.config import mod_name
 from LoiteringMunition.const import PENETRABLE_BLOCK_TYPE
-
-
-def update_missile_direction(current_dir, joystick_input):
-    """
-    简化版导弹方向更新函数
-    :param current_dir: 当前三维方向向量 (Vector3, 不需要是单位向量)
-    :param joystick_input: 摇杆二维输入 (x, y), x正=左, y正=上, 范围[-1,1]
-    :return: 更新后的三维方向向量 (Vector3)
-    """
-    # 常量定义
-    TURN_SPEED = math.radians(180)
-    DT = 1
-
-    # 归一化当前方向
-    current_dir_norm = Vector3(current_dir).Normalized()
-
-    # 解包摇杆输入 (x=左/右, y=上/下)
-    joy_x, joy_y = joystick_input
-
-    # 1. 计算偏航旋转 (绕世界Y轴旋转)
-    yaw_angle = joy_x * TURN_SPEED * DT
-    world_y_axis = Vector3(0, 1, 0)
-    new_dir = rotate_vector(current_dir_norm, world_y_axis, yaw_angle)
-
-    # 2. 计算俯仰旋转 (绕局部右轴旋转)
-    pitch_angle = -joy_y * TURN_SPEED * DT
-
-    # 计算右轴 (世界Y轴 × 当前方向)
-    right_axis = Vector3.Cross(world_y_axis, new_dir)
-    if right_axis.Length() < 1e-5:  # 如果方向与Y轴平行，使用世界X轴作为右轴
-        right_axis = Vector3(1, 0, 0)
-    else:
-        right_axis = right_axis.Normalized()
-
-    # 应用俯仰旋转
-    new_dir = rotate_vector(new_dir, right_axis, pitch_angle)
-
-    # 返回新方向 (保持原向量长度)
-    print new_dir,222
-    return new_dir
-
-
-def rotate_vector(vector, axis, angle):
-    """
-    绕任意轴旋转向量 (使用你的Vector3类方法)
-    :param vector: 要旋转的向量 (Vector3)
-    :param axis: 旋转轴 (Vector3, 不需要是单位向量)
-    :param angle: 旋转角度 (弧度)
-    :return: 旋转后的向量 (Vector3)
-    """
-    axis = axis.Normalized()
-    cos_theta = math.cos(angle)
-    sin_theta = math.sin(angle)
-
-    # 罗德里格斯旋转公式
-    return (vector * cos_theta +
-            Vector3.Cross(axis, vector) * sin_theta +
-            axis * Vector3.Dot(axis, vector) * (1 - cos_theta))
 
 
 def GetTransitionMolangDict(QC, animation_cache, now_state, now_state_start_time, next_state):
@@ -187,3 +129,19 @@ def get_direction(motion):
             return "南偏西%d°" % (angle_deg - 180)
         else:
             return "北偏西%d°" % (360 - angle_deg)
+
+
+def GetSurroundingPoses(centerPos):
+    poses = []
+    for dy in [2, 1, 0, -1, -2]:
+        for dx in range(-2, 3):
+            for dz in range(-2, 3):
+                # 排除自身坐标
+                if dx == 0 and dy == 0 and dz == 0:
+                    continue
+                poses.append((centerPos[0] + dx, centerPos[1] + dy, centerPos[2] + dz))
+    return poses
+
+
+def GetDistance(pos1, pos2):
+    return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2 + (pos1[2] - pos2[2]) ** 2)

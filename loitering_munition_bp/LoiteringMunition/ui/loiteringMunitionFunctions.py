@@ -25,17 +25,18 @@ class LoiteringMunitionFunctions(ScreenNode):
         self.initialized = False
         self.clicking_func = None
 
-        self.lock = None
-        self.lockInfo = None
-        self.doll_ctrl = None
+        self.tip_ctrl = None
+        self.info_ctrl = None
         self.item_ctrl = None
         self.info_label_ctrl = None
+        self.progress_ctrl = None
 
         self.func_def = {
             "aim": {"name": "§{color}瞄准{cd}", "type": "skill"},
             "fire": {"name": "§{color}发射{cd}", "type": "skill"},
             "inspect": {"name": "§{color}检视{cd}", "type": "skill"},
-            "explode": {"name": "§{color}强制引爆{cd}", "type": "skill"}
+            "explode": {"name": "§{color}强制引爆{cd}", "type": "skill"},
+            "speed_up": {"name": "§{color}加速{cd}", "type": "skill"},
         }
         self.use_cd = {func_key: 0 for func_key, func_def in self.func_def.items() if
                        func_def['type'] == 'skill' or func_def['type'] == 'shoot'}
@@ -85,7 +86,8 @@ class LoiteringMunitionFunctions(ScreenNode):
             self.SetScreenVisible(False)
             return
         if self.clicking_func:
-            if self.tick != 0 and time.time() - self.tick > 0.5 and not self.dragging_mode:
+            if self.tick != 0 and time.time() - self.tick > 0.5 and not self.dragging_mode and not self.GetData(
+                    "lock_button"):
                 # 进入拖拽模式
                 dragging_skill_ctrl = self.func_btn_ctrls[self.clicking_func]
                 btn_pos, click_pos = dragging_skill_ctrl.GetPosition(), clientApi.GetTouchPos()
@@ -157,11 +159,13 @@ class LoiteringMunitionFunctions(ScreenNode):
                     self.SetBtnSize(func_key, self.GetData("func_{}_size".format(func_key)))
                     self.SetBtnVisible(func_key, self.GetData("func_{}_enabled".format(func_key)))
                 self.GetBaseUIControl(template_btn_path).SetVisible(False)
-                self.doll_ctrl = self.GetBaseUIControl("/info/netease_paper_doll").asNeteasePaperDoll()
-                self.info_label_ctrl = self.GetBaseUIControl("/info/netease_paper_doll/label").asLabel()
-                self.doll_ctrl.SetVisible(False)
+                self.tip_ctrl = self.GetBaseUIControl("/screen/tip")
+                self.info_ctrl = self.GetBaseUIControl("/screen/info")
+                self.info_label_ctrl = self.GetBaseUIControl("/screen/info/label").asLabel()
+                self.progress_ctrl = self.GetBaseUIControl("/screen/info/progress_bar").asProgressBar()
                 self.GetBaseUIControl("/sight_bead").SetVisible(self.GetData("sight_bead_enabled"))
                 self.GetBaseUIControl("/screen").SetVisible(False)
+                self.GetBaseUIControl("/screen/info").SetVisible(False)
 
                 self.initialized = True
         self.SetScreenVisible(show)
@@ -183,11 +187,13 @@ class LoiteringMunitionFunctions(ScreenNode):
             func_def = self.func_def[self.clicking_func]
             if func_def['type'] == 'skill':
                 if "condition" in func_def and not func_def['condition']():
+                    if "reply" in func_def:
+                        self.client.CallServer("SendTip", 0, PID, func_def['reply'], "c")
                     return
                 if time.time() < self.use_cd[self.clicking_func]:
                     return
                 self.use_cd[self.clicking_func] = time.time() + self.GetData(
-                    "func_{}_cd".format(self.clicking_func), 0) / 1000.0
+                    "func_{}_cd".format(self.clicking_func), 0)
                 self.client.ReleaseSkill(self.clicking_func)
             elif func_def['type'] == 'shoot':
                 pass
@@ -242,21 +248,15 @@ class LoiteringMunitionFunctions(ScreenNode):
     def Cooldown(self, func):
         self.use_cd[func] = time.time()
 
-    def UpdateLock(self, lock, lockInfo=None):
-        self.lock = lock
-        self.lockInfo = lockInfo
+    def UpdateLock(self, lock, progressValue=None, lockInfo=None):
         if lock:
-            if isinstance(lock, str):
-                self.doll_ctrl.SetVisible(True)
-                self.doll_ctrl.RenderEntity({
-                    "entity_id": lock,
-                    "scale": 3,
-                    "render_depth": -50,
-                    "init_rot_y": -30,
-                    "init_rot_x": 10})
-                self.info_label_ctrl.SetText(lockInfo)
+            self.info_ctrl.SetVisible(True)
+            self.tip_ctrl.SetVisible(False)
+            self.info_label_ctrl.SetText(lockInfo)
+            self.progress_ctrl.SetValue(progressValue)
         else:
-            self.doll_ctrl.SetVisible(False)
+            self.info_ctrl.SetVisible(False)
+            self.tip_ctrl.SetVisible(True)
 
     def GetData(self, key, default=None):
         return self.client.GetData(key, default)

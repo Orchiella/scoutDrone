@@ -4,83 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ccf10bd-094a-4008-a8ff-0646e48acf7a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/animation_controllers/loitering_munition_launcher.animations_controllers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st_transition.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_3rd_transition.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/attachables/loitering_munition_launcher.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/netease_items_res/loitering_munition_launcher.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/aim.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/item_texture.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/_ui_defs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SRAW.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/loiteringMunition.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="3ccf10bd-094a-4008-a8ff-0646e48acf7a" name="Changes" comment="1">
+      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/invisibility.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_empty.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_full.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/speed_up.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/modMain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/srawSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionSettings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/uiDef.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/uiDef.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/SRAW/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/uiMgr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/entities/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/netease_items_beh/loitering_munition_launcher.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/netease_items_beh/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/netease_items_beh/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/recipes/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_bp/recipes/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animation_controllers/sraw.animations_controllers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_1st_transition.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_3rd.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw.animation_3rd_transition.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/animations/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/attachables/sraw.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/effects/sraw_aim.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/effects/loitering_munition_aim.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/effects/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/effects/loitering_munition_alerting.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/entity/sraw_missile.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_arm.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher_arm.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/models/entity/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/netease_items_res/sraw.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/netease_items_res/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/netease_items_res/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/particles/sraw/sraw_plume.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/particles/loitering_munition/loitering_munition_plume.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_arm.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition_launcher_arm.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/render_controllers/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition_launcher.render_controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/sound_definitions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/texts/zh_CN.lang" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/entity/sraw.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/item_texture.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/items/sraw.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/items/sraw_missile.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/particle/sraw_plume.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/particle/loitering_munition_plume.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_alerting.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_aim.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_aim.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_aim.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/sfxs/sraw_missile.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_alerting.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/aim.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/aim.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/explode.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/explode.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/inspect.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/inspect.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/screen.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/textures/ui/sraw/sight_bead.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/sight_bead.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/ui/_ui_defs.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/ui/sraw_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sraw_rp/ui/sraw_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,9 +47,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2ztgUmVyqMjwbw7i5qxuwCML7Xa" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -102,18 +58,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/loiteringMunition/loitering_munition_rp/ui",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/loiteringMunition/loitering_munition_rp/sounds/loitering_munition&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\sounds\loitering_munition" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\textures\ui\loitering_munition" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\animations" />
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\ui" />
     </key>
   </component>
@@ -126,6 +85,19 @@
       <option name="presentableId" value="Default" />
       <updated>1752555801452</updated>
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1752596292471</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752596292471</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>

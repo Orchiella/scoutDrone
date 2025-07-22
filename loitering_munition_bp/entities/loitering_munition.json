@@ -16,6 +16,9 @@
         "value": 999,
         "max": 999
       },
+      "minecraft:physics": {
+        "has_gravity": false
+      },
       "minecraft:rideable": {
         "seat_count": 1,
         "family_types": [
@@ -24,8 +27,8 @@
         "seats": {
           "position": [
             0.0,
-            0.0,
-            0.0
+            -1.2,
+            0
           ]
         }
       }

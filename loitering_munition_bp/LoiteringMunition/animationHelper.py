@@ -1,8 +1,8 @@
 # coding=utf-8
 import json
 
-perspective = "3rd"
-# perspective = "1st"
+# perspective = "3rd"
+perspective = "1st"
 
 target_bones = {"loitering_munition_launcher", "rightArm", "leftArm"}
 

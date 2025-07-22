@@ -3,7 +3,7 @@ import math
 import time
 
 import mod.client.extraClientApi as clientApi
-from mod.common.utils.mcmath import Vector3
+from mod.common.utils.mcmath import Vector3, Matrix
 
 import config as DB
 from LoiteringMunition import mathUtil
@@ -23,6 +23,8 @@ CC = CF.CreateCamera(PID)
 OC = CF.CreateOperation(levelId)
 PPC = CF.CreatePostProcess(levelId)
 RC = CF.CreateRot(PID)
+ARC = CF.CreateActorRender(levelId)
+PVC = CF.CreatePlayerView(PID)
 eventList = []
 
 
@@ -54,13 +56,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.animationCache = {}
         GC.AddRepeatedTimer(0.05, self.UpdateFrame)
         GC.AddRepeatedTimer(0.05, self.CheckTransition)
-        self.updateRate = 20.0
-        GC.AddRepeatedTimer(1 / self.updateRate, self.UpdateVelocity)
 
-    def UpdateVelocity(self):
-        if self.nowState != 'aim':
-            return
+    @Listen
+    def OnScriptTickClient(self):
         if not self.IsEquipped():
+            return
+        if not self.GetData("joystick_enabled"):
+            return
+        if self.nowState != 'aim':
             return
         missileId = CF.CreateRide(PID).GetEntityRider()
         if not missileId or CF.CreateEngineType(missileId).GetEngineTypeStr() != "orchiella:loitering_munition":
@@ -68,54 +71,45 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
         # 获取摇杆输入
         inputVec = CF.CreateActorMotion(PID).GetInputVector()
-        input_x, input_y = -inputVec[0],inputVec[1]
-        if abs(input_x) < 1e-5 and abs(input_y) < 1e-5:
+        inputRight, inputUp = -inputVec[0], inputVec[1]
+        if abs(inputRight) < 1e-5 and abs(inputUp) < 1e-5:
             return
 
-        # 获取导弹当前位置
-        missile_pos = CF.CreatePos(missileId).GetFootPos()
+        currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
+        if abs(currentDir[1]) != 1:
+            currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
+        else:
+            currentDirRight = Vector3(
+                clientApi.GetDirFromRot((RC.GetRot()[0], RC.GetRot()[1] + math.radians(90))))
+        currentDirUp = Vector3.Cross(currentDirRight, currentDir)
 
-        # 获取当前玩家旋转和方向
-        current_rot = RC.GetRot()
-        current_dir = Vector3(clientApi.GetDirFromRot(current_rot)).Normalized()
+        transitionMatrix = Matrix.Create(
+            [list(currentDir.ToTuple()), list(currentDirUp.ToTuple()), list(currentDirRight.ToTuple())]).Transpose()
+        inputTransformed = transitionMatrix * Matrix.Create([[0, inputUp, inputRight]]).Transpose()
+        inputTransformed = Vector3(inputTransformed[0, 0], inputTransformed[1, 0], inputTransformed[2, 0])
 
-        # 计算旋转角度（基于摇杆输入和定时器频率）
-        # 假设定时器每0.05秒触发一次（20Hz），目标角速度120度/秒
-        rotation_speed = 120.0  # 度/秒
-        time_step = 0.05  # 秒/帧
-        max_angle = rotation_speed * time_step  # 每帧最大旋转角度
-
-        # 计算摇杆输入对应的角度变化
-        yaw_angle = -input_x * max_angle  # 左右旋转（偏航）
-        pitch_angle = input_y * max_angle  # 上下旋转（俯仰）
-
-        # 将角度变化应用到当前旋转
-        current_pitch, current_yaw = current_rot
-        new_pitch = current_pitch + pitch_angle
-        new_yaw = current_yaw + yaw_angle
-
-        # 限制俯仰角范围（-90到90度）
-        new_pitch = max(-90.0, min(90.0, new_pitch))
-
-        # 将新旋转转换为方向向量
-        new_dir = Vector3(clientApi.GetDirFromRot((new_pitch, new_yaw))).Normalized()
-
-        # 计算目标位置（导弹前方一段距离）
-        look_distance = 5.0
-        target_pos = (
-            missile_pos[0] + new_dir[0] * look_distance,
-            missile_pos[1] + new_dir[1] * look_distance,
-            missile_pos[2] + new_dir[2] * look_distance
+        newDir = ((currentDir + inputTransformed * 0.1).Normalized() * 100).ToTuple()
+        cameraPos = CC.GetPosition()
+        lookPos = (
+            cameraPos[0] + newDir[0],
+            cameraPos[1] + newDir[1],
+            cameraPos[2] + newDir[2]
         )
+        self.AppendFrame(lookPos, "aim", 1.1 / 30, 0)
 
-        # 设置玩家视角
-        # 使用计算出的最大角速度（确保在一帧内完成旋转）
-        RC.SetPlayerLookAtPos(
-            target_pos,
-            pitchStep=max_angle * 1.1,  # 稍大于最大角度确保完成
-            yawStep=max_angle * 1.1,  # 稍大于最大角度确保完成
-            blockInput=False
-        )
+        currentRot = clientApi.GetRotFromDir(currentDir.ToTuple())
+        newRot = clientApi.GetRotFromDir(newDir)
+
+        pitchStep = abs(math.radians(newRot[0]) - math.radians(currentRot[0])) * 30
+        yawStep = abs(math.radians(newRot[1]) - math.radians(currentRot[1])) * 30
+
+        # if abs(newRot[1]) > 20 or abs(currentRot[1]) > 20:
+        #     RC.SetPlayerLookAtPos(lookPos, pitchStep * 1, yawStep * 1, True)
+        #     print newRot[1], currentRot[1]
+        # else:
+        #     print "not", newRot
+        #     RC.SetRot(newRot)
+        RC.SetRot(newRot)
 
     # 其实是从服务端传过来的，服务端版本的这个事件会帮我们忽略耐久变化的情况
     def OnCarriedNewItemChangedClientEvent(self, event):
@@ -142,12 +136,18 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.IsEquipped():
             return
         event['cancel'] = True
+        if self.GetData("quick_shoot"):
+            self.functionsScreen.on_click_down({'AddTouchEventParams': {'func_key': "fire"}})
+            self.functionsScreen.on_click_up({})
 
     @Listen(("RightClickBeforeClientEvent", "HoldBeforeClientEvent"))
     def RightClick(self, event):
         if not self.IsEquipped():
             return
         event['cancel'] = True
+        if self.GetData("quick_shoot"):
+            self.functionsScreen.on_click_down({'AddTouchEventParams': {'func_key': "aim"}})
+            self.functionsScreen.on_click_up({})
 
     nowState = "idle"
     beforeState = "idle"
@@ -180,7 +180,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
         if self.nowState == "aim" and _state != "aim":
             CC.SetFov(self.fovBeforeAim)
-            self.functionsScreen.GetBaseUIControl("/screen").SetVisible(False)
+            if self.functionsScreen.GetBaseUIControl("/screen"):
+                self.functionsScreen.GetBaseUIControl("/screen").SetVisible(False)
             PPC.SetColorAdjustmentTint(0, (0, 255, 0))
             OC.SetCanDrag(True)
 
@@ -199,6 +200,34 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.transitionFinishTime = self.nowAnimationStartTime + (TRANSITION_DURATION if isTransition else 0)
         return True
 
+    isControlling = False
+
+    def SwitchControl(self, boolean):
+        self.isControlling = boolean
+        if boolean:
+            if self.GetData("joystick_enabled"):
+                OC.SetCanDrag(False)
+            else:
+                clientApi.HideMoveGui(True)
+            PVC.LockPerspective(0)
+            clientApi.HideSlotBarGui(True)
+            clientApi.HideExpGui(True)
+            clientApi.HideHorseHealthGui(True)
+            clientApi.HideHealthGui(True)
+            clientApi.HideHungerGui(True)
+            clientApi.HideArmorGui(True)
+        else:
+            OC.SetCanDrag(True)
+            PVC.LockPerspective(-1)
+            clientApi.HideSlotBarGui(False)
+            clientApi.HideExpGui(False)
+            clientApi.HideHorseHealthGui(False)
+            clientApi.HideHealthGui(False)
+            clientApi.HideHungerGui(False)
+            clientApi.HideArmorGui(False)
+            clientApi.HideMoveGui(False)
+        self.SyncVarToServer(0, "invisibility", 1 if boolean else 0)
+
     def ReleaseSkill(self, skill):
         if not self.IsEquipped():
             return
@@ -215,13 +244,18 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             else:
                 self.SwitchState(skill, self.nowState != "idle")
         elif skill == "fire":
-            if self.nowState == "aim":
-                OC.SetCanDrag(False)
-                self.CallServer("Shoot", 0, PID)
-            else:
-                self.CallServer("SendTip", 0, PID, "发射前请先开镜", "c")
+            self.CallServer("Shoot", 0, PID)
         elif skill == "explode":
             self.CallServer("ExplodeByPlayerId", 0, PID)
+        elif skill == "speed_up":
+            self.CallServer("SpeedUp", 0, PID)
+            if self.isControlling:
+                CC.SetFov(int(self.fovBeforeAim * 1.2))
+
+
+    @Listen
+    def UnLoadClientAddonScriptsBefore(self, event):
+        self.SwitchState("idle", False)
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
@@ -236,10 +270,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                             levelQC.Register(
                                 'query.mod.{}_trans_{}_{}_{}_{}_{}'.format(DB.mod_name, perspective, bone, attr, node,
                                                                            coord), 0)
-        for state in STATES | {"re_transition"}:
+        for state in STATES | {"re_transition", "invisibility"}:
             levelQC.Register('query.mod.{}_{}'.format(DB.mod_name, state), 0)
         self.Rebuild(PID)
-
         self.animationCache = ANIM_CACHE
 
         def equip():
@@ -265,6 +298,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                                "controller.animation." + DB.mod_name + "_launcher" + ".general")
         actorComp.AddPlayerScriptAnimate(prefix + "arm_controller",
                                          "query.get_equipped_item_full_name('main_hand') == 'orchiella:loitering_munition_launcher'")
+
+        actorComp.AddPlayerAnimation(DB.mod_name + "_invisibility",
+                                     "animation." + DB.mod_name + ".invisibility")
+        actorComp.AddPlayerAnimationIntoState('root', 'third_person',
+                                              DB.mod_name + "_invisibility",
+                                              "query.mod." + DB.mod_name + "_invisibility")
+
         actorComp.RebuildPlayerRender()
 
         if state:
@@ -289,6 +329,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         else:
             GC.AddTimer(delay, self.UpdateVarDict, varDict, PID)
         self.CallServer("SyncVarDictToClients", delay, PID, varDict)
+
+    def InitMissileAnimation(self, missileId):
+        comp = CF.CreateActorRender(missileId)
+        comp.AddAnimationToOneActor(missileId, DB.mod_name + "_invisibility",
+                                    "animation." + DB.mod_name + ".invisibility")
+        comp.AddScriptAnimateToOneActor(missileId, DB.mod_name + "_invisibility",
+                                        "q.has_rider")
+        comp.RebuildRenderForOneActor()
 
     def UpdateVar(self, key, value, playerId=PID):
         CF.CreateQueryVariable(playerId).Set("query.mod." + DB.mod_name + "_" + key, value)

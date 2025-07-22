@@ -1,4 +1,4 @@
 item.orchiella:loitering_munition_launcher.name=§6巡飞弹-发射器
 item.orchiella:loitering_munition.name=巡飞弹
 entity.orchiella:loitering_munition.name=巡飞弹
-action.hint.exit.orchiella:loitering_munition=§a开始操控...
+action.hint.exit.orchiella:loitering_munition=§a操控模式

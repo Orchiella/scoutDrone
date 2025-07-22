@@ -9,6 +9,10 @@
                 "data": 0,
                 "item": "minecraft:iron_block"
             },
+            "G": {
+                "data": 0,
+                "item": "minecraft:gold_block"
+            },
             "S": {
                 "data": 0,
                 "item": "minecraft:spyglass"
@@ -20,7 +24,7 @@
         },
         "pattern": [
             "IIR",
-            " SI",
+            " SG",
             "   "
         ],
         "result": {

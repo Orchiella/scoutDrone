@@ -21,46 +21,6 @@
                     "size": [
                         50,
                         50
-                    ],
-                    "controls": [
-                        {
-                            "netease_paper_doll": {
-                                "type": "custom",
-                                "renderer": "netease_paper_doll_renderer",
-                                "offset": [
-                                    -25.0,
-                                    12.0
-                                ],
-                                "size": [
-                                    40,
-                                    40
-                                ],
-                                "layer": 1,
-                                "enable_scissor_test": false,
-                                "rotation": "gesture_x",
-                                "screen_scale": 1,
-                                "controls": [
-                                    {
-                                        "label": {
-                                            "type": "label",
-                                            "anchor_from": "bottom_middle",
-                                            "anchor_to": "top_middle",
-                                            "offset": [
-                                                0.0,
-                                                7.0
-                                            ],
-                                            "size": [
-                                                100,
-                                                100
-                                            ],
-                                            "font_type": "default",
-                                            "text": "选中目标：\n文本文本文本",
-                                            "text_alignment": "center"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
                     ]
                 }
             },
@@ -151,7 +111,97 @@
                         225.0
                     ],
                     "alpha": 0.35,
-                    "texture": "textures/ui/loitering_munition/screen"
+                    "texture": "textures/ui/loitering_munition/screen",
+                    "controls": [
+                        {
+                            "tip": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -4.0,
+                                    -4.0
+                                ],
+                                "size": [
+                                    100,
+                                    20.0
+                                ],
+                                "font_type": "default",
+                                "text": "发送\"xfdsz\"打开\n巡飞弹设置面板",
+                                "text_alignment": "right"
+                            }
+                        },
+                        {
+                            "info": {
+                                "type": "panel",
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "progress_bar": {
+                                            "type": "panel",
+                                            "$clip_direction": "left",
+                                            "$clip_ratio": 0.0,
+                                            "$is_new_nine_slice": false,
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$progress_bar_empty_texture": "textures/ui/loitering_munition/energy_empty",
+                                            "$progress_bar_filled_texture": "textures/ui/loitering_munition/energy_full",
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_right",
+                                            "offset": [
+                                                -6.0,
+                                                7.0
+                                            ],
+                                            "size": [
+                                                64.0,
+                                                16.0
+                                            ],
+                                            "layer": 8,
+                                            "alpha": 0.8,
+                                            "propagate_alpha": true,
+                                            "controls": [
+                                                {
+                                                    "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {
+                                                        "propagate_alpha": true
+                                                    }
+                                                },
+                                                {
+                                                    "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {
+                                                        "propagate_alpha": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "label": {
+                                            "type": "label",
+                                            "anchor_from": "bottom_left",
+                                            "anchor_to": "bottom_left",
+                                            "offset": [
+                                                4.0,
+                                                -3.0
+                                            ],
+                                            "size": [
+                                                183,
+                                                50.0
+                                            ],
+                                            "font_type": "default",
+                                            "text": "巡航速度：1111单位\n水平方向：北偏东45°\n实时位置：(111,222,333)"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
             }
         ]
