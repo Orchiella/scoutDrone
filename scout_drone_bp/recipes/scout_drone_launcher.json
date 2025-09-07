@@ -1,0 +1,39 @@
+{
+    "format_version": "1.12",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "orchiella:scout_drone_launcher"
+        },
+        "key": {
+            "I": {
+                "data": 0,
+                "item": "minecraft:iron_block"
+            },
+            "G": {
+                "data": 0,
+                "item": "minecraft:gold_block"
+            },
+            "S": {
+                "data": 0,
+                "item": "minecraft:spyglass"
+            },
+            "R": {
+                "data": 0,
+                "item": "minecraft:redstone_block"
+            }
+        },
+        "pattern": [
+            "IIR",
+            " SG",
+            "   "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "orchiella:scout_drone_launcher"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

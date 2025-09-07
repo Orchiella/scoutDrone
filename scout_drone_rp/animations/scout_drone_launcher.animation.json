@@ -1,0 +1,50 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.scout_drone_launcher.core": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"core": {
+					"rotation": [39.2, "14.5 + (query.life_time * -60.0 + variable.time_offset)", -39.2]
+				}
+			}
+		},
+		"animation.scout_drone_launcher.drop": {
+			"loop": true,
+			"bones": {
+				"scout_drone_drill": {
+					"rotation": ["-q.mod.scout_drone_drop_yaw", 0, -90],
+					"position": [-4, -12.5, 0],
+					"scale": 0.6
+				}
+			}
+		},
+		"animation.scout_drone_launcher.deployment": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"drone": {
+					"scale": "q.mod.scout_drone_loaded"
+				},
+				"tail0": {
+					"scale": "q.mod.scout_drone_deployment_tail == 0"
+				},
+				"tail1": {
+					"scale": "q.mod.scout_drone_deployment_tail == 1"
+				},
+				"rotor0": {
+					"scale": "q.mod.scout_drone_deployment_rotor == 0"
+				},
+				"rotor1": {
+					"scale": "q.mod.scout_drone_deployment_rotor == 1"
+				},
+				"load1": {
+					"scale": "q.mod.scout_drone_deployment_load == 1"
+				},
+				"load2": {
+					"scale": "q.mod.scout_drone_deployment_load == 2"
+				}
+			}
+		}
+	}
+}

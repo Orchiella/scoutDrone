@@ -1,0 +1,3 @@
+item.orchiella:scout_drone_launcher.name=§6侦查无人机发射器
+entity.orchiella:scout_drone.name=侦查无人机
+action.hint.exit.orchiella:scout_drone=§a操控模式

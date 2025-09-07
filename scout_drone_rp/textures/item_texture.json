@@ -1,0 +1,12 @@
+{
+    "resource_pack_name": "vanilla",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "orchiella:scout_drone_launcher": {
+            "textures": "textures/items/scout_drone_launcher"
+        },
+        "orchiella:scout_drone": {
+            "textures": "textures/items/scout_drone"
+        }
+    }
+}

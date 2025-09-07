@@ -1,0 +1,1834 @@
+{
+    "a1": {
+        "anim_type": "offset",
+        "duration": 0.1,
+        "from": [
+            0,
+            0
+        ],
+        "next": "@scout_drone_functions.a2",
+        "to": [
+            5,
+            0
+        ]
+    },
+    "a2": {
+        "anim_type": "offset",
+        "duration": 0.1,
+        "from": [
+            5,
+            0
+        ],
+        "next": "@scout_drone_functions.a1",
+        "to": [
+            0,
+            0
+        ]
+    },
+    "main": {
+        "type": "screen",
+        "controls": [
+            {
+                "shoot@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/scout_drone/shoot",
+                    "$hover_texture": "textures/ui/scout_drone/shoot",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/scout_drone/shoot",
+                    "$texture_layer": 2,
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -60.0,
+                        30.0
+                    ],
+                    "size": [
+                        50.0,
+                        50.0
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "alpha": 0.7,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {
+                                "$label_text|default": "快射",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "font_scale_factor": 0.8
+                            }
+                        },
+                        {
+                            "key": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    10.0,
+                                    10.0
+                                ],
+                                "layer": 3,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "左",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "inspect@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/scout_drone/inspect",
+                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "检视",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$texture_layer": 2,
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        52.0,
+                        -60.0
+                    ],
+                    "size": [
+                        40.0,
+                        40.0
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "alpha": 0.7,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {
+                                "$label_text|default": "快射",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "font_scale_factor": 0.8
+                            }
+                        },
+                        {
+                            "key": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    10.0,
+                                    10.0
+                                ],
+                                "layer": 3,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "Y",
+                                "text_alignment": "right"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "deploy": {
+                    "type": "panel",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        145.0,
+                        -60.0
+                    ],
+                    "size": [
+                        40.0,
+                        40.0
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "btn@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/scout_drone/deploy",
+                                "$hover_texture": "textures/ui/scout_drone/deploy",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "改装",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/scout_drone/deploy",
+                                "$texture_layer": 2,
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "size": [
+                                    40.0,
+                                    40.0
+                                ],
+                                "layer": 2,
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {
+                                            "alpha": 0.7,
+                                            "propagate_alpha": true
+                                        }
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {
+                                            "alpha": 0.4,
+                                            "propagate_alpha": true
+                                        }
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {
+                                            "alpha": 0.4,
+                                            "propagate_alpha": true
+                                        }
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {
+                                            "$label_text|default": "快射",
+                                            "font_scale_factor": 0.5
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "tip": {
+                                "type": "label",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    35.0
+                                ],
+                                "size": [
+                                    100,
+                                    35
+                                ],
+                                "font_type": "default",
+                                "shadow": true,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "progress_bar": {
+                                "type": "panel",
+                                "$clip_direction": "left",
+                                "$clip_ratio": 0.0,
+                                "$is_new_nine_slice": false,
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$progress_bar_empty_texture": "textures/ui/scout_drone/deploy_select_bar_empty",
+                                "$progress_bar_filled_texture": "textures/ui/scout_drone/deploy_select_bar_filled",
+                                "offset": [
+                                    0.0,
+                                    8.0
+                                ],
+                                "size": [
+                                    16.0,
+                                    2.0
+                                ],
+                                "layer": 8,
+                                "controls": [
+                                    {
+                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                    },
+                                    {
+                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "base": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_base"
+                            }
+                        },
+                        {
+                            "select_1": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_1"
+                            }
+                        },
+                        {
+                            "select_0": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_0"
+                            }
+                        },
+                        {
+                            "select_2": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_2"
+                            }
+                        },
+                        {
+                            "select_3": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_3"
+                            }
+                        },
+                        {
+                            "select_4": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_4"
+                            }
+                        },
+                        {
+                            "select_5": {
+                                "type": "image",
+                                "size": [
+                                    107.0,
+                                    107.0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/emote_wheel_select_5"
+                            }
+                        },
+                        {
+                            "img_0": {
+                                "type": "image",
+                                "offset": [
+                                    -18.0,
+                                    -30.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "img_1": {
+                                "type": "image",
+                                "offset": [
+                                    18.0,
+                                    -30.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "img_2": {
+                                "type": "image",
+                                "offset": [
+                                    36.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "img_3": {
+                                "type": "image",
+                                "offset": [
+                                    17.0,
+                                    30.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "img_4": {
+                                "type": "image",
+                                "offset": [
+                                    -18.0,
+                                    30.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "img_5": {
+                                "type": "image",
+                                "offset": [
+                                    -36.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/icon_lock"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "type": "panel",
+                                "anchor_from": "right_middle",
+                                "anchor_to": "left_middle",
+                                "offset": [
+                                    48.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    100,
+                                    60.0
+                                ],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "damage": {
+                                            "type": "panel",
+                                            "offset": [
+                                                0.0,
+                                                -24.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                12.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "font_type": "default",
+                                                        "text": "伤害"
+                                                    }
+                                                },
+                                                {
+                                                    "white": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 10,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "green": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "red": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "gray": {
+                                                        "type": "image",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "power": {
+                                            "type": "panel",
+                                            "offset": [
+                                                0.0,
+                                                -12.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                12.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "font_type": "default",
+                                                        "text": "初速"
+                                                    }
+                                                },
+                                                {
+                                                    "red": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "green": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "white": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 10,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "gray": {
+                                                        "type": "image",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "stability": {
+                                            "type": "panel",
+                                            "size": [
+                                                100,
+                                                12.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "font_type": "default",
+                                                        "text": "稳定"
+                                                    }
+                                                },
+                                                {
+                                                    "red": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "green": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "white": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 10,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "gray": {
+                                                        "type": "image",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "speed": {
+                                            "type": "panel",
+                                            "offset": [
+                                                0.0,
+                                                12.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                12.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "font_type": "default",
+                                                        "text": "操纵"
+                                                    }
+                                                },
+                                                {
+                                                    "red": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "green": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "white": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 10,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "gray": {
+                                                        "type": "image",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "firm": {
+                                            "type": "panel",
+                                            "offset": [
+                                                0.0,
+                                                24.0
+                                            ],
+                                            "size": [
+                                                100,
+                                                12.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "font_type": "default",
+                                                        "text": "坚固"
+                                                    }
+                                                },
+                                                {
+                                                    "red": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "green": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 8,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "white": {
+                                                        "type": "panel",
+                                                        "$clip_direction": "left",
+                                                        "$clip_ratio": 0.0,
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10
+                                                        ],
+                                                        "layer": 10,
+                                                        "controls": [
+                                                            {
+                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                            },
+                                                            {
+                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "gray": {
+                                                        "type": "image",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "size": [
+                                                            80.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "settings@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/scout_drone/settings",
+                    "$hover_texture": "textures/ui/scout_drone/settings",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%scoutDroneFunctions.ClickSettingsButton",
+                    "$pressed_texture": "textures/ui/scout_drone/settings",
+                    "$texture_layer": 2,
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        62.0,
+                        -94.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "alpha": 0.7,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {
+                                "$label_text|default": "快射",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "font_scale_factor": 0.8
+                            }
+                        },
+                        {
+                            "update_tip": {
+                                "type": "image",
+                                "anchor_from": "top_right",
+                                "size": [
+                                    5.0,
+                                    5.0
+                                ],
+                                "layer": 3,
+                                "texture": "textures/ui/scout_drone/update_tip"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "info": {
+                    "type": "panel",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -30.0
+                    ],
+                    "size": [
+                        200.0,
+                        15.0
+                    ],
+                    "layer": 20,
+                    "controls": [
+                        {
+                            "tip": {
+                                "type": "label",
+                                "layer": 22,
+                                "font_scale_factor": 0.8,
+                                "font_size": "large",
+                                "font_type": "default",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "edit": {
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0.0,
+                        10.0
+                    ],
+                    "size": [
+                        150.0,
+                        60.0
+                    ],
+                    "layer": 200,
+                    "visible": false,
+                    "controls": [
+                        {
+                            "label": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    7.0
+                                ],
+                                "size": [
+                                    140.0,
+                                    21
+                                ],
+                                "layer": 20,
+                                "font_size": "large",
+                                "font_type": "default",
+                                "text": "按键设置",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "bg": {
+                                "type": "image",
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/background_image"
+                            }
+                        },
+                        {
+                            "bg2": {
+                                "type": "image",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    3.0
+                                ],
+                                "size": [
+                                    140.0,
+                                    30.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/background_indent_no_top"
+                            }
+                        },
+                        {
+                            "save@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/check",
+                                "$hover_texture": "textures/ui/check",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "就这样",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "$pressed_button_name": "%scoutDroneFunctions.ClickEditSaveButton",
+                                "$pressed_texture": "textures/ui/check",
+                                "$texture_layer": 2,
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -10.0
+                                ],
+                                "size": [
+                                    12.0,
+                                    12.0
+                                ],
+                                "layer": 2,
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {
+                                            "font_size": "normal",
+                                            "locked_color": [
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "shadow": true,
+                                            "text": ""
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "size@common.slider": {
+                                "$background_default_control": "common.slider_background",
+                                "$background_hover_control": "common.slider_background_hover",
+                                "$progress_default_clip_direction": "left",
+                                "$progress_default_control": "common.slider_progress",
+                                "$progress_hover_clip_direction": "left",
+                                "$progress_hover_control": "common.slider_progress_hover",
+                                "$slider_box_hover_layout": "common.slider_button_hover_layout",
+                                "$slider_box_indent_layout": "common.slider_button_indent_layout",
+                                "$slider_box_layout": "common.slider_button_layout",
+                                "$slider_box_locked_layout": "common.slider_button_locked_layout",
+                                "$slider_box_size": [
+                                    10,
+                                    16
+                                ],
+                                "$slider_direction": "horizontal",
+                                "$slider_name|default": "netease_slider_name",
+                                "$slider_step_factory_control_ids": {
+                                    "slider_step": "@common.slider_step",
+                                    "slider_step_hover": "@common.slider_step_hover",
+                                    "slider_step_progress": "@common.slider_step_progress",
+                                    "slider_step_progress_hover": "@common.slider_step_progress_hover"
+                                },
+                                "$slider_tts_text_value": "#netease_tts_text_value",
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    10,
+                                    -10
+                                ],
+                                "size": [
+                                    50,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "quit@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/crossout",
+                                "$hover_texture": "textures/ui/crossout",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%scoutDroneFunctions.ClickEditQuitButton",
+                                "$pressed_texture": "textures/ui/crossout",
+                                "$texture_layer": 2,
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -22.0,
+                                    -10.0
+                                ],
+                                "size": [
+                                    12.0,
+                                    12.0
+                                ],
+                                "layer": 2,
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "reset@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/scout_drone/edit_reset",
+                                "$hover_texture": "textures/ui/scout_drone/edit_reset",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%scoutDroneFunctions.ClickEditResetButton",
+                                "$pressed_texture": "textures/ui/scout_drone/edit_reset",
+                                "$texture_layer": 2,
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -39.0,
+                                    -10.0
+                                ],
+                                "size": [
+                                    12.0,
+                                    12.0
+                                ],
+                                "layer": 2,
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "visible@common_toggles.switch_toggle_collection": {
+                                "type": "panel",
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_on",
+                                "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
+                                "$pressed_texture": "textures/ui/toggle_off_hover",
+                                "$toggle_name": "#netease_editor_template_namespace.toggle_name",
+                                "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    65.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    30.0,
+                                    20.0
+                                ],
+                                "layer": 1,
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "scout_drone_functions"
+}

@@ -4,53 +4,164 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ccf10bd-094a-4008-a8ff-0646e48acf7a" name="Changes" comment="1">
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/invisibility.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_empty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_full.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/speed_up.png" afterDir="false" />
+    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/DeployHelper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animation_controllers/scout_drone_launcher.animations_controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st_fix_offset.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st_transition.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_3rd.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_3rd_fix_offset.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_3rd_transition.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/attachables/scout_drone_launcher.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/speed_up.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/attribute_bar_empty.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/attribute_bar_gray.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/attribute_bar_green.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/attribute_bar_red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/attribute_bar_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/assist6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/core5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/shelf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/shelf0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/shelf1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/shelf2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/sight4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/string.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/string0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/string1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/string2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/torch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/torch0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/torch1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/torch2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy/torch3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy_select_bar_empty.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/deploy_select_bar_filled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/edit_reset.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/inspect.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/reload.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/settings.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/shoot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/update_tip.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/ui/_ui_defs.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/loiteringMunition.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ScoutDrone.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animationHelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/mathUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/modMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/modMain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/loiteringMunitionSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneSettings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/uiDef.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/uiDef.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/LoiteringMunition/ui/uiMgr.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/uiMgr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/entities/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/netease_items_beh/loitering_munition.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/netease_items_beh/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/netease_items_beh/scout_drone_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_bp/recipes/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/recipes/scout_drone_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animation_controllers/loitering_munition_launcher.animations_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/invisibility.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_1st_transition.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_3rd.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/animations/loitering_munition_launcher.animation_3rd_transition.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/attachables/loitering_munition_launcher.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/effects/loitering_munition_aim.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/effects/scout_drone_frame.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/effects/loitering_munition_alerting.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/entity/loitering_munition.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone.entity.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/models/entity/loitering_munition_launcher_arm.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone_launcher_arm.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/netease_items_res/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/netease_items_res/scout_drone_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/netease_items_res/loitering_munition_launcher.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/particles/loitering_munition/loitering_munition_plume.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/particles/scout_drone/loitering_munition_plume.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/render_controllers/scout_drone.render_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition_launcher.render_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/render_controllers/loitering_munition_launcher_arm.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/render_controllers/scout_drone_launcher_arm.render_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/aim.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/aim.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/explode.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/explode.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/loitering_munition/fire.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/fire.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/sound_definitions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/texts/zh_CN.lang" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/texts/zh_CN.lang" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/entity/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/entity/scout_drone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/item_texture.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/items/loitering_munition_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/items/scout_drone_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/particle/loitering_munition_plume.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_aim.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_aim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_alerting.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/sfxs/loitering_munition_alerting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/aim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/energy_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/explode.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/fire.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/inspect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/sight_bead.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/textures/ui/loitering_munition/speed_up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/_ui_defs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_functions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/loitering_munition_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loitering_munition_rp/ui/netease_editor_template_namespace.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/netease_editor_template_namespace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/studio.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/work.mcscfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/world_behavior_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_behavior_packs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world_resource_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_resource_packs.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2ztgUmVyqMjwbw7i5qxuwCML7Xa" />
+  <component name="ProjectId" id="32KbKfTi8Q52X3JyZkqjg6wZR3s" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -58,46 +169,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/loiteringMunition/loitering_munition_rp/sounds/loitering_munition&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/textures/ui"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\sounds\loitering_munition" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\textures\ui\loitering_munition" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\animations" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\loiteringMunition\loitering_munition_rp\ui" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\textures\ui" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\render_controllers" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\effects" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_bp\ScoutDrone" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3ccf10bd-094a-4008-a8ff-0646e48acf7a" name="Changes" comment="" />
-      <created>1752555801452</created>
+      <changelist id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="" />
+      <created>1757172148734</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1752555801452</updated>
+      <updated>1757172148734</updated>
     </task>
-    <task id="LOCAL-00001" summary="1">
-      <option name="closed" value="true" />
-      <created>1752596292471</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1752596292471</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>

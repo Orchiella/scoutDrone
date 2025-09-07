@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "orchiella:scout_drone_launcher"
+        },
+        "components": {
+            "minecraft:icon": "orchiella:scout_drone_launcher"
+        }
+    }
+}

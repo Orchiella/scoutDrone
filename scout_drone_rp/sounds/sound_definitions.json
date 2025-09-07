@@ -1,0 +1,41 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "orchiella:scout_drone_explode": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/explode",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_aim": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/aim",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_fire": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/fire",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_speed_up": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/speed_up",
+          "stream": false
+        }
+      ]
+    }
+  }
+}

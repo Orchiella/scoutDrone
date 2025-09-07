@@ -1,0 +1,17 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.scout_drone_launcher_arm": {
+      "geometry": "Geometry.scout_drone_launcher_arm",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ]
+    }
+  }
+}
+  

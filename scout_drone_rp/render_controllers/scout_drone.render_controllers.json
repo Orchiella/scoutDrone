@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.scout_drone": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        },
+        {
+          "unlit": "Material.unlit"
+        }
+      ],
+      "textures": [
+        "texture.default"
+      ],
+      "ignore_lighting": true
+    }
+  }
+}
+  

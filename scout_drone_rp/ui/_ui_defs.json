@@ -1,0 +1,7 @@
+{
+    "ui_defs": [
+        "ui/scout_drone_functions.json",
+        "ui/scout_drone_settings.json",
+        "ui/netease_editor_template_namespace.json"
+    ]
+}

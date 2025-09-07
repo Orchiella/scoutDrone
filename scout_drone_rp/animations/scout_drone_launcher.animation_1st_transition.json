@@ -1,0 +1,42 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.scout_drone_launcher.1st_transition": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.15,
+			"override_previous_animation": true,
+			"bones": {
+				"scout_drone_launcher": {
+					"rotation": {
+						"0.0": ["q.mod.scout_drone_trans_1st_item_rot_s_x", "q.mod.scout_drone_trans_1st_item_rot_s_y", "q.mod.scout_drone_trans_1st_item_rot_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_item_rot_e_x", "q.mod.scout_drone_trans_1st_item_rot_e_y", "q.mod.scout_drone_trans_1st_item_rot_e_z"]
+					},
+					"position": {
+						"0.0": ["q.mod.scout_drone_trans_1st_item_pos_s_x", "q.mod.scout_drone_trans_1st_item_pos_s_y", "q.mod.scout_drone_trans_1st_item_pos_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_item_pos_e_x", "q.mod.scout_drone_trans_1st_item_pos_e_y", "q.mod.scout_drone_trans_1st_item_pos_e_z"]
+					}
+				},
+				"rightArm": {
+					"rotation": {
+						"0.0": ["q.mod.scout_drone_trans_1st_right_rot_s_x", "q.mod.scout_drone_trans_1st_right_rot_s_y", "q.mod.scout_drone_trans_1st_right_rot_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_right_rot_e_x", "q.mod.scout_drone_trans_1st_right_rot_e_y", "q.mod.scout_drone_trans_1st_right_rot_e_z"]
+					},
+					"position": {
+						"0.0": ["q.mod.scout_drone_trans_1st_right_pos_s_x", "q.mod.scout_drone_trans_1st_right_pos_s_y", "q.mod.scout_drone_trans_1st_right_pos_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_right_pos_e_x", "q.mod.scout_drone_trans_1st_right_pos_e_y", "q.mod.scout_drone_trans_1st_right_pos_e_z"]
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"0.0": ["q.mod.scout_drone_trans_1st_left_rot_s_x", "q.mod.scout_drone_trans_1st_left_rot_s_y", "q.mod.scout_drone_trans_1st_left_rot_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_left_rot_e_x", "q.mod.scout_drone_trans_1st_left_rot_e_y", "q.mod.scout_drone_trans_1st_left_rot_e_z"]
+					},
+					"position": {
+						"0.0": ["q.mod.scout_drone_trans_1st_left_pos_s_x", "q.mod.scout_drone_trans_1st_left_pos_s_y", "q.mod.scout_drone_trans_1st_left_pos_s_z"],
+						"0.15": ["q.mod.scout_drone_trans_1st_left_pos_e_x", "q.mod.scout_drone_trans_1st_left_pos_e_y", "q.mod.scout_drone_trans_1st_left_pos_e_z"]
+					}
+				}
+			}
+		}
+	}
+}

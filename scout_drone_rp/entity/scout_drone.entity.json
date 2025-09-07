@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "geometry": {
+        "default": "geometry.scout_drone"
+      },
+      "identifier": "orchiella:scout_drone",
+      "materials": {
+        "default": "netease_entity_metallic",
+        "unlit": "entity_emissive_alpha"
+      },
+      "render_controllers": [
+        "controller.render.scout_drone"
+      ],
+      "textures": {
+        "default": "textures/entity/scout_drone"
+      }
+    }
+  }
+}

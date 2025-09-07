@@ -1,0 +1,325 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.scout_drone_launcher.general": {
+      "initial_state": "idle",
+      "states": {
+        "equip": {
+          "animations": [
+            {
+              "scout_drone_1st_equip": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_equip": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            }
+          ]
+        },
+        "idle": {
+          "animations": [
+            {
+              "scout_drone_1st_idle": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "transition": {
+          "animations": [
+            {
+              "scout_drone_1st_transition": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_transition": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "idle": "!q.mod.scout_drone_transition && q.mod.scout_drone_idle"
+            },
+            {
+              "run": "!q.mod.scout_drone_transition && q.mod.scout_drone_run"
+            },
+            {
+              "shoot": "!q.mod.scout_drone_transition && q.mod.scout_drone_shoot"
+            },
+            {
+              "inspect": "!q.mod.scout_drone_transition && q.mod.scout_drone_inspect"
+            },
+            {
+              "deploy_tail": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_tail"
+            },
+            {
+              "deploy_rotor": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_rotor"
+            },
+            {
+              "deploy_sight": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_sight"
+            },
+            {
+              "deploy_load": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_load"
+            },
+            {
+              "deploy_battery": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_battery"
+            },
+            {
+              "deployed": "!q.mod.scout_drone_transition && q.mod.scout_drone_deployed"
+            },
+            {
+              "edit_button": "!q.mod.scout_drone_transition && q.mod.scout_drone_edit_button"
+            },
+            {
+              "transition2": "q.mod.scout_drone_re_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "transition2": {
+          "animations": [
+            {
+              "scout_drone_1st_transition": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_transition": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "idle": "!q.mod.scout_drone_transition && q.mod.scout_drone_idle"
+            },
+            {
+              "run": "!q.mod.scout_drone_transition && q.mod.scout_drone_run"
+            },
+            {
+              "shoot": "!q.mod.scout_drone_transition && q.mod.scout_drone_shoot"
+            },
+            {
+              "inspect": "!q.mod.scout_drone_transition && q.mod.scout_drone_inspect"
+            },
+            {
+              "deploy_tail": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_tail"
+            },
+            {
+              "deploy_rotor": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_rotor"
+            },
+            {
+              "deploy_sight": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_sight"
+            },
+            {
+              "deploy_load": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_load"
+            },
+            {
+              "deploy_battery": "!q.mod.scout_drone_transition && q.mod.scout_drone_deploy_battery"
+            },
+            {
+              "deployed": "!q.mod.scout_drone_transition && q.mod.scout_drone_deployed"
+            },
+            {
+              "edit_button": "!q.mod.scout_drone_transition && q.mod.scout_drone_edit_button"
+            },
+            {
+              "transition2": "q.mod.scout_drone_re_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "run": {
+          "animations": [
+            {
+              "scout_drone_1st_run": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_run": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "shoot": {
+          "animations": [
+            {
+              "scout_drone_1st_shoot": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_shoot": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "inspect": {
+          "animations": [
+            {
+              "scout_drone_1st_inspect": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deploy_tail": {
+          "animations": [
+            {
+              "scout_drone_1st_deploy_tail": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deploy_rotor": {
+          "animations": [
+            {
+              "scout_drone_1st_deploy_rotor": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deploy_sight": {
+          "animations": [
+            {
+              "scout_drone_1st_deploy_sight": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deploy_load": {
+          "animations": [
+            {
+              "scout_drone_1st_deploy_load": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deploy_battery": {
+          "animations": [
+            {
+              "scout_drone_1st_deploy_battery": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "deployed": {
+          "animations": [
+            {
+              "scout_drone_1st_deployed": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "edit_button": {
+          "animations": [
+            {
+              "scout_drone_1st_edit_button": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
