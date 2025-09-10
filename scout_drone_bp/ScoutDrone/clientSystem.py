@@ -8,7 +8,7 @@ from mod.common.utils.mcmath import Vector3, Matrix
 import config as DB
 from ScoutDrone import mathUtil, DeployHelper
 from ScoutDrone.animData import ANIM_DATA
-from ScoutDrone.const import STATES, TRANSITION_DURATION, STATES_WITHOUT_3RD, DRONE_TYPE
+from ScoutDrone.const import STATES, TRANSITION_DURATION, STATES_WITHOUT_3RD, DRONE_TYPE, DRONE_LAUNCHER_TYPE
 from ScoutDrone.mathUtil import GetTransitionMolangDict, GetFixOffset
 from ScoutDrone.ui import uiMgr
 from ScoutDrone.ui.scoutDroneFunctions import DEPLOYMENT
@@ -71,6 +71,34 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
         self.initViewBobbing = False
         self.initSmoothLighting = False
+        self.addonDisabled = False
+
+    @Listen("OnScriptTickClient")
+    def Move(self):
+        if not self.isControlling:
+            return
+        # 获取摇杆输入
+        inputVec = CF.CreateActorMotion(PID).GetInputVector()
+        inputRight, inputUp = -inputVec[0], inputVec[1]
+        if abs(inputRight) < 1e-5 and abs(inputUp) < 1e-5:
+            nowMotion = CF.CreateActorMotion(CF.CreateRide(PID).GetEntityRider()).GetMotion()
+            if nowMotion and Vector3(nowMotion).Length() != 0:
+                self.CallServer("SetMotion", PID, None)
+            return
+        currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
+        if abs(currentDir[1]) != 1:
+            currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
+        else:
+            currentDirRight = Vector3(
+                clientApi.GetDirFromRot((RC.GetRot()[0], RC.GetRot()[1] + math.radians(90))))
+        currentDirUp = Vector3.Cross(currentDirRight, currentDir)
+
+        transitionMatrix = Matrix.Create(
+            [list(currentDir.ToTuple()), list(currentDirUp.ToTuple()),
+             list(currentDirRight.ToTuple())]).Transpose()
+        outputTransformed = transitionMatrix * Matrix.Create([[inputUp, 0, inputRight]]).Transpose()
+        outputTransformed = (outputTransformed[0, 0], outputTransformed[1, 0], outputTransformed[2, 0])
+        self.CallServer("SetMotion", PID, outputTransformed)
 
     @Listen
     def AddPlayerCreatedClientEvent(self, event):
@@ -80,13 +108,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     # 背包物品变化
     @Listen
     def InventoryItemChangedClientEvent(self, event):
+        print event
         if event['playerId'] != PID or event['slot'] != CF.CreateItem(PID).GetSlotId():
             return
         oldItemName = event['oldItemDict']['newItemName']
         newItemName = event['newItemDict']['newItemName']
-        if oldItemName == "minecraft:air" and newItemName in DRONE_TYPE:
+        if oldItemName == "minecraft:air" and newItemName in DRONE_LAUNCHER_TYPE:
             self.Equip(True, event['newItemDict']['extraId'])
-        elif newItemName == "minecraft:air" and oldItemName in DRONE_TYPE:
+        elif newItemName == "minecraft:air" and oldItemName in DRONE_LAUNCHER_TYPE:
             self.Equip(False)
 
     slotNow = -1
@@ -103,30 +132,29 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if slotNow > 8: return
         oldItem = itemComp.GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.INVENTORY, slotBefore)
         newItem = itemComp.GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.INVENTORY, slotNow)
-        if oldItem and oldItem['newItemName'] in DRONE_TYPE:
+        if oldItem and oldItem['newItemName'] in DRONE_LAUNCHER_TYPE:
             self.Equip(False)
-        if newItem and newItem['newItemName'] in DRONE_TYPE:
+        if newItem and newItem['newItemName'] in DRONE_LAUNCHER_TYPE:
             self.Equip(True, newItem['extraId'])
 
     def Equip(self, boolean, extraId=None):
         if boolean:
             self.RefreshDeployment(extraId)
             self.SwitchState("equip", False)
-            self.functionsScreen.Display(True)
             clientApi.HideCrossHairGUI(True)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, True)
         else:
             self.SwitchState("idle", False)
-            self.functionsScreen.Display(False)
             clientApi.HideCrossHairGUI(False)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, self.initViewBobbing)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.SMOOTH_LIGHTING, self.initSmoothLighting)
+        GC.AddTimer(0.1, self.functionsScreen.RefreshButtonVisibility)
 
     @Listen
     def OnLocalPlayerActionClientEvent(self, event):
         if not self.GetEquipment():
             return
-        if self.nowState == "inspect" or self.nowState == "launch":
+        if self.nowState == "inspect" or self.nowState == "shoot":
             return
         action = event['actionType']
         if action == clientApi.GetMinecraftEnum().PlayerActionType.StartSprinting:
@@ -150,7 +178,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.functionsScreen or not self.functionsScreen.initialized: return
         if self.transitionFinishTime != 0 and time.time() > self.transitionFinishTime:
             self.nowState = self.targetState
-            self.CallServer("UpdateState", PID, self.targetState)
             self.transitionFinishTime = 0
             self.SyncVarToServer(0, "transition", 0)
             self.nowAnimationStartTime = time.time()
@@ -189,9 +216,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.tasks.append(
             (time.time() + timeNode + (TRANSITION_DURATION if isTransition else 0) - 0.05, func))
 
+    droneData = {}
+
+    def SetDroneData(self, droneData):
+        self.droneData = droneData
+
     isControlling = False
 
-    def CanControl(self, boolean):
+    def SwitchControl(self, boolean):
         self.isControlling = boolean
         if boolean:
             PVC.LockPerspective(0)
@@ -202,7 +234,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHungerGui(True)
             clientApi.HideArmorGui(True)
         else:
-            OC.SetCanDrag(True)
             PVC.LockPerspective(-1)
             clientApi.HideSlotBarGui(False)
             clientApi.HideExpGui(False)
@@ -211,8 +242,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHungerGui(False)
             clientApi.HideArmorGui(False)
             clientApi.HideMoveGui(False)
+        self.functionsScreen.RefreshButtonVisibility()
 
     def SwitchState(self, _state, isTransition=True):
+        if 1:
+            return
         if self.nowState == _state:
             return False
         varDict = None
@@ -228,7 +262,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             for attr in ("rot", "pos"):
                 for i, coord in enumerate(("x", "y", "z")):
                     QC.Set('query.mod.{}_deployed_{}_{}'.format(DB.mod_name, attr, coord),
-                           ANIM_DATA['1st_deploy_{}'.format(self.functionsScreen.nowDrill)]['bones']['compound_bow'][
+                           ANIM_DATA['1st_deploy_{}'.format(self.functionsScreen.nowDrill)]['bones'][
+                               'scout_drone_launcher'][
                                'position' if attr == 'pos' else 'rotation']['0.0'][i])
             self.CallServer("Deploy", PID, self.functionsScreen.nowDrill, self.functionsScreen.index)
             self.AddTask(_state, lambda: self.BackIdle(True))
@@ -259,7 +294,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.nowAnimationStartTime = time.time()
         self.targetState = _state
         self.nowState = "transition"
-        self.CallServer("UpdateState", PID, "transition")
         self.transitionFinishTime = self.nowAnimationStartTime + (
             TRANSITION_DURATION if isTransition else 0)
         return True
@@ -271,13 +305,80 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if DeployHelper.Get(content, "torch") > 0:
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.SMOOTH_LIGHTING, True)
 
-    def ClickButton(self, skill):
-        bow = self.GetEquipment()
-        if not bow:
-            return False
-        if self.nowState == "equip" or self.nowState == "shoot":
-            return False
+    def ClickButton(self, function):
+        launcherItem = self.GetEquipment()
+        # if not launcherItem:
+        #     return False
+        # if self.nowState == "equip" or self.nowState == "shoot":
+        #     return False
+        if function == "shoot":
+            self.SwitchState("shoot", self.nowState != "idle")
+            self.CallServer("Shoot", PID)
+            return True
+        elif function == "recover":
+            self.CallServer("Recover", PID)
+            return True
+        elif function == "inspect" and not self.isControlling:
+            self.SwitchState("inspect", self.nowState != "idle")
+            return True
+        elif function == "control":
+            self.CallServer("Control", PID)
+            return True
+        elif function == "function" and self.isControlling:
+            self.CallServer("Function", PID)
+            return True
+        elif function == "scan" and self.isControlling:
+            self.CallServer("Scan", PID)
+            return True
+        elif function == "mark" and self.isControlling:
+            targetId = self.SelectEntity(self.FilterSpecialEntity)
+            if not targetId:
+                self.functionsScreen.SendTip("未检测到目标", "c")
+                return False
+            self.CallServer("Mark", PID, targetId)
+            return True
+        elif function == "explode":
+            self.CallServer("Explode", PID)
+            return True
 
+    def FilterSpecialEntity(self, entityId):
+        boxSize = CF.CreateCollisionBox(entityId).GetSize()
+        return boxSize[0] != 0.25 and boxSize[1] != 0.25
+
+    def SelectEntity(self, filterFunc=None):
+        rot = CF.CreateRot(PID).GetRot()
+        sightVec = clientApi.GetDirFromRot(rot)
+        minAngle = -999
+        playerPos = CC.GetPosition()
+        targetId = None
+        for entityId in GC.GetEntitiesAround(PID, 60, {}):
+            if PID == entityId:
+                continue
+            if CF.CreateRide(PID).GetEntityRider() == entityId:
+                continue
+            if filterFunc and not filterFunc(entityId):
+                continue
+            if not GC.CanSee(PID, entityId, 60, True, 180.0, 180.0):
+                continue
+            entityPos = CF.CreatePos(entityId).GetFootPos()
+            relativePos = (
+                entityPos[0] - playerPos[0],
+                entityPos[1] - playerPos[1] + CF.CreateCollisionBox(entityId).GetSize()[1] * 0.5,
+                entityPos[2] - playerPos[2])
+            angle = math.acos(max(-1.0, min(1.0, (
+                    relativePos[0] * sightVec[0] + relativePos[1] * sightVec[1] + relativePos[2] * sightVec[2]) /
+                                            (math.sqrt(
+                                                relativePos[0] ** 2 + relativePos[1] ** 2 + relativePos[2] ** 2) *
+                                             math.sqrt(
+                                                 sightVec[0] ** 2 + sightVec[1] ** 2 + sightVec[2] ** 2))))) \
+                if (math.sqrt(relativePos[0] ** 2 + relativePos[1] ** 2 + relativePos[2] ** 2) * math.sqrt(
+                sightVec[0] ** 2 + sightVec[1] ** 2 + sightVec[2] ** 2)) != 0 else 0.0
+            print angle
+            if angle > 0.15: continue
+            if minAngle == -999 or angle < minAngle:
+                minAngle = angle
+                targetId = entityId
+        return targetId
 
     @Listen
     def OnLocalPlayerStopLoading(self, args):
@@ -302,9 +403,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             ("fix_offset_x", GetFixOffset(width / float(height)), 0),
             ("fix_offset_z", -0.5 if CF.CreateActorRender(PID).GetModelStyle() == 'slim' else 0, 0),
             ("speed_amplifier", 1, 1),
-            ("arrow_loaded", 0, 0),
-            ("drop_yaw", 0, 0),
-            ("breathe", 1, 1)}
+            ("drop_yaw", 0, 0)}
                 .union({("deployment_" + deploymentType, 0, 0) for deploymentType in DEPLOYMENT})):
             levelQC.Register('query.mod.{}_{}'.format(DB.mod_name, varName), levelDefValue)
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, varName), playerDefValue)
@@ -321,19 +420,20 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp = CF.CreateActorRender(playerId)
         prefix = DB.mod_name + "_"
         itemCondition = " or ".join(
-            "query.get_equipped_item_full_name('main_hand') == '{}'".format(bowType) for bowType in DRONE_TYPE)
-        actorComp.AddPlayerGeometry(prefix + "arm", "geometry." + prefix + "arm")
-        actorComp.AddPlayerRenderController("controller.render." + prefix + "arm",
+            "query.get_equipped_item_full_name('main_hand') == '{}'".format(droneType) for droneType in
+            DRONE_LAUNCHER_TYPE)
+        actorComp.AddPlayerGeometry(prefix + "launcher_arm", "geometry." + prefix + "launcher_arm")
+        actorComp.AddPlayerRenderController("controller.render." + prefix + "launcher_arm",
                                             "v.is_first_person && " + itemCondition)
         for aniName in STATES - {"re_transition"}:
             actorComp.AddPlayerAnimation(prefix + "1st_" + aniName,
-                                         "animation." + DB.mod_name + ".1st_" + aniName)
+                                         "animation." + DB.mod_name + "_launcher.1st_" + aniName)
             if aniName not in STATES_WITHOUT_3RD:
                 actorComp.AddPlayerAnimation(prefix + "3rd_" + aniName,
-                                             "animation." + DB.mod_name + ".3rd_" + aniName)
+                                             "animation." + DB.mod_name + "_launcher.3rd_" + aniName)
 
         actorComp.AddPlayerAnimationController(prefix + "arm_controller",
-                                               "controller.animation." + DB.mod_name + ".general")
+                                               "controller.animation." + DB.mod_name + "_launcher.general")
         actorComp.AddPlayerScriptAnimate(prefix + "arm_controller", itemCondition)
         actorComp.AddPlayerAnimation(prefix + "deployment", "animation." + DB.mod_name + ".deployment")
         actorComp.AddPlayerScriptAnimate(prefix + "deployment", itemCondition)
@@ -346,23 +446,34 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     def GetEquipment(self):
         item = CF.CreateItem(PID).GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.CARRIED)
-        if item and item['newItemName'] in DRONE_TYPE:
-            return item
-        return None
+        return item if item and item['newItemName'] in DRONE_LAUNCHER_TYPE else None
 
     @Listen
     def OnKeyPressInGame(self, event):
-        if not self.functionsScreen or not self.GetEquipment():
+        if not self.functionsScreen:
             return
         if event['isDown'] != '1':
             return
         key = int(event['key'])
-        # if key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_Y:
-        #     self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "inspect"}})
-        # elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_R:
-        #     self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "reload"}})
-        # elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_V:
-        #     self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "hold_breath"}})
+        if key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_Y:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "inspect"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_R:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "recover"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_C:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "control"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_V:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "explode"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_G:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "scan"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_X:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "mark"}})
+
+    @Listen
+    def LeftClickBeforeClientEvent(self, event):
+        if clientApi.GetPlatform() != 0: return
+        if not self.GetEquipment(): return
+        event['cancel'] = True
+        self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "shoot"}})
 
     @Listen
     def GetEntityByCoordEvent(self, event):
@@ -416,7 +527,20 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         for key, value in varDict.items():
             playerQC.Set("query.mod." + DB.mod_name + "_" + key, value)
 
+    @Listen
+    def UnLoadClientAddonScriptsBefore(self, event):
+        self.addonDisabled = True
+        for frameData in self.frameDataDict.values():
+            if isinstance(frameData, dict):
+                if frameData:
+                    self.DestroyEntity(frameData['frameId'])
+            else:
+                for singleFrameData in frameData:
+                    singleFrameData["aniControlComp"].Stop()
+                    self.DestroyEntity(singleFrameData['frameId'])
+
     def AppendFrame(self, entityId, frameType, duration, extraData=None):
+        if self.addonDisabled: return
         if not extraData: extraData = {}
         if isinstance(self.frameDataDict[frameType], dict) and self.frameDataDict[frameType]:
             self.frameDataDict[frameType]['startTime'] = time.time()
@@ -512,6 +636,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.uiMgr.Init(self)
         self.settingsScreen = self.uiMgr.GetUI(UIDef.Settings)
         self.functionsScreen = self.uiMgr.GetUI(UIDef.Functions)
+        self.functionsScreen.Display(True)
 
     @Listen('ServerEvent', DB.ModName, 'ServerSystem')
     def OnGetServerEvent(self, args):

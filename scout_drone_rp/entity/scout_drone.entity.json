@@ -10,9 +10,19 @@
         "default": "netease_entity_metallic",
         "unlit": "entity_emissive_alpha"
       },
+      "animations": {
+        "idle": "animation.scout_drone.idle",
+        "move": "animation.scout_drone.move",
+        "controller.scout_drone.general": "controller.animation.scout_drone.general"
+      },
       "render_controllers": [
         "controller.render.scout_drone"
       ],
+      "scripts": {
+        "animate": [
+          "controller.scout_drone.general"
+        ]
+      },
       "textures": {
         "default": "textures/entity/scout_drone"
       }

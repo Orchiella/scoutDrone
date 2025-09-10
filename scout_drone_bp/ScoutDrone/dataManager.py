@@ -7,36 +7,20 @@ from ScoutDrone.config import mod_name
 levelId = serverApi.GetLevelId()
 
 DEFAULT_PLAYER_SETTINGS = [
-    ("sight_bead_enabled", {"description": "§f准星", "type": "bool", "default": True}),
-    ("sound_enabled", {"description": "§f播放音效", "type": "bool", "default": True}),
-    ("particle_enabled", {"description": "§f打击粒子", "type": "bool", "default": True}),
-    ("damage", {"description": "§f基础伤害", "type": "int", "range": (0, 1000), "default": 16}),
-    ("power", {"description": "§f基础初速", "type": "int", "range": (1, 10), "default": 7}),
-    ("infinite_ammo", {"description": "§f生存模式下也不消耗箭矢", "type": "bool", "default": False}),
-    ("infinite_durability", {"description": "§f生存模式下也不消耗耐久", "type": "bool", "default": False}),
-    ("aim_shoot", {"description": "§f瞄射自动举镜", "type": "bool", "default": True}),
-    ("hold_to_shoot", {"description": "§f长按屏幕射击", "type": "bool", "default": True}),
-    ("lightning_num", {"description": "§f闪电道数", "type": "int", "range": (1, 10), "default": 3}),
     ("explode_radius", {"description": "§f爆炸半径", "type": "int", "range": (0, 20), "default": 5}),
-    ("fire_semi_length", {"description": "§f火焰阵边长", "type": "int", "range": (1, 20), "default": 5}),
-    ("explode_break", {"description": "§f爆炸破坏地形", "type": "bool", "default": True}),
-    ("func_aim_auto",
-     {"description": "§6[瞄准按钮]§f射击后恢复开镜", "type": "bool", "default": False}),
-    ("func_reload_auto",
-     {"description": "§6[装填按钮]§f射击后自动使用", "type": "bool", "default": True}),
-    ("func_aim_auto_hold_breath",
-     {"description": "§6[屏息按钮]§f举镜后自动屏息", "type": "bool", "default": True}),
 ]
 
 DEFAULT_PLAYER_DATA = {
-    "func_aim_pos": (-140, -36), "func_aim_size": 40, "func_aim_visible": True,
-    "func_shoot_pos": (5, -10), "func_shoot_size": 50, "func_shoot_visible": True,
-    "func_aim_shoot_pos": (-100, 35), "func_aim_shoot_size": 50, "func_aim_shoot_visible": True,
-    "func_reload_pos": (-160, 40), "func_reload_size": 40, "func_reload_visible": True,
-    "func_inspect_pos": (52, -60), "func_inspect_size": 40, "func_inspect_visible": True,
-    "func_deploy_pos": (165, -60), "func_deploy_size": 40, "func_deploy_visible": True,
-    "func_settings_pos": (62, -94), "func_settings_size": 20, "func_settings_visible": True,
-    "func_hold_breath_pos": (-140, -90), "func_hold_breath_size": 40, "func_hold_breath_visible": True,
+    "func_shoot_pos": (-60, 30), "func_shoot_size": 50,
+    "func_inspect_pos": (52, -60), "func_inspect_size": 40,
+    "func_deploy_pos": (145, -60), "func_deploy_size": 40,
+    "func_settings_pos": (62, -94), "func_settings_size": 20,
+    "func_recover_pos": (-65, -40), "func_recover_size": 40,
+    "func_control_pos": (-110, -40), "func_control_size": 40,
+    "func_function_pos": (-20, 7), "func_function_size": 40,
+    "func_scan_pos": (52, -14), "func_scan_size": 40,
+    "func_mark_pos": (97, -14), "func_mark_size": 40,
+    "func_explode_pos": (-20, -40), "func_explode_size": 40,
     "usage_informed": False,
     "update_tip_0": False
 }

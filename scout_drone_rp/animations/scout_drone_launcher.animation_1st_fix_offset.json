@@ -6,10 +6,10 @@
 			"override_previous_animation": true,
 			"bones": {
 				"rightItem": {
-					"position":  ["q.mod.compound_bow_fix_offset_x",0, "q.mod.compound_bow_fix_offset_z"]
+					"position":  ["q.mod.scout_drone_fix_offset_x",0, "q.mod.scout_drone_fix_offset_z"]
 				},
 				"leftItem": {
-					"position":  ["q.mod.compound_bow_fix_offset_x",0, "q.mod.compound_bow_fix_offset_z"]
+					"position":  ["q.mod.scout_drone_fix_offset_x",0, "q.mod.scout_drone_fix_offset_z"]
 				}
 			}
 		}

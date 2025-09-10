@@ -61,54 +61,56 @@ class ScoutDroneFunctions(ScreenNode):
         self.functions = {
             'inspect': {
                 'name': "检视",
-                "condition": self.client.GetEquipment()},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.GetEquipment() and not self.client.isControlling},
             'shoot': {
                 'name': "启动",
-                "condition": self.client.GetEquipment() and not self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.GetEquipment()},
+            'recover': {
+                'name': "回收",
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.droneData},
             'deploy': {
                 'name': "改装",
-                "condition": self.client.GetEquipment() and not self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.GetEquipment() and not self.client.isControlling},
             'control': {
                 'name': "控制",
-                "condition": self.client.isControlling or self.client.GetEquipment() and not self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.droneData},
             'function': {
                 'name': "下挂功能",
-                "condition": self.client.isControlling and DeployHelper.Get(self.client.GetEquipment(), "load") > 0},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.isControlling and DeployHelper.Get(
+                    self.client.droneData['extraId'], "load") > 0},
             'scan': {
                 'name': "扫描",
-                "condition": self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.isControlling},
             'mark': {
                 'name': "标记",
-                "condition": self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.isControlling},
             'explode': {
                 'name': "自爆",
-                "condition": self.client.isControlling},
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.isControlling},
             'settings': {
                 'name': "",
-                "condition": self.client.GetEquipment() and not self.client.isControlling}}
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.GetEquipment() and not self.client.isControlling}}
 
     def RefreshButtonVisibility(self):
-        for functionName, functionDef in self.functions:
+        for functionName, functionDef in self.functions.items():
             self.GetBaseUIControl("/" + functionName).SetVisible(functionDef.get("condition", lambda: True)())
 
-    touchX, touchY, editProgressValue, editToggle = 0, 0, -1, False
+    touchX, touchY, editProgressValue = 0, 0, -1
 
     def Update(self):
         if not self.initialized or not self.displaying:
             return
         self.CheckSelect()
-        if self.isAimShooting:
-            globalCenterX, globalCenterY = self.aimShootCtrl.GetGlobalPosition()
-            centerX, centerY = self.aimShootCtrl.GetSize()
-            touchX, touchY = clientApi.GetTouchPos()
-            globalCenterX += centerX / 2.0
-            globalCenterY += centerY / 2.0
-            vec = (touchX - globalCenterX, touchY - globalCenterY)
-            scalar = self.aimShootCtrl.GetSize()[0] * 1.5 / (math.sqrt(vec[0] ** 2 + vec[1] ** 2)) if pow(
-                globalCenterX - touchX, 2) + pow(globalCenterY - touchY, 2) > pow(
-                self.aimShootCtrl.GetSize()[0] * 1.5, 2) else 1
-            pos = (scalar * vec[0], scalar * vec[1])
-            self.aimShootIconCtrl.SetPosition(pos)
         if self.tipDisabledTime != 0 and time.time() > self.tipDisabledTime:
             self.tipLabelCtrl.SetText("")
         if self.client.nowState == "edit_button" and self.functionEditing:
@@ -139,10 +141,6 @@ class ScoutDroneFunctions(ScreenNode):
                     editProgressValue)
                 ctrl.SetSize((size, size), True)
                 self.editCache["func_{}_size".format(self.functionEditing)] = size
-            editToggle = self.editVisibleToggle.GetToggleState()
-            if editToggle != self.editToggle:
-                self.editToggle = editToggle
-                self.editCache["func_{}_visible".format(self.functionEditing)] = editToggle
             self.SendTip("当前选中§6[{}]".format(self.functions[self.functionEditing]['name']), "e", 0.2, False)
 
     def IsInCtrl(self, pos, ctrl):
@@ -300,8 +298,6 @@ class ScoutDroneFunctions(ScreenNode):
             mathUtil.GetSliderValueFromSize(
                 self.editCache.get("func_{}_size".format(function), self.GetData("func_{}_size".format(function))),
                 DEFAULT_PLAYER_DATA['func_{}_size'.format(function)]))
-        self.editVisibleToggle.SetToggleState(
-            self.editCache.get("func_{}_visible".format(function), self.GetData("func_{}_visible".format(function))))
 
     def ClickButton(self, args):
         func = args['AddTouchEventParams']['func']
@@ -367,7 +363,6 @@ class ScoutDroneFunctions(ScreenNode):
     tipDisabledTime = 0
 
     editSizeSlider = None
-    editVisibleToggle = None
 
     updateTip = None
 
@@ -378,10 +373,11 @@ class ScoutDroneFunctions(ScreenNode):
                 self.tipLabelCtrl = self.GetBaseUIControl("/info/tip").asLabel()
 
                 for function in self.functions:
-                    self.GetBaseUIControl("/{}".format(function)).asButton().SetButtonTouchDownCallback(
-                        self.ClickButton)
-                    self.GetBaseUIControl("/{}".format(function)).asButton().AddTouchEventParams(
-                        {"func": function, "isSwallow": True})
+                    if "/{}/button_label".format(function) in self.GetAllChildrenPath("/{}".format(function)):
+                        self.GetBaseUIControl("/{}".format(function)).asButton().SetButtonTouchDownCallback(
+                            self.ClickButton)
+                        self.GetBaseUIControl("/{}".format(function)).asButton().AddTouchEventParams(
+                            {"func": function, "isSwallow": True})
 
                 self.GetBaseUIControl("/settings").asButton().SetButtonTouchDownCallback(self.ClickSettingsButton)
                 self.GetBaseUIControl("/settings").asButton().AddTouchEventParams({})
@@ -394,7 +390,6 @@ class ScoutDroneFunctions(ScreenNode):
                 self.deployTipCtrl = self.GetBaseUIControl("/deploy/tip").asLabel()
 
                 self.editSizeSlider = self.GetBaseUIControl("/edit/size").asSlider()
-                self.editVisibleToggle = self.GetBaseUIControl("/edit/visible").asSwitchToggle()
 
                 self.GetBaseUIControl("/edit").SetVisible(False)
 
@@ -418,7 +413,7 @@ class ScoutDroneFunctions(ScreenNode):
         self.SetScreenVisible(show)
 
     def StartEditing(self):
-        self.client.CanControl(False)
+        self.client.SwitchControl(False)
         self.GetBaseUIControl("/edit").SetVisible(True)
         for function in self.functions:
             ctrl = self.GetBaseUIControl('/' + function)
@@ -427,7 +422,7 @@ class ScoutDroneFunctions(ScreenNode):
         self.editVisibleToggle.SetVisible(False)
 
     def EndEditing(self):
-        self.client.CanControl(True)
+        self.client.SwitchControl(True)
         self.functionEditing = None
         self.LoadButtons()
         self.editCache = {}
@@ -458,20 +453,21 @@ class ScoutDroneFunctions(ScreenNode):
 
     def LoadButtons(self):
         for function in self.functions:
+            if "/{}/button_label".format(function) not in self.GetAllChildrenPath("/{}".format(function)):
+                continue
             ctrl = self.GetBaseUIControl('/' + function)
             relativeX, relativeY = self.GetData('func_{}_pos'.format(function))
             screenX, screenY = CF.CreateGame(clientApi.GetLocalPlayerId()).GetScreenSize()
+            size = self.GetData('func_{}_size'.format(function))
             if ctrl.GetAnchorTo() == "left_middle":
                 parentX, parentY = 0, screenY / 2.0
             else:
-                parentX, parentY = screenX, screenY / 2.0
+                parentX, parentY = screenX - size, screenY / 2.0
             ctrl.SetPosition((parentX + relativeX, parentY + relativeY))
-            size = self.GetData('func_{}_size'.format(function))
             ctrl.SetSize((size, size), True)
             labelCtrl = self.GetBaseUIControl('/' + function + "/button_label")
             if labelCtrl:
                 labelCtrl.asLabel().SetText(self.functions[function]['name'])
-            ctrl.SetVisible(self.GetData('func_{}_visible'.format(function)))
 
     def SendTip(self, tip, color, duration=2.0, cover=True):
         if not cover and self.tipLabelCtrl.GetText() and tip[:3] != self.tipLabelCtrl.GetText()[3:6]:

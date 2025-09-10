@@ -122,53 +122,6 @@
 				}
 			}
 		},
-		"animation.scout_drone_launcher.3rd_aim": {
-			"loop": true,
-			"override_previous_animation": true,
-			"bones": {
-				"rightArm": {
-					"rotation": [-78.14944, -32.46055, -16.00222]
-				},
-				"leftArm": {
-					"rotation": [-61.89847, 28.44559, 13.71406]
-				},
-				"scout_drone_launcher": {
-					"rotation": [-19.50494, 2.77032, -28.98381],
-					"position": [0.44264, -0.83238, -0.3335]
-				}
-			}
-		},
-		"animation.scout_drone_launcher.3rd_aim_shoot": {
-			"loop": "hold_on_last_frame",
-			"animation_length": 0.25,
-			"override_previous_animation": true,
-			"bones": {
-				"rightArm": {
-					"rotation": [-78.14944, -32.46055, -16.00222]
-				},
-				"leftArm": {
-					"rotation": {
-						"0.0": [-61.89847, 28.44559, 13.71406],
-						"0.0417": [-51.89847, 28.44559, 13.71406],
-						"0.25": [-61.89847, 28.44559, 13.71406]
-					}
-				},
-				"scout_drone_launcher": {
-					"rotation": [-19.50494, 2.77032, -28.98381],
-					"position": [0.44264, -0.83238, -0.3335]
-				},
-				"arrow_drill": {
-					"scale": {
-						"0.0": [1, 1, 1],
-						"0.0417": {
-							"pre": [1, 1, 1],
-							"post": [0, 0, 0]
-						},
-						"0.25": [0, 0, 0]
-					}
-				}
-			}
-		},
 		"animation.scout_drone_launcher.3rd_reload": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.6667,
