@@ -11,7 +11,7 @@ from ScoutDrone.animData import ANIM_DATA
 from ScoutDrone.const import STATES, TRANSITION_DURATION, STATES_WITHOUT_3RD, DRONE_TYPE, DRONE_LAUNCHER_TYPE
 from ScoutDrone.mathUtil import GetTransitionMolangDict, GetFixOffset
 from ScoutDrone.ui import uiMgr
-from ScoutDrone.ui.scoutDroneFunctions import DEPLOYMENT
+from ScoutDrone.ui.scoutDroneFunctions import DEPLOYMENT, GetAmplifier
 from ScoutDrone.ui.uiDef import UIDef
 
 CF = clientApi.GetEngineCompFactory()
@@ -55,7 +55,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.settingsScreen = None
         self.functionsScreen = None
         self.settings = {}
-        self.frameDataDict = {"frame": []}
+        self.frameDataDict = {"frame": [], "fake_player": {}}
         self.animationCache = {}
 
         self.frameRGB = {
@@ -80,11 +80,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         # 获取摇杆输入
         inputVec = CF.CreateActorMotion(PID).GetInputVector()
         inputRight, inputUp = -inputVec[0], inputVec[1]
+        cameraRot = CC.GetCameraRotation()
         if abs(inputRight) < 1e-5 and abs(inputUp) < 1e-5:
             nowMotion = CF.CreateActorMotion(CF.CreateRide(PID).GetEntityRider()).GetMotion()
             if nowMotion and Vector3(nowMotion).Length() != 0:
                 self.CallServer("SetMotion", PID, None)
+            CC.SetCameraRotation((cameraRot[0], cameraRot[1], cameraRot[2] * 0.95 if abs(cameraRot[2]) > 0.05 else 0))
             return
+        CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(10, max(-10, cameraRot[2] - inputRight))))
         currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
         if abs(currentDir[1]) != 1:
             currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
@@ -108,7 +111,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     # 背包物品变化
     @Listen
     def InventoryItemChangedClientEvent(self, event):
-        print event
         if event['playerId'] != PID or event['slot'] != CF.CreateItem(PID).GetSlotId():
             return
         oldItemName = event['oldItemDict']['newItemName']
@@ -218,8 +220,41 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     droneData = {}
 
-    def SetDroneData(self, droneData):
-        self.droneData = droneData
+    def UpdateDroneData(self, droneData):
+        if droneData is None:
+            self.functionsScreen.droneInfoCtrl.SetVisible(False)
+            self.droneData = {}
+            return
+        self.functionsScreen.droneInfoCtrl.SetVisible(True)
+        for key, value in droneData.items():
+            self.droneData[key] = value
+        if "entityId" in droneData:
+            self.functionsScreen.droneInfoHealthCtrl.SetValue(1)
+            self.functionsScreen.droneInfoBatteryCtrl.SetValue(1)
+            self.functionsScreen.droneInfoNameCtrl.SetText("{}的侦查无人机".format(CF.CreateName(PID).GetName()))
+        if "health" in droneData:
+            self.functionsScreen.droneInfoHealthCtrl.SetValue(
+                droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
+                    clientApi.GetMinecraftEnum().AttrType.HEALTH))
+        if "battery" in droneData:
+            self.functionsScreen.droneInfoBatteryCtrl.SetValue(
+                droneData['battery'] / float(100 * GetAmplifier("battery", self.droneData['extraId'])))
+        if "fakePlayerId" in droneData:
+            print droneData
+            if droneData['fakePlayerId']:
+                self.functionsScreen.droneInfoModelCtrl.RenderEntity({
+                    "entity_id": droneData['fakePlayerId'],
+                    "scale": 1,
+                    "render_depth": -50,
+                    "init_rot_y": -30,
+                    "init_rot_x": 10})
+            else:
+                self.functionsScreen.droneInfoModelCtrl.RenderEntity({
+                    "entity_id": self.droneData['entityId'],
+                    "scale": 1,
+                    "render_depth": -50,
+                    "init_rot_y": -30,
+                    "init_rot_x": 10})
 
     isControlling = False
 
@@ -243,6 +278,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideArmorGui(False)
             clientApi.HideMoveGui(False)
         self.functionsScreen.RefreshButtonVisibility()
+        CC.SetCameraRotation((0, 0, 0))
 
     def SwitchState(self, _state, isTransition=True):
         if 1:
@@ -373,7 +409,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                                  sightVec[0] ** 2 + sightVec[1] ** 2 + sightVec[2] ** 2))))) \
                 if (math.sqrt(relativePos[0] ** 2 + relativePos[1] ** 2 + relativePos[2] ** 2) * math.sqrt(
                 sightVec[0] ** 2 + sightVec[1] ** 2 + sightVec[2] ** 2)) != 0 else 0.0
-            print angle
             if angle > 0.15: continue
             if minAngle == -999 or angle < minAngle:
                 minAngle = angle
@@ -559,7 +594,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             frameAniControlComp.SetMixColor((extraData['color'][0], extraData['color'][1], extraData['color'][2], 255))
         frameAniControlComp.Play()
         frameData = {"startTime": time.time(), "duration": duration, "entityId": entityId,
-                     "height": extraData.get("height", 0),
+                     "height": extraData.get("height", 0), "scale": extraData.get("scale", 1),
                      "aniTransComp": frameAniTransComp, "aniControlComp": frameAniControlComp,
                      "frameId": frameId}
         if isinstance(self.frameDataDict[frameType], list):
@@ -591,7 +626,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         isBindEntity = not isinstance(frameData["entityId"], tuple)
         pos = CF.CreatePos(frameData["entityId"]).GetFootPos() if isBindEntity else \
             frameData["entityId"]
-        if time.time() - frameData['startTime'] >= frameData["duration"] or (
+        if (frameData['duration'] >= 0 and time.time() - frameData['startTime'] >= frameData["duration"]) or (
                 not pos and time.time() - frameData['startTime'] >= 0.5) or (not isBindEntity and not pos):
             # 若序列帧已过期则清理该序列帧，若绑定实体死亡则先隐藏，10秒后还是不对再清理
             if not pos and time.time() - frameData['startTime'] < 10:
@@ -605,7 +640,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif pos:
             # 若序列帧未过期，则更新位置
             aniTransComp = frameData["aniTransComp"]
-            scale = 1
+            scale = frameData['scale']
             aniTransComp.SetScale((scale, scale, scale))
             aniTransComp.SetPos((
                 pos[0],

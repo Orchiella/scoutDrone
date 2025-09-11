@@ -1,0 +1,23 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "orchiella:scout_drone_fake_player",
+      "is_experimental": false,
+      "is_spawnable": false,
+      "is_summonable": false
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "height": 1.8,
+        "width": 0.6
+      },
+      "minecraft:health": {
+        "value": 999,
+        "max": 999
+      },
+      "minecraft:physics": {
+      }
+    }
+  }
+}

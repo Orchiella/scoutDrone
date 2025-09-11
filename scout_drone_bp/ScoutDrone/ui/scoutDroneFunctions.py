@@ -96,6 +96,10 @@ class ScoutDroneFunctions(ScreenNode):
                 'name': "自爆",
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.isControlling},
+            'sight': {
+                'name': "放大",
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.isControlling},
             'settings': {
                 'name': "",
                 "condition": lambda: self.client.nowState == "edit_button" or
@@ -364,6 +368,12 @@ class ScoutDroneFunctions(ScreenNode):
 
     editSizeSlider = None
 
+    droneInfoCtrl = None
+    droneInfoNameCtrl = None
+    droneInfoModelCtrl = None
+    droneInfoHealthCtrl = None
+    droneInfoBatteryCtrl = None
+
     updateTip = None
 
     def Display(self, show):
@@ -408,6 +418,13 @@ class ScoutDroneFunctions(ScreenNode):
 
                 self.updateTip = self.GetBaseUIControl("/settings/update_tip")
                 self.updateTip.SetVisible(not self.GetData("update_tip_{}".format(0)))
+
+                self.droneInfoCtrl = self.GetBaseUIControl("/drone_info")
+                self.droneInfoCtrl.SetVisible(False)
+                self.droneInfoNameCtrl = self.GetBaseUIControl("/drone_info/name").asLabel()
+                self.droneInfoModelCtrl = self.GetBaseUIControl("/drone_info/model").asNeteasePaperDoll()
+                self.droneInfoHealthCtrl = self.GetBaseUIControl("/drone_info/health").asProgressBar()
+                self.droneInfoBatteryCtrl = self.GetBaseUIControl("/drone_info/battery").asProgressBar()
 
                 self.initialized = True
         self.SetScreenVisible(show)

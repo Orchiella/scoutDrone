@@ -12,15 +12,16 @@ DEFAULT_PLAYER_SETTINGS = [
 
 DEFAULT_PLAYER_DATA = {
     "func_shoot_pos": (-60, 30), "func_shoot_size": 50,
+    "func_sight_pos": (-38, 30), "func_sight_size": 50,
     "func_inspect_pos": (52, -60), "func_inspect_size": 40,
     "func_deploy_pos": (145, -60), "func_deploy_size": 40,
     "func_settings_pos": (62, -94), "func_settings_size": 20,
     "func_recover_pos": (-65, -40), "func_recover_size": 40,
     "func_control_pos": (-110, -40), "func_control_size": 40,
     "func_function_pos": (-20, 7), "func_function_size": 40,
-    "func_scan_pos": (52, -14), "func_scan_size": 40,
-    "func_mark_pos": (97, -14), "func_mark_size": 40,
-    "func_explode_pos": (-20, -40), "func_explode_size": 40,
+    "func_scan_pos": (-110, -82), "func_scan_size": 40,
+    "func_mark_pos": (-65, -82), "func_mark_size": 40,
+    "func_explode_pos": (-20, -82), "func_explode_size": 40,
     "usage_informed": False,
     "update_tip_0": False
 }

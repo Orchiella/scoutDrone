@@ -226,6 +226,7 @@
                         40.0
                     ],
                     "layer": 1,
+                    "visible": false,
                     "controls": [
                         {
                             "btn@common.button": {
@@ -1875,7 +1876,7 @@
                     "anchor_to": "right_middle",
                     "offset": [
                         -20.0,
-                        7.0
+                        -82.0
                     ],
                     "size": [
                         40.0,
@@ -1976,11 +1977,11 @@
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/scout_drone/inspect",
                     "$texture_layer": 2,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
                     "offset": [
-                        52.0,
-                        -14.0
+                        -110.0,
+                        -82.0
                     ],
                     "size": [
                         40.0,
@@ -2081,11 +2082,11 @@
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/scout_drone/inspect",
                     "$texture_layer": 2,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
                     "offset": [
-                        97.0,
-                        -14.0
+                        -65.0,
+                        -82.0
                     ],
                     "size": [
                         40.0,
@@ -2253,6 +2254,278 @@
                                 "shadow": true,
                                 "text": "V",
                                 "text_alignment": "right"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "sight@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/scout_drone/shoot",
+                    "$hover_texture": "textures/ui/scout_drone/shoot",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/scout_drone/shoot",
+                    "$texture_layer": 2,
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -38.0,
+                        30.0
+                    ],
+                    "size": [
+                        50.0,
+                        50.0
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "alpha": 0.7,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {
+                                "$label_text|default": "快射",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "font_scale_factor": 0.8
+                            }
+                        },
+                        {
+                            "key": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    10.0,
+                                    10.0
+                                ],
+                                "layer": 5,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "右",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "drone_info": {
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0.0,
+                        10.0
+                    ],
+                    "size": [
+                        150.0,
+                        40.0
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "model": {
+                                "type": "custom",
+                                "renderer": "netease_paper_doll_renderer",
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "offset": [
+                                    5.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    40.0,
+                                    "default"
+                                ],
+                                "layer": 6,
+                                "enable_scissor_test": false,
+                                "rotation": "gesture_x",
+                                "screen_scale": 1.0
+                            }
+                        },
+                        {
+                            "name": {
+                                "type": "label",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -5.0,
+                                    5.0
+                                ],
+                                "size": [
+                                    100,
+                                    10.0
+                                ],
+                                "layer": 6,
+                                "font_type": "default",
+                                "text": "蕙兰的侦查无人机"
+                            }
+                        },
+                        {
+                            "bg": {
+                                "type": "image",
+                                "layer": 5,
+                                "texture": "textures/ui/effect_background"
+                            }
+                        },
+                        {
+                            "health": {
+                                "type": "panel",
+                                "$clip_direction": "left",
+                                "$clip_ratio": 0.0,
+                                "$is_new_nine_slice": false,
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$progress_bar_empty_texture": "textures/ui/empty_progress_bar",
+                                "$progress_bar_filled_texture": "textures/ui/filled_progress_bar",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -15.0
+                                ],
+                                "size": [
+                                    80.0,
+                                    6.0
+                                ],
+                                "layer": 8,
+                                "controls": [
+                                    {
+                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                    },
+                                    {
+                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                    },
+                                    {
+                                        "label": {
+                                            "type": "label",
+                                            "anchor_from": "left_middle",
+                                            "anchor_to": "right_middle",
+                                            "size": [
+                                                20.0,
+                                                "default"
+                                            ],
+                                            "font_type": "default",
+                                            "text": "血量"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "battery": {
+                                "type": "panel",
+                                "$clip_direction": "left",
+                                "$clip_ratio": 0.0,
+                                "$is_new_nine_slice": false,
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$progress_bar_empty_texture": "textures/ui/empty_progress_bar",
+                                "$progress_bar_filled_texture": "textures/ui/filled_progress_bar",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    80.0,
+                                    6.0
+                                ],
+                                "layer": 8,
+                                "controls": [
+                                    {
+                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                    },
+                                    {
+                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                    },
+                                    {
+                                        "label": {
+                                            "type": "label",
+                                            "anchor_from": "left_middle",
+                                            "anchor_to": "right_middle",
+                                            "size": [
+                                                20.0,
+                                                "default"
+                                            ],
+                                            "font_type": "default",
+                                            "text": "电量"
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
