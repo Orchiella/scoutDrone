@@ -37,17 +37,19 @@ DEPLOYMENT = OrderedDict(
      "battery": {"name": "电池",
                  "deployment": [
                      {"name": "原装电池"},
-                     {"name": "轻型电池", "speed": 0.2, "battery": -0.2},
-                     {"name": "大容量电池", "speed": -0.2, "battery:": 0.5, "firm": -0.1, "defense": -0.1}]
+                     {"name": "轻型电池", "speed": 0.2, "battery": -20},
+                     {"name": "大容量电池", "speed": -0.2, "battery:": 50, "firm": -0.1, "defense": -0.1},
+                     {"name": "超大容量电池", "speed": -0.4, "battery:": 100, "firm": -0.2, "defense": -0.2},
+                     {"name": "特殊能源电池", "speed": 0.3, "battery:": 30, "firm": -0.4}]
                  }
      })
 
 
-def GetAmplifier(attribute, content):
-    amplifier = 1
+def GetAttributeValue(attribute, content):
+    result = ATTRIBUTE_TYPE[attribute]['default']
     for typeName, typeDef in DEPLOYMENT.items():
-        amplifier += typeDef['deployment'][DeployHelper.Get(content, typeName)].get(attribute, 0)
-    return amplifier
+        result += typeDef['deployment'][DeployHelper.Get(content, typeName)].get(attribute, 0)
+    return result
 
 
 class ScoutDroneFunctions(ScreenNode):
@@ -258,37 +260,30 @@ class ScoutDroneFunctions(ScreenNode):
         originalContent = content = self.client.GetEquipment()['extraId']
         if previewDeploymentType:
             content = DeployHelper.Set(content, previewDeploymentType, previewDeploymentIndex)
-        attributeDict = {attribute: (1, 1) for attribute in ATTRIBUTE_TYPE}
-        for typeName, typeDef in DEPLOYMENT.items():
-            for attribute in ATTRIBUTE_TYPE:
-                attributeDict[attribute] = (attributeDict[attribute][0] + typeDef['deployment'][
-                    DeployHelper.Get(originalContent, typeName)].get(attribute, 0),
-                                            1 if not previewDeploymentType else
-                                            attributeDict[attribute][1] + typeDef['deployment'][
-                                                DeployHelper.Get(content, typeName)].get(attribute, 0))
-        for attribute, value in attributeDict.items():
+        for attribute, value in ATTRIBUTE_TYPE.items():
             white = self.GetBaseUIControl("/deploy/attribute/{}/white".format(attribute)).asProgressBar()
             green = self.GetBaseUIControl("/deploy/attribute/{}/green".format(attribute)).asProgressBar()
             red = self.GetBaseUIControl("/deploy/attribute/{}/red".format(attribute)).asProgressBar()
-            value = attributeDict[attribute][0]
-            previewValue = attributeDict[attribute][1]
+            value = GetAttributeValue(attribute, originalContent)
+            previewValue = GetAttributeValue(attribute, content)
+            maxValue = float(ATTRIBUTE_TYPE[attribute]['max'])
             if not previewDeploymentType or value == previewValue:
                 white.SetVisible(True)
-                white.SetValue(value / 2.0)
+                white.SetValue(value / maxValue)
                 green.SetVisible(False)
                 red.SetVisible(False)
             else:
                 if value > previewValue:
                     white.SetVisible(True)
-                    white.SetValue(previewValue / 2.0)
+                    white.SetValue(previewValue / maxValue)
                     red.SetVisible(True)
-                    red.SetValue(value / 2.0)
+                    red.SetValue(value / maxValue)
                     green.SetVisible(False)
                 else:
                     white.SetVisible(True)
-                    white.SetValue(value / 2.0)
+                    white.SetValue(value / maxValue)
                     green.SetVisible(True)
-                    green.SetValue(previewValue / 2.0)
+                    green.SetValue(previewValue / maxValue)
                     red.SetVisible(False)
 
     def SelectButtonWhileEditing(self, function):

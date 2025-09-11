@@ -11,7 +11,7 @@ from ScoutDrone.animData import ANIM_DATA
 from ScoutDrone.const import STATES, TRANSITION_DURATION, STATES_WITHOUT_3RD, DRONE_TYPE, DRONE_LAUNCHER_TYPE
 from ScoutDrone.mathUtil import GetTransitionMolangDict, GetFixOffset
 from ScoutDrone.ui import uiMgr
-from ScoutDrone.ui.scoutDroneFunctions import DEPLOYMENT, GetAmplifier
+from ScoutDrone.ui.scoutDroneFunctions import DEPLOYMENT, GetAttributeValue
 from ScoutDrone.ui.uiDef import UIDef
 
 CF = clientApi.GetEngineCompFactory()
@@ -238,7 +238,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
                     clientApi.GetMinecraftEnum().AttrType.HEALTH))
         if "battery" in droneData:
-            barValue = droneData['battery'] / float(100 * GetAmplifier("battery", self.droneData['extraId']))
+            barValue = droneData['battery'] / float(GetAttributeValue("battery", self.droneData['extraId']))
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(barValue)
             if barValue < 0.2:
                 self.functionsScreen.SendTip("电量告急", "c", 1, False)
