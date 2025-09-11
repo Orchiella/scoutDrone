@@ -13,6 +13,7 @@
       "animations": {
         "idle": "animation.scout_drone.idle",
         "move": "animation.scout_drone.move",
+        "invisibility": "animation.scout_drone.invisibility",
         "controller.scout_drone.general": "controller.animation.scout_drone.general"
       },
       "render_controllers": [
@@ -20,7 +21,10 @@
       ],
       "scripts": {
         "animate": [
-          "controller.scout_drone.general"
+          "controller.scout_drone.general",
+          {
+            "invisibility": "q.mod.scout_drone_controlling"
+          }
         ]
       },
       "textures": {

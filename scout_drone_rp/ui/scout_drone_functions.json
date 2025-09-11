@@ -1282,7 +1282,7 @@
                     "anchor_to": "bottom_middle",
                     "offset": [
                         0.0,
-                        -30.0
+                        -40.0
                     ],
                     "size": [
                         200.0,
@@ -2387,11 +2387,11 @@
                                 "anchor_to": "left_middle",
                                 "offset": [
                                     5.0,
-                                    0.0
+                                    5.0
                                 ],
                                 "size": [
-                                    40.0,
-                                    "default"
+                                    30.0,
+                                    30.0
                                 ],
                                 "layer": 6,
                                 "enable_scissor_test": false,

@@ -49,6 +49,14 @@
 				}
 			}
 		},
+		"animation.scout_drone.invisibility": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"scale": 0
+				}
+			}
+		},
 		"animation.scout_drone.deployment": {
 			"loop": true,
 			"override_previous_animation": true,

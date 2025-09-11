@@ -11,7 +11,7 @@ from ScoutDrone import mathUtil, DeployHelper
 from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE
 from ScoutDrone.dataManager import DataManager, DEFAULT_PLAYER_SETTINGS
 from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance
-from ScoutDrone.ui.scoutDroneFunctions import GetAmplifier
+from ScoutDrone.ui.scoutDroneFunctions import GetAmplifier, DEPLOYMENT
 
 CF = serverApi.GetEngineCompFactory()
 levelId = serverApi.GetLevelId()
@@ -35,6 +35,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
         for droneType in DRONE_TYPE:
             serverApi.AddEntityTickEventWhiteList(droneType)
+        serverApi.AddEntityTickEventWhiteList("orchiella:scout_drone_fake_player")
 
         dataComp = CF.CreateExtraData(levelId)
         if DataManager.KEY_NAME not in dataComp.GetWholeExtraData():
@@ -62,7 +63,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if CF.CreateRide(playerId).GetEntityRider() != droneId:
             return
         if direction:
-            motion = (Vector3(direction).Normalized() * 0.6).ToTuple()
+            speed = 0.7 * GetAmplifier("speed", self.droneDict[playerId]['extraId'])
+            motion = (Vector3(direction).Normalized() * speed).ToTuple()
         else:
             direction = Vector3(CF.CreateActorMotion(droneId).GetMotion())
             motion = (direction * 0.96).ToTuple()
@@ -74,18 +76,28 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     @Listen
     def EntityTickServerEvent(self, event):
         droneId = event["entityId"]
-        if CF.CreateEngineType(droneId).GetEngineTypeStr() not in DRONE_TYPE:
-            return
-        if time.time() - GetEntityData(droneId, "batteryConsumeTime") >= 1:
+        if CF.CreateEngineType(droneId).GetEngineTypeStr() in DRONE_TYPE:
             shooterId = GetEntityData(droneId, "shooter")
-            battery = GetEntityData(droneId, "battery")
-            if battery <= 1:
-                self.Recover(shooterId)
-                self.SendTip(shooterId, "无人机电量耗尽", "c")
+            if shooterId not in self.droneDict:
+                self.DestroyEntity(droneId)
                 return
-            SetEntityData(droneId, "battery", battery - 1)
-            SetEntityData(droneId, "batteryConsumeTime", time.time())
-            self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - 1})
+            if time.time() - GetEntityData(droneId, "batteryConsumeTime") >= 1:
+                battery = GetEntityData(droneId, "battery")
+                if battery <= 1:
+                    self.Recover(shooterId)
+                    self.SendTip(shooterId, "无人机电量耗尽", "c")
+                    return
+                SetEntityData(droneId, "battery", battery - 1)
+                SetEntityData(droneId, "batteryConsumeTime", time.time())
+                self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - 1})
+            if CF.CreateRide(shooterId).GetEntityRider() == droneId:
+                CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
+            self.droneDict[shooterId]['pos'] = CF.CreatePos(droneId).GetFootPos()
+        elif CF.CreateEngineType(droneId).GetEngineTypeStr() == "orchiella:scout_drone_fake_player":
+            shooterId = GetEntityData(droneId, "shooter")
+            if shooterId not in self.droneDict:
+                self.DestroyEntity(droneId)
+                return
 
     def Shoot(self, playerId):
         launcherItem = self.GetEquipment(playerId)
@@ -99,7 +111,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         CF.CreateItem(playerId).SetInvItemNum(CF.CreateItem(playerId).GetSelectSlotId(), 0)
         droneData = {"entityId": droneId,
                      "extraId": launcherItem['extraId'],
-                     "durability": launcherItem['durability']}
+                     "durability": launcherItem['durability'],
+                     "initDurability": launcherItem['durability'],
+                     "pos": spawnPos}
         self.droneDict[playerId] = droneData
         battery = 100 * GetAmplifier("battery", launcherItem['extraId'])
         self.CallClient(playerId, "UpdateDroneData", {
@@ -110,6 +124,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         SetEntityData(droneId, "shootTime", time.time())
         SetEntityData(droneId, "battery", battery)
         SetEntityData(droneId, "batteryConsumeTime", time.time())
+        CF.CreateName(droneId).SetName("侦查无人机")
         self.SendTip(playerId, "无人机升空", "a")
         self.Control(playerId)
 
@@ -121,15 +136,36 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.DestroyEntity(droneData['entityId'])
         del self.droneDict[playerId]
         self.CallClient(playerId, "UpdateDroneData", None)
-        CF.CreateItem(levelId).SpawnItemToPlayerInv(
-            dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
-                 itemName='orchiella:scout_drone_launcher',
-                 durability=droneData['durability']), playerId)
-        self.SendTip(playerId, "无人机已回收", "a")
+        if self.ShouldTakeDurability(playerId):
+            CF.CreateItem(levelId).SpawnItemToPlayerInv(
+                dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
+                     itemName='orchiella:scout_drone_launcher',
+                     durability=droneData['durability']), playerId)
+            cost = droneData['durability'] - droneData['initDurability']
+            if cost != 0:
+                realCost = int(cost * (2 - GetAmplifier("firm", droneData['extraId'])))
+                self.SendTip(playerId, "无人机已回收，使用了§6{}§a点耐久".format(realCost), "a")
+                if cost != realCost:
+                    CF.CreateMsg(levelId).NotifyOneMessage(playerId,
+                                                           "坚固属性为你节约了{}点耐久".format(cost - realCost))
+            else:
+                self.SendTip(playerId, "无人机已回收，未消耗耐久", "a")
+        else:
+            CF.CreateItem(levelId).SpawnItemToPlayerInv(
+                dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
+                     itemName='orchiella:scout_drone_launcher',
+                     durability=droneData['initDurability']), playerId)
+            self.SendTip(playerId, "无人机已回收", "a")
+
+    switchControlCdDict = {}
 
     def Control(self, playerId):
         if playerId not in self.droneDict:
             return
+        if time.time() < self.switchControlCdDict.get(playerId, 0):
+            self.SendTip(playerId, "请不要频繁切换控制", "c")
+            return
+        self.switchControlCdDict[playerId] = time.time() + 2
         droneData = self.droneDict[playerId]
         rideComp = CF.CreateRide(playerId)
         if rideComp.GetEntityRider() == droneData['entityId']:
@@ -146,10 +182,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                             CF.CreateRot(playerId).GetRot(),
                                                             CF.CreateDimension(playerId).GetEntityDimensionId())
             self.droneDict[playerId]['fakePlayerId'] = fakePlayerId
-            self.CallClient(playerId, "UpdateDroneData", {"fakePlayerId": fakePlayerId})
-            CF.CreateName(fakePlayerId).SetName("{}§a(正在操控无人机)".format(CF.CreateName(playerId).GetName()))
+            GC.AddTimer(0.1, self.CallClient, playerId, "UpdateDroneData", {"fakePlayerId": fakePlayerId})
             SetEntityData(fakePlayerId, "shooter", playerId)
+            CF.CreateName(fakePlayerId).SetName("{}§a(正在操控无人机)".format(CF.CreateName(playerId).GetName()))
+            GC.AddTimer(0.1, self.CallClients, serverApi.GetPlayerList(), "SetAlwaysShowName", fakePlayerId)
             self.CallClient(playerId, "AppendFrame", fakePlayerId, "fake_player", -1, {"height": 0.8, "scale": 0.8})
+            CF.CreatePos(playerId).SetFootPos(droneData['pos'])
             rideComp.SetRiderRideEntity(playerId, droneData['entityId'])
 
     # 禁止交互，只允许通过按钮上下
@@ -203,6 +241,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         else:
             self.SendTip(shooterId, "退出控制状态", "a")
         self.CallClient(shooterId, "SwitchControl", False)
+
+        effects = CF.CreateEffect(shooterId).GetAllEffects()
+        if effects:
+            for effect in effects:
+                if effect["effectName"] == "night_vision" and effect["duration"] <= 11:
+                    CF.CreateEffect(shooterId).RemoveEffectFromEntity("night_vision")
         CF.CreateActorMotion(droneId).SetMotion((0, 0, 0))
 
     def Function(self, playerId):
@@ -217,6 +261,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         droneData = self.droneDict[playerId]
         if CF.CreateRide(playerId).GetEntityRider() != droneData['entityId']:
+            return
+        cost = DataManager.Get(playerId, "scan_durability_cost")
+        if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
+            self.SendTip(playerId, "耐久值不足以使用扫描技能", "c")
             return
         num = 0
         for entityId in GC.GetEntitiesAround(playerId, 80, {}):
@@ -237,6 +285,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                              "scale": CF.CreateCollisionBox(entityId).GetSize()[1] * 0.6,
                              "color": color})
             num += 1
+        self.droneDict[playerId]['durability'] -= cost
         if num > 0:
             self.SendTip(playerId, "扫描并标记了§e{}§f个目标".format(num), "f", 3)
         else:
@@ -247,6 +296,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         droneData = self.droneDict[playerId]
         if CF.CreateRide(playerId).GetEntityRider() != droneData['entityId']:
+            return
+        cost = DataManager.Get(playerId, "mark_durability_cost")
+        if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
+            self.SendTip(playerId, "耐久值不足以使用标记技能", "c")
             return
         color = (1, 1, 1)
         for entityType, frameColor in self.frameRGB.items():
@@ -260,24 +313,39 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.SendTip(playerId, "标记了§e{}§f({}米)".format(self.GetEntityName(targetId),
                                                            round(GetDistance(CF.CreatePos(playerId).GetPos(),
                                                                              CF.CreatePos(targetId).GetPos()))), "f", 1)
+        self.droneDict[playerId]['durability'] -= cost
 
     def Explode(self, playerId):
         if playerId not in self.droneDict:
             return
         droneData = self.droneDict[playerId]
         droneId = droneData['entityId']
+        cost = DataManager.Get(playerId, "explode_durability_cost")
+        if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
+            self.SendTip(playerId, "耐久值不足以使用自爆技能", "c")
+            return
         pos = CF.CreatePos(droneId).GetPos()
         self.explosionData = {"shooter": playerId, "pos": pos}
         CF.CreateExplosion(levelId).CreateExplosion(pos,
                                                     DataManager.Get(playerId, "explode_radius"),
-                                                    DataManager.Get(playerId, "explode_fire_enabled"),
-                                                    DataManager.Get(playerId, "explode_break_enabled"), playerId,
+                                                    DataManager.Get(playerId, "explode_fire"),
+                                                    DataManager.Get(playerId, "explode_break"), playerId,
                                                     playerId)
         self.explosionData = None
-        droneData['durability'] = max(0,
-                                      droneData['durability'] - DataManager.Get(playerId, "explode_durability_cost"))
+        self.droneDict[playerId]['durability'] -= cost
         self.Recover(playerId)
-        self.SendTip(playerId, "无人机已自爆", "a")
+        self.SendTip(playerId, "无人机自爆成功", "a")
+
+    def Sight(self, playerId):
+        if playerId not in self.droneDict:
+            return
+        droneData = self.droneDict[playerId]
+        if droneData.get('sight', 1) == 1:
+            sightValue = DEPLOYMENT['sight']['deployment'][DeployHelper.Get(droneData['extraId'], "sight")]['value']
+        else:
+            sightValue = 1
+        self.droneDict[playerId]['sight'] = sightValue
+        self.CallClient(playerId, "UpdateDroneData", {"sight": sightValue})
 
     explosionData = None
 
@@ -320,11 +388,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def DroneDamaged(self, event):
         droneId = event['entityId']
         if CF.CreateEngineType(droneId).GetEngineTypeStr() in DRONE_TYPE:
-            event['knock'] = False
             shooterId = GetEntityData(droneId, "shooter")
+            damage = event['damage']
+            realDamage = int(damage * (2 - GetAmplifier("defense", self.droneDict[shooterId]['extraId'])))
+            event['damage'] = realDamage
+            event['knock'] = False
             self.CallClient(shooterId, "UpdateDroneData", {
-                "health": CF.CreateAttr(droneId).GetAttrValue(serverApi.GetMinecraftEnum().AttrType.HEALTH) - event[
-                    'damage']})
+                "health": CF.CreateAttr(droneId).GetAttrValue(
+                    serverApi.GetMinecraftEnum().AttrType.HEALTH) - realDamage})
 
     @Listen
     def EntityRemoveEvent(self, event):
@@ -340,6 +411,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
     def GetEquipment(self, playerId):
         item = CF.CreateItem(playerId).GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.CARRIED)
         return item if item and item['newItemName'] in DRONE_LAUNCHER_TYPE else None
+
+    def ShouldTakeDurability(self, playerId):
+        return not DataManager.Get(playerId, "infinite_durability") and GC.GetPlayerGameType(
+            playerId) != serverApi.GetMinecraftEnum().GameType.Creative
 
     def TakeDurability(self, playerId, value):
         if value == 0 or GC.GetPlayerGameType(playerId) == serverApi.GetMinecraftEnum().GameType.Creative: return

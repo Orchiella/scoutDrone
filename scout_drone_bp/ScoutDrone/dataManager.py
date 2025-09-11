@@ -7,7 +7,16 @@ from ScoutDrone.config import mod_name
 levelId = serverApi.GetLevelId()
 
 DEFAULT_PLAYER_SETTINGS = [
-    ("explode_radius", {"description": "§f爆炸半径", "type": "int", "range": (0, 20), "default": 5}),
+    ("shake", {"description": "§f镜头摇晃§7(觉得晕可以关掉)", "type": "bool", "default": True}),
+    ("green_intense", {"description": "§f滤镜强度百分比", "type": "int", "range": (0, 100), "default": 30}),
+    ("infinite_durability", {"description": "§f生存模式下也无限耐久", "type": "bool", "default": False}),
+    ("scan_durability_cost", {"description": "§f扫描消耗耐久", "type": "int", "range": (0, 1000), "default": 15}),
+    ("mark_durability_cost", {"description": "§f标记消耗耐久", "type": "int", "range": (0, 1000), "default": 2}),
+    ("explode_durability_cost", {"description": "§f自爆消耗耐久", "type": "int", "range": (0, 1000), "default": 50}),
+    ("explode_damage_percentage", {"description": "§f自爆伤害缩放百分比", "type": "int", "range": (0, 1000), "default": 100}),
+    ("explode_radius", {"description": "§f自爆半径", "type": "int", "range": (0, 20), "default": 5}),
+    ("explode_break", {"description": "§f自爆破坏方块", "type": "bool", "default": True}),
+    ("explode_fire", {"description": "§f自爆引发火焰§7(需开启上一项)", "type": "bool", "default": True}),
 ]
 
 DEFAULT_PLAYER_DATA = {

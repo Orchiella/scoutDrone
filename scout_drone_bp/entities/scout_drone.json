@@ -16,6 +16,8 @@
         "value": 200,
         "max": 200
       },
+      "minecraft:nameable": {
+      },
       "minecraft:physics": {
         "has_gravity": false
       },

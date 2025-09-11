@@ -87,7 +87,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 self.CallServer("SetMotion", PID, None)
             CC.SetCameraRotation((cameraRot[0], cameraRot[1], cameraRot[2] * 0.95 if abs(cameraRot[2]) > 0.05 else 0))
             return
-        CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(10, max(-10, cameraRot[2] - inputRight))))
+        if self.GetData("shake"):
+            CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(12, max(-12, cameraRot[2] - inputRight))))
         currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
         if abs(currentDir[1]) != 1:
             currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
@@ -237,24 +238,28 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
                     clientApi.GetMinecraftEnum().AttrType.HEALTH))
         if "battery" in droneData:
-            self.functionsScreen.droneInfoBatteryCtrl.SetValue(
-                droneData['battery'] / float(100 * GetAmplifier("battery", self.droneData['extraId'])))
+            barValue = droneData['battery'] / float(100 * GetAmplifier("battery", self.droneData['extraId']))
+            self.functionsScreen.droneInfoBatteryCtrl.SetValue(barValue)
+            if barValue < 0.2:
+                self.functionsScreen.SendTip("电量告急", "c", 1, False)
         if "fakePlayerId" in droneData:
-            print droneData
             if droneData['fakePlayerId']:
                 self.functionsScreen.droneInfoModelCtrl.RenderEntity({
                     "entity_id": droneData['fakePlayerId'],
-                    "scale": 1,
-                    "render_depth": -50,
+                    "scale": 0.3,
                     "init_rot_y": -30,
                     "init_rot_x": 10})
             else:
                 self.functionsScreen.droneInfoModelCtrl.RenderEntity({
                     "entity_id": self.droneData['entityId'],
-                    "scale": 1,
-                    "render_depth": -50,
+                    "scale": 1.3,
                     "init_rot_y": -30,
                     "init_rot_x": 10})
+        if "sight" in droneData:
+            PVC.SetPlayerFovScale(droneData['sight'])
+
+    def SetAlwaysShowName(self, entityId):
+        CF.CreateName(entityId).SetAlwaysShowName(True)
 
     isControlling = False
 
@@ -268,6 +273,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHealthGui(True)
             clientApi.HideHungerGui(True)
             clientApi.HideArmorGui(True)
+            PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
+            self.UpdateVar("controlling", 1, self.droneData['entityId'])
         else:
             PVC.LockPerspective(-1)
             clientApi.HideSlotBarGui(False)
@@ -277,8 +284,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHungerGui(False)
             clientApi.HideArmorGui(False)
             clientApi.HideMoveGui(False)
+            PPC.SetColorAdjustmentTint(0, (0, 255, 0))
+            self.UpdateVar("controlling", 0, self.droneData['entityId'])
         self.functionsScreen.RefreshButtonVisibility()
         CC.SetCameraRotation((0, 0, 0))
+        PVC.SetPlayerFovScale(1)
+
+    @Listen
+    def ClientJumpButtonPressDownEvent(self,event):
+        if self.isControlling:
+            event['continueJump'] = False
 
     def SwitchState(self, _state, isTransition=True):
         if 1:
@@ -376,6 +391,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif function == "explode":
             self.CallServer("Explode", PID)
             return True
+        elif function == "sight":
+            self.CallServer("Sight", PID)
+            return True
 
     def FilterSpecialEntity(self, entityId):
         boxSize = CF.CreateCollisionBox(entityId).GetSize()
@@ -438,7 +456,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             ("fix_offset_x", GetFixOffset(width / float(height)), 0),
             ("fix_offset_z", -0.5 if CF.CreateActorRender(PID).GetModelStyle() == 'slim' else 0, 0),
             ("speed_amplifier", 1, 1),
-            ("drop_yaw", 0, 0)}
+            ("drop_yaw", 0, 0),
+            ("controlling", 0, 0)}
                 .union({("deployment_" + deploymentType, 0, 0) for deploymentType in DEPLOYMENT})):
             levelQC.Register('query.mod.{}_{}'.format(DB.mod_name, varName), levelDefValue)
             QC.Set('query.mod.{}_{}'.format(DB.mod_name, varName), playerDefValue)
@@ -509,6 +528,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.GetEquipment(): return
         event['cancel'] = True
         self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "shoot"}})
+
+    @Listen
+    def RightClickBeforeClientEvent(self, event):
+        if clientApi.GetPlatform() != 0: return
+        if not self.GetEquipment(): return
+        event['cancel'] = True
+        self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "sight"}})
 
     @Listen
     def GetEntityByCoordEvent(self, event):

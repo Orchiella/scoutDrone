@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="2">
-      <change afterPath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone_fake_player.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/effects/scout_drone_fake_player.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone_fake_player.entity.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone_fake_player.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/sfxs/scout_drone_fake_player.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/sfxs/scout_drone_fake_player.png" afterDir="false" />
+    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone_fake_player.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone_fake_player.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone.entity.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,14 +41,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/effects"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/effects&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\effects" />
@@ -87,12 +83,21 @@
       <option name="project" value="LOCAL" />
       <updated>1757511838230</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="3">
+      <option name="closed" value="true" />
+      <created>1757567321648</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757567321648</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
     <MESSAGE value="2" />
-    <option name="LAST_COMMIT_MESSAGE" value="2" />
+    <MESSAGE value="3" />
+    <option name="LAST_COMMIT_MESSAGE" value="3" />
   </component>
 </project>
