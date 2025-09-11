@@ -5,6 +5,7 @@ AIR_BLOCK = {"name": "minecraft:air", "aux": 0}
 FIRE_BLOCK = {"name": "minecraft:fire", "aux": 0}
 DRONE_TYPE = set("orchiella:scout_drone" + bow_type for bow_type in {""})
 DRONE_LAUNCHER_TYPE = {droneType + "_launcher" for droneType in DRONE_TYPE}
+ORIGINAL_SPEED = 0.7
 ATTRIBUTE_TYPE = {"defense", "speed", "battery", "firm"}
 INCOMPLETE_ITEM_DICT = {'count': 1, 'enchantData': [],
                         'itemId': -1, 'customTips': '', 'extraId': '', 'newAuxValue': 0, 'modEnchantData': [],

@@ -8,7 +8,7 @@ from mod.common.utils.mcmath import Vector3
 
 import config as DB
 from ScoutDrone import mathUtil, DeployHelper
-from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE
+from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE, ORIGINAL_SPEED
 from ScoutDrone.dataManager import DataManager, DEFAULT_PLAYER_SETTINGS
 from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance
 from ScoutDrone.ui.scoutDroneFunctions import GetAmplifier, DEPLOYMENT
@@ -62,12 +62,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         droneId = self.droneDict[playerId]['entityId']
         if CF.CreateRide(playerId).GetEntityRider() != droneId:
             return
+        originalMotion = CF.CreateActorMotion(droneId).GetMotion()
         if direction:
-            speed = 0.7 * GetAmplifier("speed", self.droneDict[playerId]['extraId'])
+            speed = ORIGINAL_SPEED * GetAmplifier("speed", self.droneDict[playerId]['extraId'])
+            if speed < Vector3(originalMotion).Length():
+                return
             motion = (Vector3(direction).Normalized() * speed).ToTuple()
         else:
-            direction = Vector3(CF.CreateActorMotion(droneId).GetMotion())
-            motion = (direction * 0.96).ToTuple()
+            motion = (Vector3(originalMotion) * 0.96).ToTuple()
         CF.CreateActorMotion(droneId).SetMotion(motion)
         CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
 
@@ -260,12 +262,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if playerId not in self.droneDict:
             return
         droneData = self.droneDict[playerId]
-        if CF.CreateRide(playerId).GetEntityRider() != droneData['entityId']:
+        droneId = droneData['entityId']
+        if CF.CreateRide(playerId).GetEntityRider() != droneId:
             return
-        cost = DataManager.Get(playerId, "scan_durability_cost")
-        if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
-            self.SendTip(playerId, "耐久值不足以使用扫描技能", "c")
+        cost = DataManager.Get(playerId, "scan_cost")
+        nowBattery = GetEntityData(droneId, "battery")
+        if nowBattery < cost:
+            self.SendTip(playerId, "电量值不足以使用扫描技能", "c")
             return
+        SetEntityData(droneId, "battery", nowBattery - cost)
+        self.CallClient(playerId, "UpdateDroneData", {"battery": nowBattery - cost})
         num = 0
         for entityId in GC.GetEntitiesAround(playerId, 80, {}):
             if entityId == playerId:
@@ -285,7 +291,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                              "scale": CF.CreateCollisionBox(entityId).GetSize()[1] * 0.6,
                              "color": color})
             num += 1
-        self.droneDict[playerId]['durability'] -= cost
         if num > 0:
             self.SendTip(playerId, "扫描并标记了§e{}§f个目标".format(num), "f", 3)
         else:
@@ -295,12 +300,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if playerId not in self.droneDict:
             return
         droneData = self.droneDict[playerId]
-        if CF.CreateRide(playerId).GetEntityRider() != droneData['entityId']:
+        droneId = droneData['entityId']
+        if CF.CreateRide(playerId).GetEntityRider() != droneId:
             return
-        cost = DataManager.Get(playerId, "mark_durability_cost")
-        if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
-            self.SendTip(playerId, "耐久值不足以使用标记技能", "c")
+        cost = DataManager.Get(playerId, "mark_cost")
+        nowBattery = GetEntityData(droneId, "battery")
+        if nowBattery < cost:
+            self.SendTip(playerId, "电量值不足以使用标记功能", "c")
             return
+        SetEntityData(droneId, "battery", nowBattery - cost)
+        self.CallClient(playerId, "UpdateDroneData", {"battery": nowBattery - cost})
         color = (1, 1, 1)
         for entityType, frameColor in self.frameRGB.items():
             if CF.CreateEngineType(targetId).GetEngineType() & entityType == entityType:
@@ -313,17 +322,17 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.SendTip(playerId, "标记了§e{}§f({}米)".format(self.GetEntityName(targetId),
                                                            round(GetDistance(CF.CreatePos(playerId).GetPos(),
                                                                              CF.CreatePos(targetId).GetPos()))), "f", 1)
-        self.droneDict[playerId]['durability'] -= cost
 
     def Explode(self, playerId):
         if playerId not in self.droneDict:
             return
         droneData = self.droneDict[playerId]
         droneId = droneData['entityId']
-        cost = DataManager.Get(playerId, "explode_durability_cost")
+        cost = DataManager.Get(playerId, "explode_cost")
         if droneData['durability'] < cost and self.ShouldTakeDurability(playerId):
             self.SendTip(playerId, "耐久值不足以使用自爆技能", "c")
             return
+        self.droneDict[playerId]['durability'] -= cost
         pos = CF.CreatePos(droneId).GetPos()
         self.explosionData = {"shooter": playerId, "pos": pos}
         CF.CreateExplosion(levelId).CreateExplosion(pos,
@@ -332,7 +341,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                     DataManager.Get(playerId, "explode_break"), playerId,
                                                     playerId)
         self.explosionData = None
-        self.droneDict[playerId]['durability'] -= cost
         self.Recover(playerId)
         self.SendTip(playerId, "无人机自爆成功", "a")
 
@@ -346,6 +354,30 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             sightValue = 1
         self.droneDict[playerId]['sight'] = sightValue
         self.CallClient(playerId, "UpdateDroneData", {"sight": sightValue})
+
+    def SpeedUp(self, playerId):
+        if playerId not in self.droneDict:
+            return
+        droneData = self.droneDict[playerId]
+        droneId = droneData['entityId']
+        cost = DataManager.Get(playerId, "speed_up_cost")
+        nowBattery = GetEntityData(droneId, "battery")
+        if nowBattery < cost:
+            self.SendTip(playerId, "电量值不足以使用标记功能", "c")
+            return
+        SetEntityData(droneId, "battery", nowBattery - cost)
+        self.CallClient(playerId, "UpdateDroneData", {"battery": nowBattery - cost})
+        pitch = CF.CreateRot(playerId).GetRot()[0]
+        if pitch < -45:
+            self.SendTip(playerId, "仰角过高，请先放平", "c")
+            return
+        self.droneDict[playerId]['durability'] -= cost
+        droneId = droneData['entityId']
+        speed = (ORIGINAL_SPEED * GetAmplifier("speed", self.droneDict[playerId]['extraId'])) * DataManager.Get(
+            playerId, "speed_up_amplifier")
+        CF.CreateActorMotion(droneId).SetMotion(
+            (Vector3(serverApi.GetDirFromRot(CF.CreateRot(playerId).GetRot())).Normalized() * speed).ToTuple())
+        self.SendTip(playerId, "加速！", "a")
 
     explosionData = None
 

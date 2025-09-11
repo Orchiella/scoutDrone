@@ -294,6 +294,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def ClientJumpButtonPressDownEvent(self,event):
         if self.isControlling:
             event['continueJump'] = False
+            self.CallServer("SpeedUp",PID)
 
     def SwitchState(self, _state, isTransition=True):
         if 1:
