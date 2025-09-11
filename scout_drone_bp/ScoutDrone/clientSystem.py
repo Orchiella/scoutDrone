@@ -291,10 +291,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         PVC.SetPlayerFovScale(1)
 
     @Listen
-    def ClientJumpButtonPressDownEvent(self,event):
+    def ClientJumpButtonPressDownEvent(self, event):
         if self.isControlling:
             event['continueJump'] = False
-            self.CallServer("SpeedUp",PID)
+            self.CallServer("SpeedUp", PID)
 
     def SwitchState(self, _state, isTransition=True):
         if 1:
@@ -526,16 +526,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     @Listen
     def LeftClickBeforeClientEvent(self, event):
         if clientApi.GetPlatform() != 0: return
-        if not self.GetEquipment(): return
-        event['cancel'] = True
-        self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "shoot"}})
+        if self.GetEquipment():
+            event['cancel'] = True
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "shoot"}})
 
     @Listen
     def RightClickBeforeClientEvent(self, event):
         if clientApi.GetPlatform() != 0: return
-        if not self.GetEquipment(): return
-        event['cancel'] = True
-        self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "sight"}})
+        if self.isControlling:
+            event['cancel'] = True
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "sight"}})
 
     @Listen
     def GetEntityByCoordEvent(self, event):

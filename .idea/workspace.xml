@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="5">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
-    </list>
+    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="6" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757585285371</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="6">
+      <option name="closed" value="true" />
+      <created>1757606897280</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757606897280</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -112,6 +114,7 @@
     <MESSAGE value="3" />
     <MESSAGE value="4" />
     <MESSAGE value="5" />
-    <option name="LAST_COMMIT_MESSAGE" value="5" />
+    <MESSAGE value="6" />
+    <option name="LAST_COMMIT_MESSAGE" value="6" />
   </component>
 </project>
