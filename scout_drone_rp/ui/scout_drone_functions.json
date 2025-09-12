@@ -1633,8 +1633,8 @@
                 "recover@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/recover",
+                    "$hover_texture": "textures/ui/scout_drone/recover",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1660,7 +1660,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/recover",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -1738,8 +1738,8 @@
                 "control@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/control",
+                    "$hover_texture": "textures/ui/scout_drone/control",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1765,7 +1765,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/control",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -1843,8 +1843,8 @@
                 "function@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/function",
+                    "$hover_texture": "textures/ui/scout_drone/function",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1870,13 +1870,13 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/function",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
                     "offset": [
                         -20.0,
-                        -82.0
+                        -95.0
                     ],
                     "size": [
                         40.0,
@@ -1948,8 +1948,8 @@
                 "scan@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/scan",
+                    "$hover_texture": "textures/ui/scout_drone/scan",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1975,13 +1975,13 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/scan",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
                     "offset": [
                         -110.0,
-                        -82.0
+                        -95.0
                     ],
                     "size": [
                         40.0,
@@ -2042,7 +2042,7 @@
                                 "layer": 3,
                                 "font_type": "default",
                                 "shadow": true,
-                                "text": "G",
+                                "text": "V",
                                 "text_alignment": "right"
                             }
                         }
@@ -2053,8 +2053,8 @@
                 "mark@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/mark",
+                    "$hover_texture": "textures/ui/scout_drone/mark",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -2080,13 +2080,13 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/mark",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
                     "offset": [
                         -65.0,
-                        -82.0
+                        -95.0
                     ],
                     "size": [
                         40.0,
@@ -2158,8 +2158,8 @@
                 "explode@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/inspect",
-                    "$hover_texture": "textures/ui/scout_drone/inspect",
+                    "$default_texture": "textures/ui/scout_drone/explode",
+                    "$hover_texture": "textures/ui/scout_drone/explode",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -2185,7 +2185,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/inspect",
+                    "$pressed_texture": "textures/ui/scout_drone/explode",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -2252,7 +2252,7 @@
                                 "layer": 3,
                                 "font_type": "default",
                                 "shadow": true,
-                                "text": "V",
+                                "text": "G",
                                 "text_alignment": "right"
                             }
                         }
@@ -2263,8 +2263,8 @@
                 "sight@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/scout_drone/shoot",
-                    "$hover_texture": "textures/ui/scout_drone/shoot",
+                    "$default_texture": "textures/ui/scout_drone/sight",
+                    "$hover_texture": "textures/ui/scout_drone/sight",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -2290,7 +2290,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/scout_drone/shoot",
+                    "$pressed_texture": "textures/ui/scout_drone/sight",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -2371,7 +2371,7 @@
                     "anchor_to": "top_middle",
                     "offset": [
                         0.0,
-                        10.0
+                        5.0
                     ],
                     "size": [
                         150.0,
@@ -2526,6 +2526,193 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "control_panel": {
+                    "type": "panel",
+                    "size": [
+                        240.0,
+                        180.0
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "screen": {
+                                "type": "image",
+                                "layer": 1,
+                                "alpha": 0.5,
+                                "texture": "textures/ui/scout_drone/control_screen"
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "label",
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    100,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "font_type": "default"
+                            }
+                        },
+                        {
+                            "right": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    100,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "font_type": "default",
+                                "text_alignment": "right"
+                            }
+                        },
+                        {
+                            "battery_warning": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    5.0
+                                ],
+                                "size": [
+                                    100,
+                                    20.0
+                                ],
+                                "font_size": "large",
+                                "font_type": "default",
+                                "text": "§c电量告急",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "charge@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/scout_drone/charge",
+                    "$hover_texture": "textures/ui/scout_drone/charge",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/scout_drone/charge",
+                    "$texture_layer": 2,
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -130.0,
+                        30.0
+                    ],
+                    "size": [
+                        40.0,
+                        40.0
+                    ],
+                    "layer": 2,
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "alpha": 0.7,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "alpha": 0.4,
+                                "propagate_alpha": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {
+                                "$label_text|default": "快射",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "font_scale_factor": 0.8,
+                                "max_size": [
+                                    100,
+                                    "100%"
+                                ],
+                                "size": [
+                                    100,
+                                    "default"
+                                ]
+                            }
+                        },
+                        {
+                            "key": {
+                                "type": "label",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_right",
+                                "offset": [
+                                    -5.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    10.0,
+                                    10.0
+                                ],
+                                "layer": 3,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "R",
+                                "text_alignment": "right"
                             }
                         }
                     ]

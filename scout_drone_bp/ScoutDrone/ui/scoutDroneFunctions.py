@@ -27,12 +27,14 @@ DEPLOYMENT = OrderedDict(
               "deployment": [
                   {"name": "不下挂"},
                   {"name": "引力钩爪", "speed": -0.2},
-                  {"name": "强探照灯", "speed": -0.1}]},
+                  {"name": "强探照灯", "speed": -0.1},
+                  {"name": "诱饵投放器", "speed": -0.1}]},
      "sight": {"name": "放大器",
                "deployment": [
-                   {"name": "原装放大器", "value": 0.9},
+                   {"name": "原装款", "value": 0.8},
                    {"name": "普通放大器", "value": 0.5, "firm": -0.1},
-                   {"name": "专业放大器", "value": 0.2, "firm": -0.2, "defense": -0.1}],
+                   {"name": "改良放大器", "value": 0.3, "firm": -0.2, "defense": -0.1},
+                   {"name": "专业放大器", "value": 0.1, "firm": -0.3, "defense": -0.15}],
                },
      "battery": {"name": "电池",
                  "deployment": [
@@ -102,6 +104,10 @@ class ScoutDroneFunctions(ScreenNode):
                 'name': "放大",
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.isControlling},
+            'charge': {
+                'name': "",
+                "condition": lambda: self.client.nowState == "edit_button" or
+                                     self.client.GetEquipment()},
             'settings': {
                 'name': "",
                 "condition": lambda: self.client.nowState == "edit_button" or
@@ -117,6 +123,8 @@ class ScoutDroneFunctions(ScreenNode):
         if not self.initialized or not self.displaying:
             return
         self.CheckSelect()
+        if self.controlPanelBatteryWarningCtrl.GetVisible():
+            self.controlPanelBatteryWarningCtrl.SetAlpha(0.5 * (1 + math.sin(5 * time.time())))
         if self.tipDisabledTime != 0 and time.time() > self.tipDisabledTime:
             self.tipLabelCtrl.SetText("")
         if self.client.nowState == "edit_button" and self.functionEditing:
@@ -300,6 +308,8 @@ class ScoutDroneFunctions(ScreenNode):
 
     def ClickButton(self, args):
         func = args['AddTouchEventParams']['func']
+        if not self.GetBaseUIControl("/" + func).GetVisible():
+            return
         if self.client.nowState == "edit_button":
             self.SelectButtonWhileEditing(func)
             return
@@ -369,6 +379,13 @@ class ScoutDroneFunctions(ScreenNode):
     droneInfoHealthCtrl = None
     droneInfoBatteryCtrl = None
 
+    controlPanelCtrl = None
+    controlPanelLeftCtrl = None
+    controlPanelRightCtrl = None
+    controlPanelBatteryWarningCtrl = None
+
+    chargeButtonLabelCtrl = None
+
     updateTip = None
 
     def Display(self, show):
@@ -420,6 +437,14 @@ class ScoutDroneFunctions(ScreenNode):
                 self.droneInfoModelCtrl = self.GetBaseUIControl("/drone_info/model").asNeteasePaperDoll()
                 self.droneInfoHealthCtrl = self.GetBaseUIControl("/drone_info/health").asProgressBar()
                 self.droneInfoBatteryCtrl = self.GetBaseUIControl("/drone_info/battery").asProgressBar()
+
+                self.controlPanelCtrl = self.GetBaseUIControl("/control_panel")
+                self.controlPanelLeftCtrl = self.GetBaseUIControl("/control_panel/left").asLabel()
+                self.controlPanelRightCtrl = self.GetBaseUIControl("/control_panel/right").asLabel()
+                self.controlPanelBatteryWarningCtrl = self.GetBaseUIControl("/control_panel/battery_warning").asLabel()
+                self.controlPanelCtrl.SetVisible(False)
+
+                self.chargeButtonLabelCtrl = self.GetBaseUIControl("/charge/button_label").asLabel()
 
                 self.initialized = True
         self.SetScreenVisible(show)
@@ -478,7 +503,7 @@ class ScoutDroneFunctions(ScreenNode):
             ctrl.SetPosition((parentX + relativeX, parentY + relativeY))
             ctrl.SetSize((size, size), True)
             labelCtrl = self.GetBaseUIControl('/' + function + "/button_label")
-            if labelCtrl:
+            if labelCtrl and self.functions[function]['name']:
                 labelCtrl.asLabel().SetText(self.functions[function]['name'])
 
     def SendTip(self, tip, color, duration=2.0, cover=True):

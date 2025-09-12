@@ -146,6 +146,15 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.SwitchState("equip", False)
             clientApi.HideCrossHairGUI(True)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, True)
+            batteryValue = int(DeployHelper.Get(extraId, "batteryValue"))
+            batteryColor = "f"
+            if batteryValue < 10:
+                batteryColor = "c"
+            elif batteryValue < 20:
+                batteryColor = "e"
+            self.functionsScreen.chargeButtonLabelCtrl.SetText(
+                "充电\n(§{}{}§f/{})".format(batteryColor, batteryValue,
+                                            int(GetAttributeValue("battery", extraId))))
         else:
             self.SwitchState("idle", False)
             clientApi.HideCrossHairGUI(False)
@@ -230,6 +239,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         for key, value in droneData.items():
             self.droneData[key] = value
         if "entityId" in droneData:
+            self.functionsScreen.controlPanelBatteryWarningCtrl.SetVisible(False)
             self.functionsScreen.droneInfoHealthCtrl.SetValue(1)
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(1)
             self.functionsScreen.droneInfoNameCtrl.SetText("{}的侦查无人机".format(CF.CreateName(PID).GetName()))
@@ -240,8 +250,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if "battery" in droneData:
             barValue = droneData['battery'] / float(GetAttributeValue("battery", self.droneData['extraId']))
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(barValue)
-            if barValue < 0.2:
-                self.functionsScreen.SendTip("电量告急", "c", 1, False)
+            self.functionsScreen.controlPanelBatteryWarningCtrl.SetVisible(barValue < 0.2)
         if "fakePlayerId" in droneData:
             if droneData['fakePlayerId']:
                 self.functionsScreen.droneInfoModelCtrl.RenderEntity({
@@ -257,6 +266,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                     "init_rot_x": 10})
         if "sight" in droneData:
             PVC.SetPlayerFovScale(droneData['sight'])
+        if "control_panel" in droneData:
+            self.functionsScreen.controlPanelLeftCtrl.SetText(droneData['control_panel'][0])
+            self.functionsScreen.controlPanelRightCtrl.SetText(droneData['control_panel'][1])
 
     def SetAlwaysShowName(self, entityId):
         CF.CreateName(entityId).SetAlwaysShowName(True)
@@ -267,6 +279,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.isControlling = boolean
         if boolean:
             PVC.LockPerspective(0)
+            clientApi.HideCrossHairGUI(True)
             clientApi.HideSlotBarGui(True)
             clientApi.HideExpGui(True)
             clientApi.HideHorseHealthGui(True)
@@ -275,8 +288,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideArmorGui(True)
             PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
             self.UpdateVar("controlling", 1, self.droneData['entityId'])
+            self.functionsScreen.controlPanelCtrl.SetVisible(True)
+            self.functionsScreen.controlPanelLeftCtrl.SetText("")
+            self.functionsScreen.controlPanelRightCtrl.SetText("")
         else:
             PVC.LockPerspective(-1)
+            clientApi.HideCrossHairGUI(False)
             clientApi.HideSlotBarGui(False)
             clientApi.HideExpGui(False)
             clientApi.HideHorseHealthGui(False)
@@ -286,6 +303,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideMoveGui(False)
             PPC.SetColorAdjustmentTint(0, (0, 255, 0))
             self.UpdateVar("controlling", 0, self.droneData['entityId'])
+            self.functionsScreen.controlPanelCtrl.SetVisible(False)
         self.functionsScreen.RefreshButtonVisibility()
         CC.SetCameraRotation((0, 0, 0))
         PVC.SetPlayerFovScale(1)
@@ -385,7 +403,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif function == "mark" and self.isControlling:
             targetId = self.SelectEntity(self.FilterSpecialEntity)
             if not targetId:
-                self.functionsScreen.SendTip("未检测到目标", "c")
+                self.functionsScreen.SendTip("需对准一个目标", "c")
                 return False
             self.CallServer("Mark", PID, targetId)
             return True
@@ -514,11 +532,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "inspect"}})
         elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_R:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "recover"}})
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "charge"}})
         elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_C:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "control"}})
-        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_V:
-            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "explode"}})
         elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_G:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "explode"}})
+        elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_V:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "scan"}})
         elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_X:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "mark"}})

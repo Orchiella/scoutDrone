@@ -10,6 +10,7 @@ DEFAULT_PLAYER_SETTINGS = [
     ("shake", {"description": "§f镜头摇晃§7(觉得晕可以关掉)", "type": "bool", "default": True}),
     ("green_intense", {"description": "§f滤镜强度百分比", "type": "int", "range": (0, 100), "default": 30}),
     ("infinite_durability", {"description": "§f生存模式下也无限耐久", "type": "bool", "default": False}),
+    ("infinite_battery", {"description": "§f生存模式下也不需充电", "type": "bool", "default": False}),
     ("speed_up_amplifier", {"description": "§f加速倍率", "type": "int", "range": (2, 10), "default": 3}),
     ("speed_up_cost", {"description": "§f加速消耗电量", "type": "int", "range": (0, 1000), "default": 5}),
     ("scan_cost", {"description": "§f扫描消耗电量", "type": "int", "range": (0, 1000), "default": 15}),
@@ -30,9 +31,10 @@ DEFAULT_PLAYER_DATA = {
     "func_recover_pos": (-65, -40), "func_recover_size": 40,
     "func_control_pos": (-110, -40), "func_control_size": 40,
     "func_function_pos": (-20, 7), "func_function_size": 40,
-    "func_scan_pos": (-110, -82), "func_scan_size": 40,
-    "func_mark_pos": (-65, -82), "func_mark_size": 40,
-    "func_explode_pos": (-20, -82), "func_explode_size": 40,
+    "func_scan_pos": (-110, -95), "func_scan_size": 40,
+    "func_mark_pos": (-65, -95), "func_mark_size": 40,
+    "func_explode_pos": (-20, -95), "func_explode_size": 40,
+    "func_charge_pos": (-130,30), "func_charge_size": 40,
     "usage_informed": False,
     "update_tip_0": False
 }

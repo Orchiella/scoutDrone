@@ -18,7 +18,7 @@ INCOMPLETE_ITEM_DICT = {'count': 1, 'enchantData': [],
 WHITE_COLOR = (1.0, 1.0, 1.0)
 ORANGE_COLOR = (1.0, 0.502, 0.0)
 TRANSITION_DURATION = 0.15
-CUSTOM_TIPS = ('§b侦查无人机\n'
+CUSTOM_TIPS = ('§6侦查无人机\n'
                '§f风扇种类: §7{}\n'
                '§f尾翼种类: §7{}\n'
                '§f下挂模块: §7{}\n'

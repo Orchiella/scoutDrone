@@ -120,7 +120,7 @@ def get_scale_by_distance(player_pos, frame_pos):
     return max(1, 2.5 - (dist - 25) / 10)
 
 
-def get_direction(motion):
+def GetDirection(motion):
     vx, vy, vz = motion
     if vx == 0 and vz == 0:
         return "无水平方向"

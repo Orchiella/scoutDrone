@@ -11,7 +11,7 @@ from ScoutDrone import mathUtil, DeployHelper
 from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE, ORIGINAL_SPEED, \
     CUSTOM_TIPS, ATTRIBUTE_TYPE
 from ScoutDrone.dataManager import DataManager, DEFAULT_PLAYER_SETTINGS
-from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance
+from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance, GetDirection
 from ScoutDrone.ui.scoutDroneFunctions import GetAttributeValue, DEPLOYMENT
 
 CF = serverApi.GetEngineCompFactory()
@@ -95,12 +95,27 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - 1})
             if CF.CreateRide(shooterId).GetEntityRider() == droneId:
                 CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
+            lastPos = self.droneDict[shooterId]['pos']
             self.droneDict[shooterId]['pos'] = CF.CreatePos(droneId).GetFootPos()
+            moveDist = GetDistance(lastPos, CF.CreatePos(droneId).GetFootPos()) + GetEntityData(droneId, "moveDist", 0)
+            SetEntityData(droneId, "moveDist", moveDist)
+            motion = CF.CreateActorMotion(droneId).GetMotion()
+            self.CallClient(shooterId, "UpdateDroneData", {"control_panel": (
+                "当前速度：{}单位\n水平方向：{}".format(round(Vector3(motion).Length(), 1), GetDirection(motion)),
+                "遥控距离：{}米\n飞行路程：{}米".format(
+                    round(GetDistance(CF.CreatePos(droneId).GetFootPos(), GetEntityData(droneId, "shootPos")), 1),
+                    round(moveDist, 1)))})
         elif CF.CreateEngineType(droneId).GetEngineTypeStr() == "orchiella:scout_drone_fake_player":
             shooterId = GetEntityData(droneId, "shooter")
             if shooterId not in self.droneDict:
                 self.DestroyEntity(droneId)
                 return
+
+    def Deploy(self, playerId, key, value):
+        equipment = self.GetEquipment(playerId)
+        if not equipment:
+            return
+        self.UpdateDeploy(playerId, equipment, key, value)
 
     def Shoot(self, playerId):
         launcherItem = self.GetEquipment(playerId)
@@ -108,6 +123,11 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         if playerId in self.droneDict:
             self.Recover(playerId)
+        batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
+            playerId) else (GetAttributeValue("battery", launcherItem['extraId']))
+        if batteryValue < 10:
+            self.SendTip(playerId, "电量太少，请先补充！", "c")
+            return
         spawnPos = CF.CreatePos(playerId).GetFootPos()
         blockInfoComp = CF.CreateBlockInfo(levelId)
         dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
@@ -126,6 +146,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                      "extraId": launcherItem['extraId'],
                      "durability": launcherItem['durability'],
                      "initDurability": launcherItem['durability'],
+                     "battery": batteryValue,
                      "pos": spawnPos}
         self.droneDict[playerId] = droneData
         battery = GetAttributeValue("battery", launcherItem['extraId'])
@@ -146,29 +167,28 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         droneData = self.droneDict[playerId]
         CF.CreateRide(playerId).StopEntityRiding()
-        self.DestroyEntity(droneData['entityId'])
+        droneId = droneData['entityId']
+        self.DestroyEntity(droneId)
         del self.droneDict[playerId]
         self.CallClient(playerId, "UpdateDroneData", None)
-        if self.ShouldTakeDurability(playerId):
-            CF.CreateItem(levelId).SpawnItemToPlayerInv(
-                dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
-                     itemName='orchiella:scout_drone_launcher',
-                     durability=droneData['durability']), playerId)
-            cost = droneData['initDurability'] - droneData['durability']
-            if cost != 0:
-                realCost = int(cost * (ATTRIBUTE_TYPE['firm']['max'] - GetAttributeValue("firm", droneData['extraId'])))
-                self.SendTip(playerId, "无人机已回收，使用了§6{}§a点耐久".format(realCost), "a")
-                if cost > realCost:
-                    CF.CreateMsg(levelId).NotifyOneMessage(playerId,
-                                                           "坚固属性为你节约了{}点耐久".format(cost - realCost))
-            else:
-                self.SendTip(playerId, "无人机已回收，未消耗耐久", "a")
+        battery = GetEntityData(droneId, "battery")
+        durability = droneData['durability'] if self.ShouldTakeDurability(playerId) else droneData['initDurability']
+        extraId = DeployHelper.Set(droneData['extraId'], "batteryValue", battery)
+        CF.CreateItem(levelId).SpawnItemToPlayerInv(
+            dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
+                 itemName='orchiella:scout_drone_launcher',
+                 durability=durability,
+                 customTips=self.GetCustomTips({"extraId": extraId, "durability": durability}),
+                 extraId=extraId), playerId)
+        cost = droneData['initDurability'] - durability
+        if cost != 0:
+            realCost = int(cost * (ATTRIBUTE_TYPE['firm']['max'] - GetAttributeValue("firm", droneData['extraId'])))
+            self.SendTip(playerId, "无人机已回收，使用了§6{}§a点耐久".format(realCost), "a")
+            if cost > realCost:
+                CF.CreateMsg(levelId).NotifyOneMessage(playerId,
+                                                       "坚固属性为你节约了{}点耐久".format(cost - realCost))
         else:
-            CF.CreateItem(levelId).SpawnItemToPlayerInv(
-                dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
-                     itemName='orchiella:scout_drone_launcher',
-                     durability=droneData['initDurability']), playerId)
-            self.SendTip(playerId, "无人机已回收", "a")
+            self.SendTip(playerId, "无人机已回收，未消耗耐久", "a")
 
     switchControlCdDict = {}
 
@@ -252,7 +272,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.CallClient(shooterId, "UpdateDroneData", None)
             self.SendTip(shooterId, "无人机被击毁", "c")
         else:
-            self.SendTip(shooterId, "退出控制状态", "a")
+            self.SendTip(shooterId, "退出控制状态", "7")
         self.CallClient(shooterId, "SwitchControl", False)
 
         effects = CF.CreateEffect(shooterId).GetAllEffects()
@@ -291,6 +311,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 continue
             boxSize = CF.CreateCollisionBox(entityId).GetSize()
             if boxSize[0] == 0.25 and boxSize[1] == 0.25:
+                continue
+            if CF.CreateEngineType(
+                    entityId).GetEngineTypeStr() == "orchiella:scout_drone_fake_player" and GetEntityData(entityId,
+                                                                                                          "shooter") == playerId:
                 continue
             color = (1, 1, 1)
             for entityType, frameColor in self.frameRGB.items():
@@ -374,7 +398,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         cost = DataManager.Get(playerId, "speed_up_cost")
         nowBattery = GetEntityData(droneId, "battery")
         if nowBattery < cost:
-            self.SendTip(playerId, "电量值不足以使用标记功能", "c")
+            self.SendTip(playerId, "电量值不足以使用加速功能", "c")
             return
         SetEntityData(droneId, "battery", nowBattery - cost)
         self.CallClient(playerId, "UpdateDroneData", {"battery": nowBattery - cost})
@@ -410,6 +434,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if CF.CreateEngineType(playerId).GetEngineTypeStr() == "minecraft:player":
             droneId = CF.CreateRide(playerId).GetEntityRider()
             if playerId in self.droneDict and droneId == self.droneDict[playerId]['entityId']:
+                CF.CreateHurt(droneId).Hurt(event['damage'], event['cause'], event['srcId'], None)
                 event['damage'] = 0
                 event['knock'] = False
 
@@ -433,7 +458,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if CF.CreateEngineType(droneId).GetEngineTypeStr() in DRONE_TYPE:
             shooterId = GetEntityData(droneId, "shooter")
             damage = event['damage']
-            realDamage = int(damage * GetAttributeValue("defense", self.droneDict[shooterId]['extraId']))
+            realDamage = int(damage * (2 - GetAttributeValue("defense", self.droneDict[shooterId]['extraId'])))
             event['damage'] = realDamage
             event['knock'] = False
             self.CallClient(shooterId, "UpdateDroneData", {
@@ -463,34 +488,34 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         item = CF.CreateItem(playerId).GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.CARRIED)
         return item if item and item['newItemName'] in DRONE_LAUNCHER_TYPE else None
 
+    def GetCustomTips(self, equipment):
+        extraId = equipment['extraId']
+        return CUSTOM_TIPS.format(
+            DEPLOYMENT["rotor"]['deployment'][DeployHelper.Get(extraId, "rotor")]['name'],
+            DEPLOYMENT["tail"]['deployment'][DeployHelper.Get(extraId, "tail")]['name'],
+            DEPLOYMENT["load"]['deployment'][DeployHelper.Get(extraId, "load")]['name'],
+            DEPLOYMENT["sight"]['deployment'][DeployHelper.Get(extraId, "sight")]['name'],
+            DEPLOYMENT["battery"]['deployment'][DeployHelper.Get(extraId, "battery")]['name'],
+            int(DeployHelper.Get(extraId, "batteryValue")),
+            int(GetAttributeValue("battery", extraId)),
+            equipment['durability'],
+            1000
+        )
+
     def UpdateDeploy(self, playerId, equipment, key, value):
         newExtraId = DeployHelper.Set(equipment['extraId'], key, value)
         CF.CreateItem(playerId).ChangePlayerItemTipsAndExtraId(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
                                                                CF.CreateItem(playerId).GetSelectSlotId(),
-                                                               CUSTOM_TIPS.format(
-                                                                   DEPLOYMENT["rotor"]['deployment'][
-                                                                       DeployHelper.Get(newExtraId,
-                                                                                        "rotor")]['name'],
-                                                                   DEPLOYMENT["tail"]['deployment'][
-                                                                       DeployHelper.Get(newExtraId,
-                                                                                        "tail")]['name'],
-                                                                   DEPLOYMENT["load"]['deployment'][
-                                                                       DeployHelper.Get(newExtraId,
-                                                                                        "load")]['name'],
-                                                                   DEPLOYMENT["sight"]['deployment'][
-                                                                       DeployHelper.Get(newExtraId,
-                                                                                        "sight")]['name'],
-                                                                   DEPLOYMENT["battery"]['deployment'][
-                                                                       DeployHelper.Get(newExtraId,
-                                                                                        "battery")]['name'],
-                                                                   DeployHelper.Get(newExtraId, "battery"),
-
-                                                               ),
+                                                               self.GetCustomTips(equipment),
                                                                newExtraId)
         self.CallClient(playerId, "RefreshDeployment", newExtraId)
 
     def ShouldTakeDurability(self, playerId):
         return not DataManager.Get(playerId, "infinite_durability") and GC.GetPlayerGameType(
+            playerId) != serverApi.GetMinecraftEnum().GameType.Creative
+
+    def ShouldTakeBattery(self, playerId):
+        return not DataManager.Get(playerId, "infinite_battery") and GC.GetPlayerGameType(
             playerId) != serverApi.GetMinecraftEnum().GameType.Creative
 
     def TakeDurability(self, playerId, value):
