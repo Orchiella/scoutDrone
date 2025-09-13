@@ -8,7 +8,7 @@
         "unlit": "entity_emissive_alpha"
       },
       "textures": {
-        "default": "textures/entity/scout_drone_launcher",
+        "default": "textures/entity/scout_drone",
         "enchanted": "textures/misc/enchanted_item_glint"
       },
       "animations": {
@@ -18,6 +18,7 @@
         "scout_drone_1st_equip": "animation.scout_drone_launcher.1st_equip",
         "scout_drone_1st_shoot": "animation.scout_drone_launcher.1st_shoot",
         "scout_drone_1st_run": "animation.scout_drone_launcher.1st_run",
+        "scout_drone_1st_charge": "animation.scout_drone_launcher.1st_charge",
         "scout_drone_1st_inspect": "animation.scout_drone_launcher.1st_inspect",
         "scout_drone_1st_deploy_tail": "animation.scout_drone_launcher.1st_deploy_tail",
         "scout_drone_1st_deploy_rotor": "animation.scout_drone_launcher.1st_deploy_rotor",
@@ -37,7 +38,7 @@
       },
       "geometry": {
         "arm": "geometry.scout_drone_launcher_arm",
-        "default": "geometry.scout_drone_launcher"
+        "default": "geometry.scout_drone"
       },
       "scripts": {
         "initialize": [
@@ -55,7 +56,7 @@
         ]
       },
       "render_controllers": [
-        "controller.render.scout_drone_launcher"
+        "controller.render.scout_drone"
       ]
     }
   }

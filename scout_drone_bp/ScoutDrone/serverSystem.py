@@ -86,13 +86,13 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 return
             if time.time() - GetEntityData(droneId, "batteryConsumeTime") >= 1:
                 battery = GetEntityData(droneId, "battery")
-                if battery <= 1:
-                    self.Recover(shooterId)
-                    self.SendTip(shooterId, "无人机电量耗尽", "c")
-                    return
                 SetEntityData(droneId, "battery", battery - 1)
                 SetEntityData(droneId, "batteryConsumeTime", time.time())
                 self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - 1})
+                if battery - 1 <= 0:
+                    self.Recover(shooterId)
+                    self.SendTip(shooterId, "无人机电量耗尽", "c")
+                    return
             if CF.CreateRide(shooterId).GetEntityRider() == droneId:
                 CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
             lastPos = self.droneDict[shooterId]['pos']
@@ -122,7 +122,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if not launcherItem:
             return
         if playerId in self.droneDict:
-            self.Recover(playerId)
+            self.SendTip(playerId, "请先收回上一架", "c")
+            return
         batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
             playerId) else (GetAttributeValue("battery", launcherItem['extraId']))
         if batteryValue < 10:
@@ -161,6 +162,29 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         CF.CreateName(droneId).SetName("侦查无人机")
         self.SendTip(playerId, "无人机升空", "a")
         self.Control(playerId)
+
+    def ConsumeToCharge(self, playerId):
+        takeNum = self.TakeItems(playerId, "minecraft:redstone", 1)
+        if takeNum <= 0:
+            self.CallClient(playerId, "BackIdle")
+            self.SendTip(playerId, "需要红石粉", "c")
+            return
+        for j in range(5):
+            GC.AddTimer((j + 1) * 0.2, self.Charge, playerId)
+
+    def Charge(self, playerId):
+        equipment = self.GetEquipment(playerId)
+        if not equipment:
+            return
+        batteryValue = DeployHelper.Get(equipment['extraId'], "batteryValue")
+        maxBatteryValue = GetAttributeValue("battery", equipment['extraId'])
+        newBatteryValue = min(maxBatteryValue, batteryValue + 5)
+        self.UpdateDeploy(playerId, equipment, "batteryValue", newBatteryValue)
+        if newBatteryValue >= maxBatteryValue:
+            self.CallClient(playerId, "BackIdle")
+            self.SendTip(playerId, "电量已充满", "a")
+            return
+        self.SendTip(playerId, "正在充电{}".format("..." if time.time() % 1 > 0.5 else ".."), "7", 1)
 
     def Recover(self, playerId):
         if playerId not in self.droneDict:
@@ -527,6 +551,32 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             itemComp.SetItemDurability(enum, 0, item['durability'] - value)
         else:
             itemComp.SetEntityItem(enum, None, 0)
+
+    def TakeItems(self, playerId, itemName, maxNum):
+        if GC.GetPlayerGameType(playerId) == serverApi.GetMinecraftEnum().GameType.Creative or DataManager.Get(playerId,
+                                                                                                               "charge_no_consume"):
+            return maxNum
+        itemComp = CF.CreateItem(playerId)
+        takenNum = 0
+        slotsToTake = {}
+        for slot in range(36):
+            if takenNum >= maxNum:
+                break
+            item = itemComp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY, slot)
+            if not item or item['newItemName'] != itemName:
+                continue
+            item_count = item["count"]
+            if takenNum + item_count >= maxNum:
+                countToTake = maxNum - takenNum
+            else:
+                countToTake = item_count
+            takenNum += countToTake
+            slotsToTake[slot] = countToTake
+        for slot, count in slotsToTake.items():
+            itemComp.SetInvItemNum(slot,
+                                   itemComp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
+                                                          slot)["count"] - count)
+        return takenNum
 
     def SyncRebuild(self, playerId):
         otherPlayers = serverApi.GetPlayerList()

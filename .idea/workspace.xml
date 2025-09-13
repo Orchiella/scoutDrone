@@ -4,26 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="7">
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/charge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/control_screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/sight.png" afterDir="false" />
+    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animData.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animationHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/animationHelper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/mathUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/control.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/control.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/explode.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/explode.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/function.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/function.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/inspect.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/inspect.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/mark.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/mark.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/recover.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/recover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/scan.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/scan.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/shoot.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/ui/scout_drone/shoot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animation_controllers/scout_drone_launcher.animations_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animation_controllers/scout_drone_launcher.animations_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st_fix_offset.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st_fix_offset.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_3rd.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_3rd.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/attachables/scout_drone_launcher.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/attachables/scout_drone_launcher.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone_launcher.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/render_controllers/scout_drone.render_controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/render_controllers/scout_drone.render_controllers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/render_controllers/scout_drone_launcher.render_controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/entity/scout_drone.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/entity/scout_drone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/items/scout_drone_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/items/scout_drone_launcher.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757607233581</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="8">
+      <option name="closed" value="true" />
+      <created>1757675921152</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1757675921152</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -144,6 +152,7 @@
     <MESSAGE value="5" />
     <MESSAGE value="6" />
     <MESSAGE value="7" />
-    <option name="LAST_COMMIT_MESSAGE" value="7" />
+    <MESSAGE value="8" />
+    <option name="LAST_COMMIT_MESSAGE" value="8" />
   </component>
 </project>

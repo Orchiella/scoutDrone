@@ -5,7 +5,7 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"root": {
+				"all": {
 					"rotation": {
 						"0.0": {
 							"post": [0, 0, 0],
@@ -19,10 +19,7 @@
 							"post": [0, 0, -5],
 							"lerp_mode": "catmullrom"
 						},
-						"2.0": {
-							"post": [0, 0, 0],
-							"lerp_mode": "catmullrom"
-						}
+						"2.0": [0, 0, 0]
 					},
 					"position": {
 						"0.0": {
@@ -33,37 +30,43 @@
 							"post": [0, 2, 0],
 							"lerp_mode": "catmullrom"
 						},
-						"2.0": {
-							"post": [0, 0, 0],
-							"lerp_mode": "catmullrom"
-						}
+						"2.0": [0, 0, 0]
 					}
+				},
+				"rail": {
+					"scale": 0
 				}
 			}
 		},
 		"animation.scout_drone.move": {
 			"loop": true,
 			"bones": {
-				"root": {
+				"all": {
 					"rotation": [0, 0, 0]
+				},
+				"rail": {
+					"scale": 0
 				}
 			}
 		},
 		"animation.scout_drone.invisibility": {
 			"loop": true,
 			"bones": {
-				"root": {
+				"all": {
 					"scale": 0
-				}
+				},
+				"root": {
+                  "scale": 0
+                },
+				"head": {
+                  "scale": 0
+                }
 			}
 		},
 		"animation.scout_drone.deployment": {
 			"loop": true,
 			"override_previous_animation": true,
 			"bones": {
-				"drone": {
-					"scale": "q.mod.scout_drone_loaded"
-				},
 				"tail0": {
 					"scale": "q.mod.scout_drone_deployment_tail == 0"
 				},

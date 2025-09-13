@@ -146,15 +146,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.SwitchState("equip", False)
             clientApi.HideCrossHairGUI(True)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, True)
-            batteryValue = int(DeployHelper.Get(extraId, "batteryValue"))
-            batteryColor = "f"
-            if batteryValue < 10:
-                batteryColor = "c"
-            elif batteryValue < 20:
-                batteryColor = "e"
-            self.functionsScreen.chargeButtonLabelCtrl.SetText(
-                "充电\n(§{}{}§f/{})".format(batteryColor, batteryValue,
-                                            int(GetAttributeValue("battery", extraId))))
         else:
             self.SwitchState("idle", False)
             clientApi.HideCrossHairGUI(False)
@@ -166,7 +157,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnLocalPlayerActionClientEvent(self, event):
         if not self.GetEquipment():
             return
-        if self.nowState == "inspect" or self.nowState == "shoot":
+        if self.nowState == "inspect" or self.nowState == "shoot" or self.nowState == "charge":
             return
         action = event['actionType']
         if action == clientApi.GetMinecraftEnum().PlayerActionType.StartSprinting:
@@ -261,7 +252,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             else:
                 self.functionsScreen.droneInfoModelCtrl.RenderEntity({
                     "entity_id": self.droneData['entityId'],
-                    "scale": 1.3,
+                    "scale": 1.0,
                     "init_rot_y": -30,
                     "init_rot_x": 10})
         if "sight" in droneData:
@@ -288,6 +279,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideArmorGui(True)
             PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
             self.UpdateVar("controlling", 1, self.droneData['entityId'])
+            self.UpdateVar("controlling", 1)
             self.functionsScreen.controlPanelCtrl.SetVisible(True)
             self.functionsScreen.controlPanelLeftCtrl.SetText("")
             self.functionsScreen.controlPanelRightCtrl.SetText("")
@@ -303,6 +295,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideMoveGui(False)
             PPC.SetColorAdjustmentTint(0, (0, 255, 0))
             self.UpdateVar("controlling", 0, self.droneData['entityId'])
+            self.UpdateVar("controlling", 0)
             self.functionsScreen.controlPanelCtrl.SetVisible(False)
         self.functionsScreen.RefreshButtonVisibility()
         CC.SetCameraRotation((0, 0, 0))
@@ -315,8 +308,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.CallServer("SpeedUp", PID)
 
     def SwitchState(self, _state, isTransition=True):
-        if 1:
-            return
         if self.nowState == _state:
             return False
         varDict = None
@@ -324,8 +315,14 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.tasks = []
         elif _state == "equip":
             self.AddTask(_state, self.BackIdle)
+            self.AddTask(_state, self.CheckBatteryWhenEquipped)
         elif _state == "inspect":
             self.AddTask(_state, self.BackIdle, isTransition)
+        elif _state == "shoot":
+            self.AddTask(_state, lambda: self.CallServer("Shoot", PID), isTransition)
+        elif _state == "charge":
+            for i in range(4):
+                self.AddTask(i * 1, lambda: self.CallServer("ConsumeToCharge", PID))
         elif _state == "edit_button":
             self.AddTask(_state, self.functionsScreen.StartEditing)
         elif _state == "deployed":
@@ -368,28 +365,51 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             TRANSITION_DURATION if isTransition else 0)
         return True
 
+    def CheckBatteryWhenEquipped(self):
+        batteryValue = DeployHelper.Get(self.GetEquipment()['extraId'], "batteryValue") if self.ShouldTakeBattery(
+        ) else (GetAttributeValue("battery", self.GetEquipment()['extraId']))
+        if batteryValue > 10:
+            self.functionsScreen.SendTip("无人机已就绪", "a", 2, False)
+        else:
+            self.functionsScreen.SendTip("这台无人机几乎没电了！", "c", 2, False)
+
     def RefreshDeployment(self, content):
         varDict = {"deployment_" + deployType: DeployHelper.Get(content, deployType) for deployType in
                    DEPLOYMENT.keys()}
         self.SyncVarDictToServer(0, varDict)
-        if DeployHelper.Get(content, "torch") > 0:
-            PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.SMOOTH_LIGHTING, True)
+        batteryValue = int(DeployHelper.Get(content, "batteryValue"))
+        batteryColor = "f"
+        if batteryValue < 10:
+            batteryColor = "c"
+        elif batteryValue < 20:
+            batteryColor = "e"
+        self.functionsScreen.chargeButtonLabelCtrl.SetText(
+            "充电\n(§{}{}§f/{})".format(batteryColor, batteryValue,
+                                        int(GetAttributeValue("battery", content))))
 
     def ClickButton(self, function):
         launcherItem = self.GetEquipment()
-        # if not launcherItem:
-        #     return False
-        # if self.nowState == "equip" or self.nowState == "shoot":
-        #     return False
+        if launcherItem and self.nowState == "equip" or self.nowState == "shoot":
+            return False
         if function == "shoot":
+            if self.droneData:
+                self.functionsScreen.SendTip("请先收回上一架", "c")
+                return False
+            batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
+            ) else (GetAttributeValue("battery", launcherItem['extraId']))
+            if batteryValue < 10:
+                self.functionsScreen.SendTip("电量太少，请先补充！", "c")
+                return False
             self.SwitchState("shoot", self.nowState != "idle")
-            self.CallServer("Shoot", PID)
             return True
         elif function == "recover":
             self.CallServer("Recover", PID)
             return True
-        elif function == "inspect" and not self.isControlling:
-            self.SwitchState("inspect", self.nowState != "idle")
+        elif (function == "inspect" or function == "charge") and not self.isControlling:
+            if self.nowState == function or self.targetState == function:
+                self.BackIdle(True)
+            else:
+                self.SwitchState(function)
             return True
         elif function == "control":
             self.CallServer("Control", PID)
@@ -413,6 +433,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif function == "sight":
             self.CallServer("Sight", PID)
             return True
+
+    def ShouldTakeBattery(self):
+        return not self.GetData("infinite_battery") and GC.GetPlayerGameType(
+            PID) != clientApi.GetMinecraftEnum().GameType.Creative
 
     def FilterSpecialEntity(self, entityId):
         boxSize = CF.CreateCollisionBox(entityId).GetSize()
@@ -510,6 +534,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerScriptAnimate(prefix + "arm_controller", itemCondition)
         actorComp.AddPlayerAnimation(prefix + "deployment", "animation." + DB.mod_name + ".deployment")
         actorComp.AddPlayerScriptAnimate(prefix + "deployment", itemCondition)
+        actorComp.AddPlayerAnimation(prefix + "invisibility", "animation." + DB.mod_name + ".invisibility")
+        actorComp.AddPlayerScriptAnimate(prefix + "invisibility", "q.mod." + prefix + "controlling")
+        if CF.CreateEngineType(CF.CreateRide(playerId).GetEntityRider()).GetEngineTypeStr() in DRONE_TYPE:
+            self.UpdateVar("controlling", 1, playerId)
         actorComp.RebuildPlayerRender()
 
         if state:

@@ -8,7 +8,10 @@
           "*": "Material.default"
         },
         {
-          "unlit": "Material.unlit"
+          "bone53": "Material.unlit"
+        },
+        {
+          "bone55": "Material.unlit"
         }
       ],
       "textures": [

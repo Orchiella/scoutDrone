@@ -57,6 +57,9 @@
               "shoot": "!q.mod.scout_drone_transition && q.mod.scout_drone_shoot"
             },
             {
+              "charge": "!q.mod.scout_drone_transition && q.mod.scout_drone_charge"
+            },
+            {
               "inspect": "!q.mod.scout_drone_transition && q.mod.scout_drone_inspect"
             },
             {
@@ -106,6 +109,9 @@
             },
             {
               "shoot": "!q.mod.scout_drone_transition && q.mod.scout_drone_shoot"
+            },
+            {
+              "charge": "!q.mod.scout_drone_transition && q.mod.scout_drone_charge"
             },
             {
               "inspect": "!q.mod.scout_drone_transition && q.mod.scout_drone_inspect"
@@ -164,6 +170,24 @@
             },
             {
               "scout_drone_3rd_shoot": "!(c.is_first_person??v.is_first_person)"
+            }
+          ],
+          "transitions": [
+            {
+              "transition": "q.mod.scout_drone_transition"
+            },
+            {
+              "equip": "q.mod.scout_drone_equip"
+            }
+          ]
+        },
+        "charge": {
+          "animations": [
+            {
+              "scout_drone_1st_charge": "c.is_first_person??v.is_first_person"
+            },
+            {
+              "scout_drone_3rd_idle": "!(c.is_first_person??v.is_first_person)"
             }
           ],
           "transitions": [

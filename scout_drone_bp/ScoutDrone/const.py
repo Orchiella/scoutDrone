@@ -1,5 +1,5 @@
 # coding=utf-8
-STATES_WITHOUT_3RD = {"inspect", "deploy_tail", "deploy_rotor", "deploy_sight", "deploy_load",
+STATES_WITHOUT_3RD = {"inspect", "charge", "deploy_tail", "deploy_rotor", "deploy_sight", "deploy_load",
                       "deploy_battery", "deployed", "edit_button"}
 STATES = {"transition", "re_transition", "idle", "run", "shoot", "equip"} | STATES_WITHOUT_3RD
 AIR_BLOCK = {"name": "minecraft:air", "aux": 0}
