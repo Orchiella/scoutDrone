@@ -15,6 +15,18 @@ INCOMPLETE_ITEM_DICT = {'count': 1, 'enchantData': [],
                         'itemId': -1, 'customTips': '', 'extraId': '', 'newAuxValue': 0, 'modEnchantData': [],
                         'modId': '', 'modItemId': '', 'auxValue': 0,
                         'showInHand': True}
+PENETRABLE_BLOCK_TYPE = set("minecraft:" + block for block in {"air",
+                                                               "flowing_water", "water", "flowing_lava", "lava",
+                                                               "end_portal", "portal", "fire", "grass", "snow_layer",
+                                                               "vine", "redstone",
+                                                               "torch",
+                                                               "sapling", "yellow_flower",
+                                                               "light_block",
+                                                               'short_grass', 'fern', 'poppy', 'blue_orchid', 'allium',
+                                                               'azure_bluet', 'red_tulip', 'orange_tulip',
+                                                               'white_tulip', 'pink_tulip', 'oxeye_daisy', 'cornflower',
+                                                               'lily_of_the_valley', 'sunflower', 'lilac', 'tall_grass',
+                                                               'large_fern', 'rose_bush', 'peony'})
 WHITE_COLOR = (1.0, 1.0, 1.0)
 ORANGE_COLOR = (1.0, 0.502, 0.0)
 TRANSITION_DURATION = 0.15

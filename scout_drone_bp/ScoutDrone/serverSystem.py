@@ -9,7 +9,7 @@ from mod.common.utils.mcmath import Vector3
 import config as DB
 from ScoutDrone import mathUtil, DeployHelper
 from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE, ORIGINAL_SPEED, \
-    CUSTOM_TIPS, ATTRIBUTE_TYPE
+    CUSTOM_TIPS, ATTRIBUTE_TYPE, PENETRABLE_BLOCK_TYPE
 from ScoutDrone.dataManager import DataManager, DEFAULT_PLAYER_SETTINGS
 from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance, GetDirection
 from ScoutDrone.ui.scoutDroneFunctions import GetAttributeValue, DEPLOYMENT
@@ -65,15 +65,29 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if CF.CreateRide(playerId).GetEntityRider() != droneId:
             return
         originalMotion = CF.CreateActorMotion(droneId).GetMotion()
+        originalMotionLength = Vector3(originalMotion).Length()
         if direction:
             speed = ORIGINAL_SPEED * GetAttributeValue("speed", self.droneDict[playerId]['extraId'])
-            if speed < Vector3(originalMotion).Length():
-                return
-            motion = (Vector3(direction).Normalized() * amplifier * speed).ToTuple()
+            if speed < originalMotionLength:
+                # 如果现在的速度超过了应该有的速度，则继承速率
+                motion = (Vector3(direction).Normalized() * originalMotionLength).ToTuple()
+            else:
+                motion = (Vector3(direction).Normalized() * amplifier * speed).ToTuple()
+            CF.CreateActorMotion(droneId).SetMotion(motion)
+            CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
         else:
-            motion = (Vector3(originalMotion) * 0.96).ToTuple()
-        CF.CreateActorMotion(droneId).SetMotion(motion)
-        CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
+            if originalMotionLength > 0.05:
+                motion = (Vector3(originalMotion) * 0.96).ToTuple()
+                CF.CreateActorMotion(droneId).SetMotion(motion)
+                CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
+            else:
+                pos = CF.CreatePos(droneId).GetFootPos()
+                newPos = (pos[0], pos[1] + 0.05 * math.sin(3.14 * time.time()), pos[2])
+                if CF.CreateBlockInfo(levelId).GetBlockNew(
+                        (int(math.floor(newPos[0])), int(math.floor(newPos[1])), int(math.floor(newPos[2]))),
+                        CF.CreateDimension(playerId).GetEntityDimensionId())[
+                    'name'] in PENETRABLE_BLOCK_TYPE:
+                    CF.CreatePos(droneId).SetFootPos(newPos)
 
     droneDict = {}
 
@@ -97,15 +111,17 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             if CF.CreateRide(shooterId).GetEntityRider() == entityId:
                 CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
             lastPos = self.droneDict[shooterId]['pos']
-            self.droneDict[shooterId]['pos'] = CF.CreatePos(entityId).GetFootPos()
-            moveDist = GetDistance(lastPos, CF.CreatePos(entityId).GetFootPos()) + GetEntityData(entityId, "moveDist",
-                                                                                                 0)
-            SetEntityData(entityId, "moveDist", moveDist)
+            nowPos = CF.CreatePos(entityId).GetFootPos()
+            self.droneDict[shooterId]['pos'] = nowPos
+            moveDist = GetEntityData(entityId, "moveDist", 0)
+            if not (nowPos[0] == lastPos[0] and abs(nowPos[1] - lastPos[1]) < 0.1 and nowPos[2] == lastPos[2]):
+                moveDist += GetDistance(lastPos, nowPos)
+                SetEntityData(entityId, "moveDist", moveDist)
             motion = CF.CreateActorMotion(entityId).GetMotion()
             self.CallClient(shooterId, "UpdateDroneData", {"control_panel": (
                 "当前速度：{}单位\n水平方向：{}".format(round(Vector3(motion).Length(), 1), GetDirection(motion)),
                 "遥控距离：{}米\n飞行路程：{}米".format(
-                    round(GetDistance(CF.CreatePos(entityId).GetFootPos(), GetEntityData(entityId, "shootPos")), 1),
+                    round(GetDistance(nowPos, GetEntityData(entityId, "shootPos")), 1),
                     round(moveDist, 1)))})
         elif CF.CreateEngineType(entityId).GetEngineTypeStr() == "orchiella:scout_drone_fake_player":
             shooterId = GetEntityData(entityId, "shooter")
@@ -239,7 +255,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         rideComp = CF.CreateRide(playerId)
         if rideComp.GetEntityRider() == droneData['entityId']:
             rideComp.StopEntityRiding()
-            self.CallClient(playerId, "PlaySound", "quit_control")
         else:
             droneId = droneData['entityId']
             SetEntityData(droneId, "shootPos", CF.CreatePos(playerId).GetFootPos())
@@ -259,7 +274,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.CallClient(playerId, "AppendFrame", fakePlayerId, "fake_player", -1, {"height": 0.8, "scale": 0.8})
             CF.CreatePos(playerId).SetFootPos(droneData['pos'])
             rideComp.SetRiderRideEntity(playerId, droneData['entityId'])
-            self.CallClient(playerId, "PlaySound", "enter_control")
 
     # 禁止交互，只允许通过按钮上下
     @Listen
@@ -279,6 +293,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             CF.CreateRot(playerId).SetRot(controlRot)
         self.CallClient(playerId, "SwitchControl", True)
         self.SendTip(playerId, "进入控制状态", "a")
+        self.CallClient(playerId, "PlaySound", "enter_control")
 
     @Listen
     def EntityStopRidingEvent(self, event):
@@ -319,6 +334,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 if effect["effectName"] == "night_vision" and effect["duration"] <= 11:
                     CF.CreateEffect(shooterId).RemoveEffectFromEntity("night_vision")
         CF.CreateActorMotion(droneId).SetMotion((0, 0, 0))
+        self.CallClient(playerId, "PlaySound", "quit_control")
 
     def Function(self, playerId, extraData):
         if playerId not in self.droneDict:
@@ -455,6 +471,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.explosionData = None
         self.Recover(playerId)
         self.SendTip(playerId, "无人机自爆成功", "a")
+        self.CallClient(playerId, "PlaySound", "explode")
 
     def Sight(self, playerId):
         if playerId not in self.droneDict:

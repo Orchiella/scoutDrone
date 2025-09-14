@@ -82,9 +82,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         inputRight, inputUp = -inputVec[0], inputVec[1]
         cameraRot = CC.GetCameraRotation()
         if abs(inputRight) < 1e-5 and abs(inputUp) < 1e-5:
-            nowMotion = CF.CreateActorMotion(CF.CreateRide(PID).GetEntityRider()).GetMotion()
-            if nowMotion and Vector3(nowMotion).Length() != 0:
-                self.CallServer("SetMotion", PID, None)
+            self.CallServer("SetMotion", PID, None)
             CC.SetCameraRotation((cameraRot[0], cameraRot[1], cameraRot[2] * 0.95 if abs(cameraRot[2]) > 0.05 else 0))
             return
         amplifier = math.sqrt(inputUp ** 2 + inputRight ** 2)
@@ -226,6 +224,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.droneData = {}
             if self.GetData("sound_enabled"):
                 AC.StopCustomMusicById(self.droneIdleMusicId, 1)
+                self.droneIdleMusicId = None
             return
         self.functionsScreen.droneInfoCtrl.SetVisible(True)
         for key, value in droneData.items():
@@ -235,12 +234,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.functionsScreen.droneInfoHealthCtrl.SetValue(1)
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(1)
             self.functionsScreen.droneInfoNameCtrl.SetText("{}的侦查无人机".format(CF.CreateName(PID).GetName()))
-            if self.GetData("sound_enabled"):
-                def play():
-                    self.droneIdleMusicId = AC.PlayCustomMusic(
-                        "orchiella:" + DB.mod_name + "_idle", (0, 0, 0), 1, 1, True, self.droneData['entityId'])
-
-                GC.AddTimer(0.2, play)
         if "health" in droneData:
             self.functionsScreen.droneInfoHealthCtrl.SetValue(
                 droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
@@ -292,6 +285,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 self.functionsScreen.controlPanelCtrl.SetVisible(True)
                 self.functionsScreen.controlPanelLeftCtrl.SetText("")
                 self.functionsScreen.controlPanelRightCtrl.SetText("")
+                if self.GetData("sound_enabled"):
+                    if self.droneIdleMusicId:
+                        AC.StopCustomMusicById(self.droneIdleMusicId, 0)
+                        self.droneIdleMusicId = None
+
+                    def play():
+                        self.droneIdleMusicId = AC.PlayCustomMusic(
+                            "orchiella:" + DB.mod_name + "_idle", (0, 0, 0), 1, 1, True, self.droneData['entityId'])
+
+                    GC.AddTimer(0.2, play)
         else:
             PVC.LockPerspective(-1)
             clientApi.HideCrossHairGUI(False)
@@ -324,15 +327,15 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.tasks:
             self.tasks = []
         if _state == "equip":
-            self.AddTask(_state, self.BackIdle)
-            self.AddTask(_state, self.CheckBatteryWhenEquipped)
+            self.AddTask(0.92, self.BackIdle)
+            self.AddTask(0.92, self.CheckBatteryWhenEquipped)
             self.AddTask(0.15, lambda: self.PlaySound("equip"))
         elif _state == "inspect":
             self.AddTask(_state, self.BackIdle, isTransition)
             self.AddTask(5.16, lambda: self.PlaySound("shoot"))
         elif _state == "shoot":
             self.AddTask(_state, lambda: self.CallServer("Shoot", PID), isTransition)
-            self.AddTask(0.21, lambda: self.PlaySound("shoot"))
+            self.AddTask(0.16, lambda: self.PlaySound("shoot"))
         elif _state == "charge":
             for i in range(10):
                 self.AddTask(i * 1, lambda: self.CallServer("ConsumeToCharge", PID))
@@ -401,6 +404,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             "充电\n(§{}{}§f/{})".format(batteryColor, batteryValue,
                                         int(GetAttributeValue("battery", content))))
 
+    recoverCd = 0
+
     def ClickButton(self, function):
         launcherItem = self.GetEquipment()
         if launcherItem and self.nowState == "equip" or self.nowState == "shoot":
@@ -415,8 +420,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 self.functionsScreen.SendTip("电量太少，请先补充！", "c")
                 return False
             self.SwitchState("shoot", self.nowState != "idle")
+            self.recoverCd = time.time() + ANIM_DATA['1st_shoot']['length'] + 1
             return True
         elif function == "recover":
+            if time.time() < self.recoverCd:
+                self.functionsScreen.SendTip("刚升空，不要回收这么快", "c")
+                return False
             self.CallServer("Recover", PID)
             return True
         elif (function == "inspect" or function == "charge") and not self.isControlling:
