@@ -7,6 +7,7 @@ from ScoutDrone.config import mod_name
 levelId = serverApi.GetLevelId()
 
 DEFAULT_PLAYER_SETTINGS = [
+    ("sound_enabled", {"description": "§f音效", "type": "bool", "default": True}),
     ("shake", {"description": "§f镜头摇晃§7(觉得晕可以关掉)", "type": "bool", "default": True}),
     ("green_intense", {"description": "§f滤镜强度百分比", "type": "int", "range": (0, 100), "default": 30}),
     ("charge_no_consume", {"description": "§f生存模式下充电不消耗红石粉", "type": "bool", "default": False}),
@@ -16,6 +17,10 @@ DEFAULT_PLAYER_SETTINGS = [
     ("speed_up_cost", {"description": "§f加速消耗电量", "type": "int", "range": (0, 1000), "default": 5}),
     ("scan_cost", {"description": "§f扫描消耗电量", "type": "int", "range": (0, 1000), "default": 15}),
     ("mark_cost", {"description": "§f标记消耗电量", "type": "int", "range": (0, 1000), "default": 2}),
+    ("load1_cost", {"description": "§f引力钩爪消耗电量", "type": "int", "range": (0, 1000), "default": 10}),
+    ("load3_cost", {"description": "§f投放诱饵消耗电量", "type": "int", "range": (0, 1000), "default": 10}),
+    ("load3_duration", {"description": "§f诱饵持续时长", "type": "int", "range": (0, 1000), "default": 10}),
+    ("load3_radius", {"description": "§f诱饵作用半径", "type": "int", "range": (0, 100), "default": 15}),
     ("explode_cost", {"description": "§f自爆消耗耐久", "type": "int", "range": (0, 1000), "default": 50}),
     ("explode_damage_percentage", {"description": "§f自爆伤害缩放百分比", "type": "int", "range": (0, 1000), "default": 100}),
     ("explode_radius", {"description": "§f自爆半径", "type": "int", "range": (0, 20), "default": 5}),
@@ -31,7 +36,7 @@ DEFAULT_PLAYER_DATA = {
     "func_settings_pos": (62, -94), "func_settings_size": 20,
     "func_recover_pos": (-65, -40), "func_recover_size": 40,
     "func_control_pos": (-110, -40), "func_control_size": 40,
-    "func_function_pos": (-20, 7), "func_function_size": 40,
+    "func_function_pos": (-20, -40), "func_function_size": 40,
     "func_scan_pos": (-110, -95), "func_scan_size": 40,
     "func_mark_pos": (-65, -95), "func_mark_size": 40,
     "func_explode_pos": (-20, -95), "func_explode_size": 40,

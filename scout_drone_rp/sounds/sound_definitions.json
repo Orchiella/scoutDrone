@@ -1,15 +1,6 @@
 {
   "format_version": "1.14.0",
   "sound_definitions": {
-    "orchiella:scout_drone_explode": {
-      "category": "player",
-      "sounds": [
-        {
-          "name": "sounds/scout_drone/explode",
-          "stream": false
-        }
-      ]
-    },
     "orchiella:scout_drone_aim": {
       "category": "player",
       "sounds": [
@@ -19,20 +10,110 @@
         }
       ]
     },
-    "orchiella:scout_drone_fire": {
+    "orchiella:scout_drone_deployed": {
       "category": "player",
       "sounds": [
         {
-          "name": "sounds/scout_drone/fire",
+          "name": "sounds/scout_drone/deployed",
           "stream": false
         }
       ]
     },
-    "orchiella:scout_drone_speed_up": {
+    "orchiella:scout_drone_select_drill": {
       "category": "player",
       "sounds": [
         {
-          "name": "sounds/scout_drone/speed_up",
+          "name": "sounds/scout_drone/select_drill",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_equip": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/equip",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_shoot": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/shoot",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_enter_control": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/enter_control",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_quit_control": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/quit_control",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_scan": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/scan",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_mark": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/mark",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_explode": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/explode",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_idle": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/idle",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_speed_up0": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/speed_up0",
+          "stream": false
+        }
+      ]
+    },
+    "orchiella:scout_drone_speed_up1": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/speed_up1",
           "stream": false
         }
       ]

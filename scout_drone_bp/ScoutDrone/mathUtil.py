@@ -12,6 +12,14 @@ def GetFixOffset(rate):
     return 7.5 * (min(rate, 1.6) - 1.6)
 
 
+def GetSizeAmplifier(sliderValue):
+    return 2.5 * sliderValue + 0.5
+
+
+def GetSliderValueFromSize(size, defaultSize):
+    return (size / float(defaultSize) - 0.5) / 2.5
+
+
 def GetTransitionMolangDict(QC, animation_cache, now_state, now_state_start_time, next_state):
     t_now = time.time()
     t_anim_global = t_now - now_state_start_time  # 不管是不是过渡动画都需要
@@ -23,7 +31,7 @@ def GetTransitionMolangDict(QC, animation_cache, now_state, now_state_start_time
         ("1st", {
             "right": "rightArm",
             "left": "leftArm",
-            "item": mod_name
+            "item": "drone"
         }),
         ("3rd", {
             "right": "rightArm",

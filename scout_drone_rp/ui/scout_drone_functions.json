@@ -226,7 +226,6 @@
                         40.0
                     ],
                     "layer": 1,
-                    "visible": false,
                     "controls": [
                         {
                             "btn@common.button": {
@@ -562,7 +561,7 @@
                             }
                         },
                         {
-                            "attribute": {
+                            "info": {
                                 "type": "panel",
                                 "anchor_from": "right_middle",
                                 "anchor_to": "left_middle",
@@ -571,602 +570,688 @@
                                     0.0
                                 ],
                                 "size": [
-                                    100,
-                                    48.0
+                                    110.0,
+                                    80.0
                                 ],
                                 "layer": 1,
                                 "controls": [
                                     {
-                                        "defense": {
+                                        "upper": {
                                             "type": "panel",
-                                            "offset": [
-                                                0.0,
-                                                -16.0
-                                            ],
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
                                             "size": [
-                                                100,
-                                                12.0
+                                                "default",
+                                                60.0
                                             ],
                                             "layer": 1,
                                             "controls": [
                                                 {
-                                                    "label": {
-                                                        "type": "label",
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "left_middle",
-                                                        "font_type": "default",
-                                                        "text": "防御"
-                                                    }
-                                                },
-                                                {
-                                                    "white": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 10,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "green": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "red": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "gray": {
+                                                    "bg": {
                                                         "type": "image",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10.0
-                                                        ],
                                                         "layer": 1,
+                                                        "alpha": 0.5,
                                                         "nineslice_size": [
                                                             1.0,
                                                             1.0,
                                                             1.0,
                                                             1.0
                                                         ],
-                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                        "texture": "textures/ui/background_indent_no_top"
+                                                    }
+                                                },
+                                                {
+                                                    "attribute": {
+                                                        "type": "panel",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            3.0,
+                                                            0.0
+                                                        ],
+                                                        "size": [
+                                                            100,
+                                                            48.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "defense": {
+                                                                    "type": "panel",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        -16.0
+                                                                    ],
+                                                                    "size": [
+                                                                        100,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "label": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "font_type": "default",
+                                                                                "text": "防御"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "white": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 10,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "green": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "red": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "gray": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10.0
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "battery": {
+                                                                    "type": "panel",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        -4.0
+                                                                    ],
+                                                                    "size": [
+                                                                        100,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "label": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "font_type": "default",
+                                                                                "text": "电池"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "red": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "green": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "white": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 10,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "gray": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10.0
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "speed": {
+                                                                    "type": "panel",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        8.0
+                                                                    ],
+                                                                    "size": [
+                                                                        100,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "label": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "font_type": "default",
+                                                                                "text": "机动"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "red": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "green": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "white": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 10,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "gray": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10.0
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "firm": {
+                                                                    "type": "panel",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        20.0
+                                                                    ],
+                                                                    "size": [
+                                                                        100,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "label": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "font_type": "default",
+                                                                                "text": "坚固"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "red": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "green": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 8,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "white": {
+                                                                                "type": "panel",
+                                                                                "$clip_direction": "left",
+                                                                                "$clip_ratio": 0.0,
+                                                                                "$is_new_nine_slice": false,
+                                                                                "$nine_slice_buttom": 0,
+                                                                                "$nine_slice_left": 0,
+                                                                                "$nine_slice_right": 0,
+                                                                                "$nine_slice_top": 0,
+                                                                                "$nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
+                                                                                "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10
+                                                                                ],
+                                                                                "layer": 10,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
+                                                                                    },
+                                                                                    {
+                                                                                        "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "gray": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "right_middle",
+                                                                                "anchor_to": "right_middle",
+                                                                                "size": [
+                                                                                    80.0,
+                                                                                    10.0
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "battery": {
+                                        "lower": {
                                             "type": "panel",
-                                            "offset": [
-                                                0.0,
-                                                -4.0
-                                            ],
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
                                             "size": [
-                                                100,
-                                                12.0
+                                                "default",
+                                                18.0
                                             ],
                                             "layer": 1,
                                             "controls": [
                                                 {
-                                                    "label": {
-                                                        "type": "label",
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "left_middle",
-                                                        "font_type": "default",
-                                                        "text": "电池"
-                                                    }
-                                                },
-                                                {
-                                                    "red": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "green": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "white": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 10,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "gray": {
+                                                    "bg": {
                                                         "type": "image",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10.0
-                                                        ],
                                                         "layer": 1,
+                                                        "alpha": 0.5,
                                                         "nineslice_size": [
                                                             1.0,
                                                             1.0,
                                                             1.0,
                                                             1.0
                                                         ],
-                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                        "texture": "textures/ui/background_indent_no_top"
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "speed": {
-                                            "type": "panel",
-                                            "offset": [
-                                                0.0,
-                                                8.0
-                                            ],
-                                            "size": [
-                                                100,
-                                                12.0
-                                            ],
-                                            "layer": 1,
-                                            "controls": [
+                                                },
                                                 {
                                                     "label": {
                                                         "type": "label",
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "left_middle",
-                                                        "font_type": "default",
-                                                        "text": "机动"
-                                                    }
-                                                },
-                                                {
-                                                    "red": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
                                                         "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "green": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "white": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 10,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "gray": {
-                                                        "type": "image",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
+                                                            100.0,
                                                             10.0
                                                         ],
-                                                        "layer": 1,
-                                                        "nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "firm": {
-                                            "type": "panel",
-                                            "offset": [
-                                                0.0,
-                                                20.0
-                                            ],
-                                            "size": [
-                                                100,
-                                                12.0
-                                            ],
-                                            "layer": 1,
-                                            "controls": [
-                                                {
-                                                    "label": {
-                                                        "type": "label",
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "left_middle",
+                                                        "layer": 2,
                                                         "font_type": "default",
-                                                        "text": "坚固"
-                                                    }
-                                                },
-                                                {
-                                                    "red": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_red",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "green": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_green",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 8,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "white": {
-                                                        "type": "panel",
-                                                        "$clip_direction": "left",
-                                                        "$clip_ratio": 0.0,
-                                                        "$is_new_nine_slice": false,
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$progress_bar_empty_texture": "textures/ui/scout_drone/attribute_bar_empty",
-                                                        "$progress_bar_filled_texture": "textures/ui/scout_drone/attribute_bar_white",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10
-                                                        ],
-                                                        "layer": 10,
-                                                        "controls": [
-                                                            {
-                                                                "empty_progress_bar@netease_editor_template_namespace.empty_progress_bar": {}
-                                                            },
-                                                            {
-                                                                "filled_progress_bar@netease_editor_template_namespace.filled_progress_bar": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "gray": {
-                                                        "type": "image",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "size": [
-                                                            80.0,
-                                                            10.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "texture": "textures/ui/scout_drone/attribute_bar_gray"
+                                                        "text": "文字文字文字"
                                                     }
                                                 }
                                             ]
@@ -1317,7 +1402,6 @@
                         60.0
                     ],
                     "layer": 200,
-                    "visible": false,
                     "controls": [
                         {
                             "label": {

@@ -40,9 +40,9 @@ DEPLOYMENT = OrderedDict(
                  "deployment": [
                      {"name": "原装电池"},
                      {"name": "轻型电池", "speed": 0.2, "battery": -20},
-                     {"name": "大容量电池", "speed": -0.2, "battery:": 50, "firm": -0.1, "defense": -0.1},
-                     {"name": "超大容量电池", "speed": -0.4, "battery:": 100, "firm": -0.2, "defense": -0.2},
-                     {"name": "特殊能源电池", "speed": 0.3, "battery:": 30, "firm": -0.4}]
+                     {"name": "大容量电池", "speed": -0.2, "battery": 50, "firm": -0.1, "defense": -0.1},
+                     {"name": "超大容量电池", "speed": -0.4, "battery": 100, "firm": -0.2, "defense": -0.2},
+                     {"name": "特殊能源电池", "speed": 0.3, "battery": 30, "firm": -0.4}]
                  }
      })
 
@@ -105,11 +105,13 @@ class ScoutDroneFunctions(ScreenNode):
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.isControlling},
             'charge': {
-                'name': "",
+                'name': "充电",
+                'name_changeable': True,
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.GetEquipment()},
             'settings': {
-                'name': "",
+                'name': "设置",
+                'name_changeable': True,
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.GetEquipment() and not self.client.isControlling}}
 
@@ -144,7 +146,7 @@ class ScoutDroneFunctions(ScreenNode):
                     if ctrl.GetAnchorTo() == "left_middle":
                         parentX, parentY = 0, screenY / 2.0
                     else:
-                        parentX, parentY = screenX, screenY / 2.0
+                        parentX, parentY = screenX-size, screenY / 2.0
                     self.editCache["func_{}_pos".format(self.functionEditing)] = (
                         posX + relativeX - parentX, posY + relativeY - parentY)
             editProgressValue = self.editSizeSlider.GetSliderValue()
@@ -189,8 +191,8 @@ class ScoutDroneFunctions(ScreenNode):
         for i in range(WHEEL_NUM):
             self.deploySelectCtrls[i].SetVisible(i == index)
             self.deployImgCtrls[i].SetVisible(self.isSelecting)
-        self.deployAttributeCtrl.SetVisible(index < 0 or
-                                            not self.nowDrill and 0 <= index < len(
+        self.deployInfoCtrl.SetVisible(index < 0 or
+                                       not self.nowDrill and 0 <= index < len(
             DEPLOYMENT) or self.nowDrill and 0 <= index < len(
             DEPLOYMENT[self.nowDrill]['deployment']))
 
@@ -203,26 +205,31 @@ class ScoutDroneFunctions(ScreenNode):
             self.index = index
             if not self.nowDrill:
                 if 0 <= index < len(DEPLOYMENT):
-                    self.deployLabelCtrl.SetText(DEPLOYMENT.items()[index][1]['name'])
+                    self.deployLabelCtrl.SetText("§a进入下级")
+                    self.deployInfoLabelCtrl.SetText(DEPLOYMENT.items()[index][1]['name'])
                     self.client.SwitchState("deploy_{}".format(DEPLOYMENT.items()[index][0]))
                 else:
+                    self.deployInfoLabelCtrl.SetText("")
                     if len(DEPLOYMENT) <= index < WHEEL_NUM:
                         self.deployLabelCtrl.SetText("§7敬请期待")
                     elif index < 0:
                         self.deployLabelCtrl.SetText("§a请选择")
                     else:
+                        self.deployInfoLabelCtrl.SetText("")
                         self.deployLabelCtrl.SetText("§f改装")
                     self.client.SwitchState("idle")
             else:
+                self.deployLabelCtrl.SetText("§c触碰返回")
                 if 0 <= index < len(DEPLOYMENT[self.nowDrill]['deployment']):
-                    self.deployLabelCtrl.SetText(DEPLOYMENT[self.nowDrill]['deployment'][index]['name'])
+                    self.deployInfoLabelCtrl.SetText(DEPLOYMENT[self.nowDrill]['deployment'][index]['name'])
                     self.client.UpdateVar("deployment_{}".format(self.nowDrill), index)
                     self.RefreshAttribute(self.nowDrill, index)
                 elif len(DEPLOYMENT[self.nowDrill]['deployment']) <= index < WHEEL_NUM:
-                    self.deployLabelCtrl.SetText("§7敬请期待")
+                    self.deployInfoLabelCtrl.SetText("§7敬请期待")
                     self.client.UpdateVar("deployment_{}".format(self.nowDrill),
                                           DeployHelper.Get(self.client.GetEquipment()['extraId'], self.nowDrill))
                 elif index >= WHEEL_NUM:
+                    self.deployInfoLabelCtrl.SetText("")
                     self.deployLabelCtrl.SetText("§f改装")
 
     def CheckSelect(self):
@@ -269,9 +276,9 @@ class ScoutDroneFunctions(ScreenNode):
         if previewDeploymentType:
             content = DeployHelper.Set(content, previewDeploymentType, previewDeploymentIndex)
         for attribute, value in ATTRIBUTE_TYPE.items():
-            white = self.GetBaseUIControl("/deploy/attribute/{}/white".format(attribute)).asProgressBar()
-            green = self.GetBaseUIControl("/deploy/attribute/{}/green".format(attribute)).asProgressBar()
-            red = self.GetBaseUIControl("/deploy/attribute/{}/red".format(attribute)).asProgressBar()
+            white = self.GetBaseUIControl("/deploy/info/upper/attribute/{}/white".format(attribute)).asProgressBar()
+            green = self.GetBaseUIControl("/deploy/info/upper/attribute/{}/green".format(attribute)).asProgressBar()
+            red = self.GetBaseUIControl("/deploy/info/upper/attribute/{}/red".format(attribute)).asProgressBar()
             value = GetAttributeValue(attribute, originalContent)
             previewValue = GetAttributeValue(attribute, content)
             maxValue = float(ATTRIBUTE_TYPE[attribute]['max'])
@@ -300,7 +307,6 @@ class ScoutDroneFunctions(ScreenNode):
             self.editSizeSlider.SetVisible(False)
             return
         self.editSizeSlider.SetVisible(True)
-        self.editVisibleToggle.SetVisible(True)
         self.editSizeSlider.SetSliderValue(
             mathUtil.GetSliderValueFromSize(
                 self.editCache.get("func_{}_size".format(function), self.GetData("func_{}_size".format(function))),
@@ -366,7 +372,9 @@ class ScoutDroneFunctions(ScreenNode):
     deploySelectCtrls = []
     deployImgCtrls = []
     deployTipCtrl = None
+    deployInfoCtrl = None
     deployAttributeCtrl = None
+    deployInfoLabelCtrl = None
 
     tipLabelCtrl = None
     tipDisabledTime = 0
@@ -421,7 +429,9 @@ class ScoutDroneFunctions(ScreenNode):
                     self.deploySelectCtrls.append(self.GetBaseUIControl("/deploy/select_" + str(i)))
                     self.deployImgCtrls.append(self.GetBaseUIControl("/deploy/img_" + str(i)).asImage())
 
-                self.deployAttributeCtrl = self.GetBaseUIControl("/deploy/attribute")
+                self.deployInfoCtrl = self.GetBaseUIControl("/deploy/info")
+                self.deployAttributeCtrl = self.GetBaseUIControl("/deploy/info/upper/attribute")
+                self.deployInfoLabelCtrl = self.GetBaseUIControl("/deploy/info/lower/label").asLabel()
 
                 self.SetSelect()
 
@@ -456,7 +466,6 @@ class ScoutDroneFunctions(ScreenNode):
             ctrl = self.GetBaseUIControl('/' + function)
             ctrl.SetVisible(True)
         self.editSizeSlider.SetVisible(False)
-        self.editVisibleToggle.SetVisible(False)
 
     def EndEditing(self):
         self.client.SwitchControl(True)
@@ -502,9 +511,11 @@ class ScoutDroneFunctions(ScreenNode):
                 parentX, parentY = screenX - size, screenY / 2.0
             ctrl.SetPosition((parentX + relativeX, parentY + relativeY))
             ctrl.SetSize((size, size), True)
-            labelCtrl = self.GetBaseUIControl('/' + function + "/button_label")
-            if labelCtrl and self.functions[function]['name']:
-                labelCtrl.asLabel().SetText(self.functions[function]['name'])
+            labelCtrl = self.GetBaseUIControl('/' + function + "/button_label").asLabel()
+            if self.functions[function].get("name_changeable", False):
+                labelCtrl.SetText("")
+            else:
+                labelCtrl.SetText(self.functions[function]['name'])
 
     def SendTip(self, tip, color, duration=2.0, cover=True):
         if not cover and self.tipLabelCtrl.GetText() and tip[:3] != self.tipLabelCtrl.GetText()[3:6]:

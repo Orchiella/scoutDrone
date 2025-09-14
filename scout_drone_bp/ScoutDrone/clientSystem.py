@@ -87,8 +87,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 self.CallServer("SetMotion", PID, None)
             CC.SetCameraRotation((cameraRot[0], cameraRot[1], cameraRot[2] * 0.95 if abs(cameraRot[2]) > 0.05 else 0))
             return
+        amplifier = math.sqrt(inputUp ** 2 + inputRight ** 2)
         if self.GetData("shake"):
-            CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(12, max(-12, cameraRot[2] - inputRight))))
+            CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(12, max(-12, cameraRot[2] - inputRight * amplifier))))
         currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
         if abs(currentDir[1]) != 1:
             currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
@@ -102,7 +103,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
              list(currentDirRight.ToTuple())]).Transpose()
         outputTransformed = transitionMatrix * Matrix.Create([[inputUp, 0, inputRight]]).Transpose()
         outputTransformed = (outputTransformed[0, 0], outputTransformed[1, 0], outputTransformed[2, 0])
-        self.CallServer("SetMotion", PID, outputTransformed)
+        self.CallServer("SetMotion", PID, outputTransformed, amplifier)
 
     @Listen
     def AddPlayerCreatedClientEvent(self, event):
@@ -157,7 +158,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def OnLocalPlayerActionClientEvent(self, event):
         if not self.GetEquipment():
             return
-        if self.nowState == "inspect" or self.nowState == "shoot" or self.nowState == "charge":
+        if self.nowState == "inspect" or self.nowState == "shoot" or self.nowState == "charge" or self.nowState == "equip":
             return
         action = event['actionType']
         if action == clientApi.GetMinecraftEnum().PlayerActionType.StartSprinting:
@@ -204,27 +205,27 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.UpdateVar("fix_offset_x", GetFixOffset(nowScreenRate))
             self.functionsScreen.LoadButtons()
 
-    def BackIdle(self, isIdleTransition=False, isRunTransition=True, isSneakTransition=True):
-        if PC.isSneaking():
-            self.SwitchState("sneak", isSneakTransition)
+    def BackIdle(self, isIdleTransition=False, isRunTransition=True):
+        if PC.isSprinting():
+            self.SwitchState("run", isRunTransition)
         else:
-            if PC.isSprinting():
-                self.SwitchState("run", isRunTransition)
-            else:
-                self.SwitchState("idle", isIdleTransition)
+            self.SwitchState("idle", isIdleTransition)
 
     def AddTask(self, timeNode, func, isTransition=False):
         if isinstance(timeNode, str):
             timeNode = self.animationCache["1st_" + timeNode]["length"]
         self.tasks.append(
-            (time.time() + timeNode + (TRANSITION_DURATION if isTransition else 0) - 0.05, func))
+            (time.time() + timeNode + (TRANSITION_DURATION if isTransition else 0), func))
 
     droneData = {}
+    droneIdleMusicId = None
 
     def UpdateDroneData(self, droneData):
         if droneData is None:
             self.functionsScreen.droneInfoCtrl.SetVisible(False)
             self.droneData = {}
+            if self.GetData("sound_enabled"):
+                AC.StopCustomMusicById(self.droneIdleMusicId, 1)
             return
         self.functionsScreen.droneInfoCtrl.SetVisible(True)
         for key, value in droneData.items():
@@ -234,6 +235,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.functionsScreen.droneInfoHealthCtrl.SetValue(1)
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(1)
             self.functionsScreen.droneInfoNameCtrl.SetText("{}的侦查无人机".format(CF.CreateName(PID).GetName()))
+            if self.GetData("sound_enabled"):
+                def play():
+                    self.droneIdleMusicId = AC.PlayCustomMusic(
+                        "orchiella:" + DB.mod_name + "_idle", (0, 0, 0), 1, 1, True, self.droneData['entityId'])
+
+                GC.AddTimer(0.2, play)
         if "health" in droneData:
             self.functionsScreen.droneInfoHealthCtrl.SetValue(
                 droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
@@ -267,7 +274,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     isControlling = False
 
     def SwitchControl(self, boolean):
-        self.isControlling = boolean
+        if self.droneData:
+            self.isControlling = boolean
         if boolean:
             PVC.LockPerspective(0)
             clientApi.HideCrossHairGUI(True)
@@ -277,12 +285,13 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHealthGui(True)
             clientApi.HideHungerGui(True)
             clientApi.HideArmorGui(True)
-            PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
-            self.UpdateVar("controlling", 1, self.droneData['entityId'])
-            self.UpdateVar("controlling", 1)
-            self.functionsScreen.controlPanelCtrl.SetVisible(True)
-            self.functionsScreen.controlPanelLeftCtrl.SetText("")
-            self.functionsScreen.controlPanelRightCtrl.SetText("")
+            if self.droneData:
+                PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
+                self.UpdateVar("controlling", 1, self.droneData['entityId'])
+                self.UpdateVar("controlling", 1)
+                self.functionsScreen.controlPanelCtrl.SetVisible(True)
+                self.functionsScreen.controlPanelLeftCtrl.SetText("")
+                self.functionsScreen.controlPanelRightCtrl.SetText("")
         else:
             PVC.LockPerspective(-1)
             clientApi.HideCrossHairGUI(False)
@@ -293,10 +302,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHungerGui(False)
             clientApi.HideArmorGui(False)
             clientApi.HideMoveGui(False)
-            PPC.SetColorAdjustmentTint(0, (0, 255, 0))
-            self.UpdateVar("controlling", 0, self.droneData['entityId'])
-            self.UpdateVar("controlling", 0)
-            self.functionsScreen.controlPanelCtrl.SetVisible(False)
+            if self.droneData:
+                PPC.SetColorAdjustmentTint(0, (0, 255, 0))
+                self.UpdateVar("controlling", 0, self.droneData['entityId'])
+                self.UpdateVar("controlling", 0)
+                self.functionsScreen.controlPanelCtrl.SetVisible(False)
         self.functionsScreen.RefreshButtonVisibility()
         CC.SetCameraRotation((0, 0, 0))
         PVC.SetPlayerFovScale(1)
@@ -313,15 +323,18 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         varDict = None
         if self.tasks:
             self.tasks = []
-        elif _state == "equip":
+        if _state == "equip":
             self.AddTask(_state, self.BackIdle)
             self.AddTask(_state, self.CheckBatteryWhenEquipped)
+            self.AddTask(0.15, lambda: self.PlaySound("equip"))
         elif _state == "inspect":
             self.AddTask(_state, self.BackIdle, isTransition)
+            self.AddTask(5.16, lambda: self.PlaySound("shoot"))
         elif _state == "shoot":
             self.AddTask(_state, lambda: self.CallServer("Shoot", PID), isTransition)
+            self.AddTask(0.21, lambda: self.PlaySound("shoot"))
         elif _state == "charge":
-            for i in range(4):
+            for i in range(10):
                 self.AddTask(i * 1, lambda: self.CallServer("ConsumeToCharge", PID))
         elif _state == "edit_button":
             self.AddTask(_state, self.functionsScreen.StartEditing)
@@ -330,7 +343,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 for i, coord in enumerate(("x", "y", "z")):
                     QC.Set('query.mod.{}_deployed_{}_{}'.format(DB.mod_name, attr, coord),
                            ANIM_DATA['1st_deploy_{}'.format(self.functionsScreen.nowDrill)]['bones'][
-                               'scout_drone_launcher'][
+                               'drone'][
                                'position' if attr == 'pos' else 'rotation']['0.0'][i])
             self.CallServer("Deploy", PID, self.functionsScreen.nowDrill, self.functionsScreen.index)
             self.AddTask(_state, lambda: self.BackIdle(True))
@@ -339,6 +352,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                                               self.nowAnimationStartTime,
                                               "deploy_{}".format(self.functionsScreen.nowDrill))
         elif self.nowState == "edit_button":
+            self.nowState = "transition"
             self.functionsScreen.EndEditing()
         elif self.nowState == "deployed":
             varDict = GetTransitionMolangDict(QC, self.animationCache,
@@ -415,7 +429,17 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.CallServer("Control", PID)
             return True
         elif function == "function" and self.isControlling:
-            self.CallServer("Function", PID)
+            loadType = DeployHelper.Get(self.droneData['extraId'], "load")
+            if loadType <= 0:
+                return False
+            extraData = {}
+            if loadType == 1:
+                targetId = self.SelectEntity(self.FilterHook)
+                if not targetId:
+                    self.functionsScreen.SendTip("准星需靠近一个有效的实体", "c")
+                    return False
+                extraData = {"targetId": targetId}
+            self.CallServer("Function", PID, extraData)
             return True
         elif function == "scan" and self.isControlling:
             self.CallServer("Scan", PID)
@@ -423,7 +447,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif function == "mark" and self.isControlling:
             targetId = self.SelectEntity(self.FilterSpecialEntity)
             if not targetId:
-                self.functionsScreen.SendTip("需对准一个目标", "c")
+                self.functionsScreen.SendTip("准星需靠近一个目标", "c")
                 return False
             self.CallServer("Mark", PID, targetId)
             return True
@@ -441,6 +465,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def FilterSpecialEntity(self, entityId):
         boxSize = CF.CreateCollisionBox(entityId).GetSize()
         return boxSize[0] != 0.25 and boxSize[1] != 0.25
+
+    def FilterHook(self, entityId):
+        return CF.CreateEngineType(entityId).GetEngineTypeStr() != "orchiella:scout_drone_fake_player"
 
     def SelectEntity(self, filterFunc=None):
         rot = CF.CreateRot(PID).GetRot()
@@ -558,6 +585,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         key = int(event['key'])
         if key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_Y:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "inspect"}})
+        if key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_F:
+            self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "function"}})
         elif key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_R:
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "recover"}})
             self.functionsScreen.ClickButton({"AddTouchEventParams": {"func": "charge"}})

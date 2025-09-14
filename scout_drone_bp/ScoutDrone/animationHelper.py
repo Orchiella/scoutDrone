@@ -5,8 +5,8 @@ ModName = "ScoutDrone"
 mod_name = ''.join(['_' + c.lower() if c.isupper() and i != 0 else c.lower() for i, c in enumerate(ModName)])
 
 animation_cache = {}
-for perspective in {"1st"}:
-    target_bones = {mod_name, "rightArm", "leftArm"}
+for perspective in {"1st","3rd"}:
+    target_bones = {"drone", "rightArm", "leftArm"}
     with open(
             "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/{}/{}_rp/animations/{}_launcher.animation_{}.json".format(
                 ModName,

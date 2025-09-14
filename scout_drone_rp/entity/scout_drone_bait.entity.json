@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "geometry": {
+        "default": "geometry.scout_drone_bait"
+      },
+      "identifier": "orchiella:scout_drone_bait",
+      "materials": {
+        "default": "entity_emissive"
+      },
+      "animations": {
+        "idle": "animation.scout_drone_bait.idle"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "textures": {
+        "default": "textures/entity/scout_drone"
+      },
+      "scripts": {
+        "initialize": [
+          "variable.time_offset = Math.random(0, 100000);"
+        ],
+        "animate": [
+          "idle"
+        ]
+      }
+    }
+  }
+}

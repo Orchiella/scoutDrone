@@ -6,7 +6,7 @@
 			"animation_length": 0.15,
 			"override_previous_animation": true,
 			"bones": {
-				"scout_drone_launcher": {
+				"drone": {
 					"rotation": {
 						"0.0": ["q.mod.scout_drone_trans_3rd_item_rot_s_x", "q.mod.scout_drone_trans_3rd_item_rot_s_y", "q.mod.scout_drone_trans_3rd_item_rot_s_z"],
 						"0.15": ["q.mod.scout_drone_trans_3rd_item_rot_e_x", "q.mod.scout_drone_trans_3rd_item_rot_e_y", "q.mod.scout_drone_trans_3rd_item_rot_e_z"]
