@@ -15,6 +15,9 @@
         },
         {
           "bone131": "Material.unlit"
+        },
+        {
+          "load3_unlit": "Material.unlit"
         }
       ],
       "textures": [

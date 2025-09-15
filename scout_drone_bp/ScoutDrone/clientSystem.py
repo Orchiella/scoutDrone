@@ -271,7 +271,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.isControlling = boolean
         if boolean:
             PVC.LockPerspective(0)
-            clientApi.HideCrossHairGUI(True)
             clientApi.HideSlotBarGui(True)
             clientApi.HideExpGui(True)
             clientApi.HideHorseHealthGui(True)
@@ -279,6 +278,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHungerGui(True)
             clientApi.HideArmorGui(True)
             if self.droneData:
+                clientApi.HideCrossHairGUI(True)
+                OC.SetCanAttack(False)
+                OC.SetCanOpenInv(False)
                 PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
                 self.UpdateVar("controlling", 1, self.droneData['entityId'])
                 self.UpdateVar("controlling", 1)
@@ -295,21 +297,28 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                             "orchiella:" + DB.mod_name + "_idle", (0, 0, 0), 1, 1, True, self.droneData['entityId'])
 
                     GC.AddTimer(0.2, play)
+            else:
+                OC.SetCanAll(False)
+                clientApi.HideMoveGui(True)
         else:
             PVC.LockPerspective(-1)
-            clientApi.HideCrossHairGUI(False)
             clientApi.HideSlotBarGui(False)
             clientApi.HideExpGui(False)
             clientApi.HideHorseHealthGui(False)
             clientApi.HideHealthGui(False)
             clientApi.HideHungerGui(False)
             clientApi.HideArmorGui(False)
-            clientApi.HideMoveGui(False)
             if self.droneData:
+                clientApi.HideCrossHairGUI(False)
+                OC.SetCanAttack(True)
+                OC.SetCanOpenInv(True)
                 PPC.SetColorAdjustmentTint(0, (0, 255, 0))
                 self.UpdateVar("controlling", 0, self.droneData['entityId'])
                 self.UpdateVar("controlling", 0)
                 self.functionsScreen.controlPanelCtrl.SetVisible(False)
+            else:
+                OC.SetCanAll(True)
+                clientApi.HideMoveGui(False)
         self.functionsScreen.RefreshButtonVisibility()
         CC.SetCameraRotation((0, 0, 0))
         PVC.SetPlayerFovScale(1)
@@ -638,12 +647,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     @Listen
     def PlayerTryDestroyBlockClientEvent(self, event):
-        if self.GetEquipment():
+        if self.GetEquipment() or self.isControlling:
             event['cancel'] = True
 
     @Listen
     def StartDestroyBlockClientEvent(self, event):
-        if self.GetEquipment():
+        if self.GetEquipment() or self.isControlling:
             event['cancel'] = True
 
     def BlinkVar(self, key):

@@ -7,11 +7,11 @@
         "key": {
             "I": {
                 "data": 0,
-                "item": "minecraft:iron_block"
+                "item": "minecraft:iron_ingot"
             },
             "G": {
                 "data": 0,
-                "item": "minecraft:gold_block"
+                "item": "minecraft:gold_ingot"
             },
             "S": {
                 "data": 0,
@@ -23,9 +23,9 @@
             }
         },
         "pattern": [
-            "IIR",
-            " SG",
-            "   "
+            "III",
+            "GRG",
+            " S "
         ],
         "result": {
             "count": 1,

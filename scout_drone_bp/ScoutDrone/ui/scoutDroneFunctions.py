@@ -22,7 +22,8 @@ DEPLOYMENT = OrderedDict(
      "rotor": {"name": "风扇",
                "deployment": [
                    {"name": "原装款"},
-                   {"name": "高功率款", "defense": 0.4, "speed": 0.25, "firm": -0.3}]},
+                   {"name": "高功率款", "defense": 0.3, "speed": 0.25, "firm": -0.3},
+                   {"name": "加固款", "defense": 0.4, "speed": -0.25, "firm": 0.4}]},
      "load": {"name": "下挂",
               "deployment": [
                   {"name": "不下挂"},
@@ -146,7 +147,7 @@ class ScoutDroneFunctions(ScreenNode):
                     if ctrl.GetAnchorTo() == "left_middle":
                         parentX, parentY = 0, screenY / 2.0
                     else:
-                        parentX, parentY = screenX-size, screenY / 2.0
+                        parentX, parentY = screenX - size, screenY / 2.0
                     self.editCache["func_{}_pos".format(self.functionEditing)] = (
                         posX + relativeX - parentX, posY + relativeY - parentY)
             editProgressValue = self.editSizeSlider.GetSliderValue()
@@ -460,7 +461,7 @@ class ScoutDroneFunctions(ScreenNode):
         self.SetScreenVisible(show)
 
     def StartEditing(self):
-        self.client.SwitchControl(False)
+        self.client.SwitchControl(True)
         self.GetBaseUIControl("/edit").SetVisible(True)
         for function in self.functions:
             ctrl = self.GetBaseUIControl('/' + function)
@@ -468,7 +469,7 @@ class ScoutDroneFunctions(ScreenNode):
         self.editSizeSlider.SetVisible(False)
 
     def EndEditing(self):
-        self.client.SwitchControl(True)
+        self.client.SwitchControl(False)
         self.functionEditing = None
         self.LoadButtons()
         self.editCache = {}

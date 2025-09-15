@@ -21,6 +21,9 @@
         "controller.render.scout_drone"
       ],
       "scripts": {
+        "initialize": [
+          "variable.time_offset = Math.random(0, 100000);"
+        ],
         "animate": [
           "controller.scout_drone.general",
           "deployment",

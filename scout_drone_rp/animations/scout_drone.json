@@ -74,7 +74,7 @@
 					"scale": "q.mod.scout_drone_deployment_tail == 1"
 				},
 				"rotor0": {
-					"scale": "q.mod.scout_drone_deployment_rotor == 0"
+					"scale": "q.mod.scout_drone_deployment_rotor == 0 || q.mod.scout_drone_deployment_rotor == 2"
 				},
 				"rotor1": {
 					"scale": "q.mod.scout_drone_deployment_rotor == 1"
@@ -84,6 +84,12 @@
 				},
 				"load2": {
 					"scale": "q.mod.scout_drone_deployment_load == 2"
+				},
+				"load3": {
+					"scale": "q.mod.scout_drone_deployment_load == 3"
+				},
+				"load3_unlit": {
+					"rotation": [39.2, "14.5 + (query.life_time * -60.0 + variable.time_offset)", -39.2]
 				}
 			}
 		}
