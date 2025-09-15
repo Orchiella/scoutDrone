@@ -181,7 +181,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if self.transitionFinishTime != 0 and time.time() > self.transitionFinishTime:
             self.nowState = self.targetState
             self.transitionFinishTime = 0
-            self.SyncVarToServer(0, "transition", 0)
+            self.SyncVarToServer("transition", 0)
             self.nowAnimationStartTime = time.time()
             self.beforeState = None
             self.targetState = None
@@ -283,7 +283,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 OC.SetCanOpenInv(False)
                 PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
                 self.UpdateVar("controlling", 1, self.droneData['entityId'])
-                self.UpdateVar("controlling", 1)
+                self.SyncVarToServer("controlling", 1)
                 self.functionsScreen.controlPanelCtrl.SetVisible(True)
                 self.functionsScreen.controlPanelLeftCtrl.SetText("")
                 self.functionsScreen.controlPanelRightCtrl.SetText("")
@@ -314,7 +314,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 OC.SetCanOpenInv(True)
                 PPC.SetColorAdjustmentTint(0, (0, 255, 0))
                 self.UpdateVar("controlling", 0, self.droneData['entityId'])
-                self.UpdateVar("controlling", 0)
+                self.SyncVarToServer("controlling", 0)
                 self.functionsScreen.controlPanelCtrl.SetVisible(False)
             else:
                 OC.SetCanAll(True)
@@ -374,16 +374,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if varDict is None:
             varDict = GetTransitionMolangDict(QC, self.animationCache, self.nowState,
                                               self.nowAnimationStartTime if isTransition else 0, _state)
-        self.SyncVarDictToServer(0, varDict)
+        self.SyncVarDictToServer(varDict)
         for state in STATES:
-            self.SyncVarToServer(0, state, 1 if state == _state else 0)
+            self.SyncVarToServer(state, 1 if state == _state else 0)
         if self.nowState == "transition":
-            self.SyncVarToServer(0, "re_transition", 1)
-            self.SyncVarToServer(0.05, "re_transition", 0)
+            self.SyncVarToServer("re_transition", 1)
+            GC.AddTimer(0.05, self.SyncVarToServer, "re_transition", 0)
         else:
             self.beforeState = self.nowState
 
-        self.SyncVarToServer(0, "transition", 1)
+        self.SyncVarToServer("transition", 1)
         self.nowAnimationStartTime = time.time()
         self.targetState = _state
         self.nowState = "transition"
@@ -402,7 +402,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def RefreshDeployment(self, content):
         varDict = {"deployment_" + deployType: DeployHelper.Get(content, deployType) for deployType in
                    DEPLOYMENT.keys()}
-        self.SyncVarDictToServer(0, varDict)
+        self.SyncVarDictToServer(varDict)
         batteryValue = int(DeployHelper.Get(content, "batteryValue"))
         batteryColor = "f"
         if batteryValue < 10:
@@ -656,24 +656,16 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             event['cancel'] = True
 
     def BlinkVar(self, key):
-        self.SyncVarToServer(0, key, 1)
-        self.SyncVarToServer(0.05, key, 0)
+        self.SyncVarToServer( key, 1)
+        GC.AddTimer(0.05, self.SyncVarToServer, key, 0)
 
-    def SyncVarToServer(self, delay, key, value):
-        if delay == 0:
-            self.UpdateVar(key, value, PID)  # 我发现这里的PID参数不能去除，否则会是-1，不知道为何
-            self.CallServer("SyncVarToClients", PID, key, value)
-        else:
-            GC.AddTimer(delay, self.UpdateVar, key, value, PID)
-            GC.AddTimer(delay, self.CallServer, "SyncVarToClients", PID, key, value)
+    def SyncVarToServer(self, key, value):
+        self.UpdateVar(key, value, PID)  # 我发现这里的PID参数不能去除，否则会是-1，不知道为何
+        self.CallServer("SyncVarToClients", PID, key, value)
 
-    def SyncVarDictToServer(self, delay, varDict):
-        if delay == 0:
-            self.UpdateVarDict(varDict, PID)
-            self.CallServer("SyncVarDictToClients", PID, varDict)
-        else:
-            GC.AddTimer(delay, self.UpdateVarDict, varDict, PID)
-            GC.AddTimer(delay, self.CallServer, "SyncVarDictToClients", PID, varDict)
+    def SyncVarDictToServer(self, varDict):
+        self.UpdateVarDict(varDict, PID)
+        self.CallServer("SyncVarDictToClients", PID, varDict)
 
     def UpdateVar(self, key, value, playerId=PID):
         CF.CreateQueryVariable(playerId).Set("query.mod." + DB.mod_name + "_" + key, value)

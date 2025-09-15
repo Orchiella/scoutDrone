@@ -259,10 +259,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     switchControlCdDict = {}
 
-    def Control(self, playerId):
+    def Control(self, playerId,isForce=False):
         if playerId not in self.droneDict:
             return
-        if time.time() < self.switchControlCdDict.get(playerId, 0):
+        if not isForce and time.time() < self.switchControlCdDict.get(playerId, 0):
             self.SendTip(playerId, "请不要频繁切换控制", "c")
             return
         self.switchControlCdDict[playerId] = time.time() + 2
@@ -609,7 +609,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 event['damage'] = 0
                 event['knock'] = False
                 return
-            self.Control(shooterId)
+            self.Control(shooterId,True)
             self.SendTip(shooterId, "本体受到伤害，控制中断", "c")
             CF.CreateHurt(shooterId).Hurt(event['damage'], event['cause'], event['srcId'], None)
             event['damage'] = 1
@@ -723,12 +723,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                                           slot)["count"] - count)
         return takenNum
 
-    def SyncRebuild(self, playerId):
-        otherPlayers = serverApi.GetPlayerList()
-        otherPlayers.remove(playerId)
-        for otherPlayerId in otherPlayers:
-            self.CallClient(otherPlayerId, "Rebuild", playerId)
-            self.CallClient(playerId, "Rebuild", otherPlayerId)
+    def SyncRebuild(self, playerId, otherPlayerId):
+        self.CallClient(otherPlayerId, "Rebuild", playerId)
+        self.CallClient(playerId, "Rebuild", otherPlayerId)
 
     def SyncVarToClients(self, playerId, key, value, exceptSelf=True):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId] if exceptSelf else None), "UpdateVar",
