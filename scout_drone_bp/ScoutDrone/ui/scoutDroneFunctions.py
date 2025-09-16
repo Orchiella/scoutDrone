@@ -42,7 +42,7 @@ DEPLOYMENT = OrderedDict(
                      {"name": "原装电池"},
                      {"name": "轻型电池", "speed": 0.2, "battery": -20},
                      {"name": "大容量电池", "speed": -0.2, "battery": 50, "firm": -0.1, "defense": -0.1},
-                     {"name": "超大容量电池", "speed": -0.4, "battery": 100, "firm": -0.2, "defense": -0.2},
+                     {"name": "超大容量电池", "speed": -0.35, "battery": 100, "firm": -0.2, "defense": -0.2},
                      {"name": "特殊能源电池", "speed": 0.3, "battery": 30, "firm": -0.4}]
                  }
      })
@@ -88,7 +88,7 @@ class ScoutDroneFunctions(ScreenNode):
                 'name': "下挂功能",
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.isControlling and DeployHelper.Get(
-                    self.client.droneData['extraId'], "load") > 0},
+                    self.client.droneData.get('extraId',''), "load") > 0},
             'scan': {
                 'name': "扫描",
                 "condition": lambda: self.client.nowState == "edit_button" or

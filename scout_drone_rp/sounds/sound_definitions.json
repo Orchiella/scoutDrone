@@ -117,6 +117,15 @@
           "stream": false
         }
       ]
+    },
+    "orchiella:scout_drone_charge": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/scout_drone/charge",
+          "stream": false
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "orchiella:scout_drone_drop",
+      "is_experimental": false,
+      "is_spawnable": false,
+      "is_summonable": false
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "height": 0.25,
+        "width": 0.25
+      },
+      "minecraft:physics": {
+      },
+      "minecraft:interact": {
+        "interactions": [
+          {
+            "on_interact": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player"
+                  }
+                ]
+              }
+            },
+            "interact_text": "捡起"
+          }
+        ]
+      }
+    }
+  }
+}

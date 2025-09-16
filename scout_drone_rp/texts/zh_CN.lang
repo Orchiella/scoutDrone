@@ -1,3 +1,7 @@
 item.orchiella:scout_drone_launcher.name=§6侦查无人机发射器
 entity.orchiella:scout_drone.name=侦查无人机
 action.hint.exit.orchiella:scout_drone=§a操控模式
+item.orchiella:scout_drone_coupon1.name=预设装备券：重型探照无人机§8(长按/右键使用)
+item.orchiella:scout_drone_coupon2.name=预设装备券：轻型穿梭无人机§8(长按/右键使用)
+item.orchiella:scout_drone_coupon3.name=预设装备券：钩爪辅助无人机§8(长按/右键使用)
+item.orchiella:scout_drone_coupon4.name=预设装备券：耐用自爆无人机§8(长按/右键使用)

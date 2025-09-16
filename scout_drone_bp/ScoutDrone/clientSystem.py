@@ -70,8 +70,11 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         }
 
         self.initViewBobbing = False
-        self.initSmoothLighting = False
         self.addonDisabled = False
+
+    shaking = False
+    stopShakingTime = 0
+    stopShakingRoll = 0
 
     @Listen("OnScriptTickClient")
     def Move(self):
@@ -82,12 +85,29 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         inputRight, inputUp = -inputVec[0], inputVec[1]
         cameraRot = CC.GetCameraRotation()
         if abs(inputRight) < 1e-5 and abs(inputUp) < 1e-5:
+            idleShake = 2
             self.CallServer("SetMotion", PID, None)
-            CC.SetCameraRotation((cameraRot[0], cameraRot[1], cameraRot[2] * 0.95 if abs(cameraRot[2]) > 0.05 else 0))
+            if self.GetData("shake"):
+                if self.shaking:
+                    roll = cameraRot[2] * 0.95
+                    CC.SetCameraRotation(
+                        (cameraRot[0], cameraRot[1], roll))
+                    if abs(roll) < idleShake:
+                        self.shaking = False
+                        self.stopShakingTime = time.time()
+                        self.stopShakingRoll = roll
+                else:
+                    if self.stopShakingRoll >= 0:
+                        phi = math.pi - math.asin(self.stopShakingRoll / idleShake)
+                    else:
+                        phi = math.asin(self.stopShakingRoll / idleShake)
+                    CC.SetCameraRotation((cameraRot[0], cameraRot[1], idleShake * math.sin(
+                        3 * (time.time() - self.stopShakingTime - 1 / 30.0) + phi)))
             return
         amplifier = math.sqrt(inputUp ** 2 + inputRight ** 2)
         if self.GetData("shake"):
             CC.SetCameraRotation((cameraRot[0], cameraRot[1], min(12, max(-12, cameraRot[2] - inputRight * amplifier))))
+            self.shaking = True
         currentDir = Vector3(clientApi.GetDirFromRot(RC.GetRot()))
         if abs(currentDir[1]) != 1:
             currentDirRight = Vector3.Cross(currentDir, Vector3(0, 1, 0))
@@ -108,30 +128,32 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if event['playerId'] == PID: return
         self.CallServer("SyncRebuild", PID, event['playerId'])
 
-    # 背包物品变化
+    # 主手物品变化
+    def OnCarriedNewItemChangedClientEvent(self, event):
+        if not self.functionsScreen or not self.functionsScreen.initialized:
+            return
+        oldItem = event['oldItemDict']
+        newItem = event['newItemDict']
+        isOldDrone = oldItem and oldItem['newItemName'] in DRONE_LAUNCHER_TYPE
+        isNewDrone = newItem and newItem['newItemName'] in DRONE_LAUNCHER_TYPE
+        if isOldDrone and isNewDrone and oldItem['newItemName'] == newItem['newItemName'] and (
+                DeployHelper.Get(oldItem['extraId'], 'uuid') == DeployHelper.Get(newItem['extraId'], 'uuid')):
+            # 内部变化
+            pass
+        else:
+            if isOldDrone:
+                self.Equip(False)
+            if isNewDrone:
+                self.Equip(True, newItem['extraId'])
+
+    # 物品栏切换，会快上述事件一步，提前收起装备，可能会多余，但一定不会出问题。。
     @Listen
-    def InventoryItemChangedClientEvent(self, event):
-        if event['playerId'] != PID or event['slot'] != CF.CreateItem(PID).GetSlotId():
+    def OnItemSlotButtonClickedEvent(self, event):
+        slotBefore = CF.CreateItem(PID).GetSlotId()
+        slotNow = event['slotIndex']
+        if slotBefore == slotNow or clientApi.GetTopUI() != "hud_screen":
             return
-        oldItemName = event['oldItemDict']['newItemName']
-        newItemName = event['newItemDict']['newItemName']
-        if oldItemName == "minecraft:air" and newItemName in DRONE_LAUNCHER_TYPE:
-            self.Equip(True, event['newItemDict']['extraId'])
-        elif newItemName == "minecraft:air" and oldItemName in DRONE_LAUNCHER_TYPE:
-            self.Equip(False)
-
-    slotNow = -1
-
-    @Listen("OnScriptTickClient")
-    # 物品栏切换，现在改用定时器判断
-    def SwitchSlot(self):
-        slotBefore = self.slotNow
-        slotNow = CF.CreateItem(PID).GetSlotId()
-        if slotBefore == slotNow:
-            return
-        self.slotNow = slotNow
         itemComp = CF.CreateItem(PID)
-        if slotNow > 8: return
         oldItem = itemComp.GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.INVENTORY, slotBefore)
         newItem = itemComp.GetPlayerItem(clientApi.GetMinecraftEnum().ItemPosType.INVENTORY, slotNow)
         if oldItem and oldItem['newItemName'] in DRONE_LAUNCHER_TYPE:
@@ -147,9 +169,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, True)
         else:
             self.SwitchState("idle", False)
-            clientApi.HideCrossHairGUI(False)
+            if not self.isControlling:
+                clientApi.HideCrossHairGUI(False)
             PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.VIEW_BOBBING, self.initViewBobbing)
-            PVC.SetToggleOption(clientApi.GetMinecraftEnum().OptionId.SMOOTH_LIGHTING, self.initSmoothLighting)
         GC.AddTimer(0.1, self.functionsScreen.RefreshButtonVisibility)
 
     @Listen
@@ -277,8 +299,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHealthGui(True)
             clientApi.HideHungerGui(True)
             clientApi.HideArmorGui(True)
+            clientApi.HideCrossHairGUI(True)
             if self.droneData:
-                clientApi.HideCrossHairGUI(True)
                 OC.SetCanAttack(False)
                 OC.SetCanOpenInv(False)
                 PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
@@ -308,8 +330,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             clientApi.HideHealthGui(False)
             clientApi.HideHungerGui(False)
             clientApi.HideArmorGui(False)
+            clientApi.HideCrossHairGUI(False)
             if self.droneData:
-                clientApi.HideCrossHairGUI(False)
                 OC.SetCanAttack(True)
                 OC.SetCanOpenInv(True)
                 PPC.SetColorAdjustmentTint(0, (0, 255, 0))
@@ -346,6 +368,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.AddTask(_state, lambda: self.CallServer("Shoot", PID), isTransition)
             self.AddTask(0.16, lambda: self.PlaySound("shoot"))
         elif _state == "charge":
+            self.PlaySound("charge")
             for i in range(10):
                 self.AddTask(i * 1, lambda: self.CallServer("ConsumeToCharge", PID))
         elif _state == "edit_button":
@@ -392,8 +415,12 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         return True
 
     def CheckBatteryWhenEquipped(self):
-        batteryValue = DeployHelper.Get(self.GetEquipment()['extraId'], "batteryValue") if self.ShouldTakeBattery(
-        ) else (GetAttributeValue("battery", self.GetEquipment()['extraId']))
+        launcherItem = self.GetEquipment()
+        if launcherItem['durability'] <= 0:
+            self.functionsScreen.SendTip("无耐久！请换一台", "c")
+            return False
+        batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
+        ) else (GetAttributeValue("battery", launcherItem['extraId']))
         if batteryValue > 10:
             self.functionsScreen.SendTip("无人机已就绪", "a", 2, False)
         else:
@@ -422,6 +449,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if function == "shoot":
             if self.droneData:
                 self.functionsScreen.SendTip("请先收回上一架", "c")
+                return False
+            if launcherItem['durability'] <= 0:
+                self.functionsScreen.SendTip("这台无人机已经没有耐久度了！", "c")
                 return False
             batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
             ) else (GetAttributeValue("battery", launcherItem['extraId']))
@@ -552,12 +582,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.Rebuild(PID)
         self.animationCache = ANIM_DATA
 
-        def equip():
-            if self.GetEquipment():
-                self.slotNow = -1
-
-        GC.AddTimer(0.5, equip)
-
     def Rebuild(self, playerId=PID, state=None):
         actorComp = CF.CreateActorRender(playerId)
         prefix = DB.mod_name + "_"
@@ -599,6 +623,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         if not self.functionsScreen:
             return
         if event['isDown'] != '1':
+            return
+        if clientApi.GetTopUI() != "hud_screen":
             return
         key = int(event['key'])
         if key == clientApi.GetMinecraftEnum().KeyBoardType.KEY_Y:
@@ -656,7 +682,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             event['cancel'] = True
 
     def BlinkVar(self, key):
-        self.SyncVarToServer( key, 1)
+        self.SyncVarToServer(key, 1)
         GC.AddTimer(0.05, self.SyncVarToServer, key, 0)
 
     def SyncVarToServer(self, key, value):
@@ -785,6 +811,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         self.settingsScreen = self.uiMgr.GetUI(UIDef.Settings)
         self.functionsScreen = self.uiMgr.GetUI(UIDef.Functions)
         self.functionsScreen.Display(True)
+        item = CF.CreateItem(PID).GetCarriedItem()
+        if item and item['newItemName'] in DRONE_LAUNCHER_TYPE:
+            self.Equip(True, item['extraId'])
 
     @Listen('ServerEvent', DB.ModName, 'ServerSystem')
     def OnGetServerEvent(self, args):

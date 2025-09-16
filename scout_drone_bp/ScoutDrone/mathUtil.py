@@ -131,7 +131,7 @@ def get_scale_by_distance(player_pos, frame_pos):
 def GetDirection(motion):
     vx, vy, vz = motion
     if vx == 0 and vz == 0:
-        return "无水平方向"
+        return "无"
 
     # 计算水平角度，以正北为0度，顺时针为正方向
     angle_rad = math.atan2(vx, -vz)  # 注意：Minecraft中z轴朝南，x轴朝东

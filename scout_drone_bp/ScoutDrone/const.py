@@ -6,6 +6,7 @@ AIR_BLOCK = {"name": "minecraft:air", "aux": 0}
 FIRE_BLOCK = {"name": "minecraft:fire", "aux": 0}
 DRONE_TYPE = set("orchiella:scout_drone" + bow_type for bow_type in {""})
 DRONE_LAUNCHER_TYPE = {droneType + "_launcher" for droneType in DRONE_TYPE}
+DRONE_DROP_TYPE = {droneType + "_drop" for droneType in DRONE_TYPE}
 ORIGINAL_SPEED = 0.7
 ATTRIBUTE_TYPE = {"defense": {"default": 1, "max": 2},
                   "speed": {"default": 1, "max": 2},
@@ -41,6 +42,12 @@ CUSTOM_TIPS = ('§6侦查无人机\n'
                '\n'
                '§5§o开发者蕙兰出品')
 COUPONS = [
-    dict(INCOMPLETE_ITEM_DICT, itemName="orchiella:scout_drone", newItemName="orchiella:scout_drone",
-         extraId="battery:1,shelf:2,assist:1,string:2,sight:1", durability=1000)
+    dict(INCOMPLETE_ITEM_DICT, itemName="orchiella:scout_drone_launcher", newItemName="orchiella:scout_drone_launcher",
+         extraId="load:2,rotor:2,sight:3,battery:3", durability=1000),
+    dict(INCOMPLETE_ITEM_DICT, itemName="orchiella:scout_drone_launcher", newItemName="orchiella:scout_drone_launcher",
+         extraId="load:0,rotor:1,battery:1,tail:1,sight:2", durability=1000),
+    dict(INCOMPLETE_ITEM_DICT, itemName="orchiella:scout_drone_launcher", newItemName="orchiella:scout_drone_launcher",
+         extraId="load:1,rotor:1,battery:3,tail:1,sight:2", durability=1000),
+    dict(INCOMPLETE_ITEM_DICT, itemName="orchiella:scout_drone_launcher", newItemName="orchiella:scout_drone_launcher",
+         extraId="rotor:2,tail:0", durability=1000)
 ]

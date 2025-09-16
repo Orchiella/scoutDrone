@@ -7,6 +7,9 @@
         },
         "orchiella:scout_drone": {
             "textures": "textures/items/scout_drone"
+        },
+        "orchiella:scout_drone_coupon": {
+            "textures": "textures/items/scout_drone_coupon"
         }
     }
 }

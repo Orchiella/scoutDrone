@@ -2,6 +2,7 @@
 import math
 import random
 import time
+import uuid
 
 import mod.server.extraServerApi as serverApi
 from mod.common.utils.mcmath import Vector3
@@ -9,7 +10,7 @@ from mod.common.utils.mcmath import Vector3
 import config as DB
 from ScoutDrone import mathUtil, DeployHelper
 from ScoutDrone.const import AIR_BLOCK, INCOMPLETE_ITEM_DICT, DRONE_TYPE, DRONE_LAUNCHER_TYPE, ORIGINAL_SPEED, \
-    CUSTOM_TIPS, ATTRIBUTE_TYPE, PENETRABLE_BLOCK_TYPE
+    CUSTOM_TIPS, ATTRIBUTE_TYPE, PENETRABLE_BLOCK_TYPE, DRONE_DROP_TYPE, COUPONS
 from ScoutDrone.dataManager import DataManager, DEFAULT_PLAYER_SETTINGS
 from ScoutDrone.mathUtil import GetSurroundingPoses, GetDistance, GetDirection
 from ScoutDrone.ui.scoutDroneFunctions import GetAttributeValue, DEPLOYMENT
@@ -56,7 +57,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             serverApi.GetMinecraftEnum().EntityType.Player: (0.2, 0.4, 1.0),  # 亮蓝色，高度辨识
         }
 
-    motionReceptionTimeDict = {}
+    @Listen
+    def OnCarriedNewItemChangedServerEvent(self, event):
+        playerId = event['playerId']
+        newItem = event['newItemDict']
+        if newItem and newItem['newItemName'] in DRONE_LAUNCHER_TYPE and not newItem['extraId']:
+            CF.CreateItem(playerId).ChangePlayerItemTipsAndExtraId(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
+                                                                   CF.CreateItem(playerId).GetSelectSlotId(),
+                                                                   self.GetCustomTips(newItem),
+                                                                   DeployHelper.Set('', 'uuid', uuid.uuid4()))
+        self.CallClient(playerId, "OnCarriedNewItemChangedClientEvent", event)
 
     def SetMotion(self, playerId, direction, amplifier=1):
         if playerId not in self.droneDict:
@@ -67,12 +77,15 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         originalMotion = CF.CreateActorMotion(droneId).GetMotion()
         originalMotionLength = Vector3(originalMotion).Length()
         if direction:
-            speed = ORIGINAL_SPEED * GetAttributeValue("speed", self.droneDict[playerId]['extraId'])
+            attributeAmplifier = GetAttributeValue("speed", self.droneDict[playerId]['extraId'])
+            speed = ORIGINAL_SPEED * attributeAmplifier
             if speed < originalMotionLength:
                 # 如果现在的速度超过了应该有的速度，则继承速率
                 motion = (Vector3(direction).Normalized() * originalMotionLength).ToTuple()
             else:
-                motion = (Vector3(direction).Normalized() * amplifier * speed).ToTuple()
+                motion = (Vector3(direction).Normalized() * amplifier * min(
+                    speed, originalMotionLength + 0.2 * attributeAmplifier * (
+                            0.5 + 0.5 * originalMotionLength / speed))).ToTuple()
             CF.CreateActorMotion(droneId).SetMotion(motion)
             CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
         else:
@@ -82,7 +95,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 CF.CreateRot(droneId).SetRot(serverApi.GetRotFromDir(motion))
             else:
                 pos = CF.CreatePos(droneId).GetFootPos()
-                newPos = (pos[0], pos[1] + 0.05 * math.sin(3.14 * time.time()), pos[2])
+                newPos = (pos[0], pos[1] + 0.025 * math.sin(3.14 * time.time()), pos[2])
                 if CF.CreateBlockInfo(levelId).GetBlockNew(
                         (int(math.floor(newPos[0])), int(math.floor(newPos[1])), int(math.floor(newPos[2]))),
                         CF.CreateDimension(playerId).GetEntityDimensionId())[
@@ -104,13 +117,16 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 self.Recover(shooterId)
                 self.SendTip(shooterId, "无人机电量耗尽", "c")
                 return
+            if CF.CreateRide(shooterId).GetEntityRider() == entityId:
+                CF.CreateRot(entityId).SetRot(CF.CreateRot(shooterId).GetRot())
             if time.time() - GetEntityData(entityId, "consumeTime"):
                 SetEntityData(entityId, "consumeTime", time.time() + 0.2)
                 if Vector3(CF.CreateActorMotion(entityId).GetMotion()).Length() > 0.1:
-                    batteryTaken = 0.1
+                    batteryTaken = 0.08
                 else:
-                    batteryTaken = 0.03
-                batteryTaken = min(batteryTaken, battery)
+                    batteryTaken = 0.01
+                batteryTaken = min(batteryTaken * DataManager.Get(shooterId, "battery_consume_percentage") / 100.0,
+                                   battery)
                 self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - batteryTaken})
                 SetEntityData(entityId, "battery", battery - batteryTaken)
                 self.droneDict[shooterId]['durability'] -= 0.01
@@ -124,8 +140,11 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 moveDist += GetDistance(lastPos, nowPos)
                 SetEntityData(entityId, "moveDist", moveDist)
             motion = CF.CreateActorMotion(entityId).GetMotion()
+            motionLengthRounded = round(Vector3(motion).Length(), 1)
             self.CallClient(shooterId, "UpdateDroneData", {"control_panel": (
-                "当前速度：{}单位\n水平方向：{}".format(round(Vector3(motion).Length(), 1), GetDirection(motion)),
+                "当前速率：{}\n水平方向：{}".format(
+                    str(motionLengthRounded) + "单位" if motionLengthRounded != 0 else "悬停中",
+                    GetDirection(motion)),
                 "遥控距离：{}米\n飞行路程：{}米".format(
                     round(GetDistance(nowPos, GetEntityData(entityId, "shootPos")), 1),
                     round(moveDist, 1)))})
@@ -154,12 +173,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if not launcherItem:
             return
         if playerId in self.droneDict:
-            self.SendTip(playerId, "请先收回上一架", "c")
+            return
+        if launcherItem['durability'] <= 0:
             return
         batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
             playerId) else (GetAttributeValue("battery", launcherItem['extraId']))
         if batteryValue < 10:
-            self.SendTip(playerId, "电量太少，请先补充！", "c")
             return
         if not DataManager.Get(playerId, 'usage_informed'):
             CF.CreateMsg(playerId).NotifyOneMessage(playerId,
@@ -188,19 +207,22 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                      "battery": batteryValue,
                      "pos": spawnPos}
         self.droneDict[playerId] = droneData
-        battery = GetAttributeValue("battery", launcherItem['extraId'])
         self.CallClient(playerId, "UpdateDroneData", {
             "entityId": droneData['entityId'],
             "extraId": droneData['extraId']})
         self.CallClient(playerId, "functionsScreen.RefreshButtonVisibility")
         SetEntityData(droneId, "shooter", playerId)
         SetEntityData(droneId, "shootTime", time.time())
-        SetEntityData(droneId, "battery", battery)
+        SetEntityData(droneId, "battery", batteryValue)
         SetEntityData(droneId, "consumeTime", time.time())
         CF.CreateName(droneId).SetName("侦查无人机")
         GC.AddTimer(0.1, self.SyncVarDictToClients, droneId,
                     {"deployment_" + deployType: DeployHelper.Get(launcherItem['extraId'], deployType) for
                      deployType in DEPLOYMENT.keys()})
+        CF.CreateAttr(droneId).SetAttrMaxValue(serverApi.GetMinecraftEnum().AttrType.HEALTH,
+                                               DataManager.Get(playerId, "drone_health"))
+        CF.CreateAttr(droneId).SetAttrValue(serverApi.GetMinecraftEnum().AttrType.HEALTH,
+                                            DataManager.Get(playerId, "drone_health"))
         self.SendTip(playerId, "无人机升空", "a")
         self.Control(playerId)
 
@@ -234,32 +256,36 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         CF.CreateRide(playerId).StopEntityRiding()
         droneId = droneData['entityId']
         self.DestroyEntity(droneId)
+        self.ClearLightBlock(playerId)
         del self.droneDict[playerId]
         self.CallClient(playerId, "UpdateDroneData", None)
         battery = int(GetEntityData(droneId, "battery"))
         durability = int(droneData['durability']) if self.ShouldTakeDurability(playerId) else droneData[
             'initDurability']
         extraId = DeployHelper.Set(droneData['extraId'], "batteryValue", battery)
+        durabilityCost = droneData['initDurability'] - durability
+        realDurabilityCost = int(
+            durabilityCost * (ATTRIBUTE_TYPE['firm']['max'] - GetAttributeValue("firm", droneData['extraId'])))
+        durability = droneData['initDurability'] - realDurabilityCost
         CF.CreateItem(levelId).SpawnItemToPlayerInv(
             dict(INCOMPLETE_ITEM_DICT, newItemName='orchiella:scout_drone_launcher',
                  itemName='orchiella:scout_drone_launcher',
                  durability=durability,
                  customTips=self.GetCustomTips({"extraId": extraId, "durability": durability}),
                  extraId=extraId), playerId)
-        cost = droneData['initDurability'] - durability
-        if cost != 0:
-            realCost = int(cost * (ATTRIBUTE_TYPE['firm']['max'] - GetAttributeValue("firm", droneData['extraId'])))
-            self.SendTip(playerId, "无人机已回收，使用了§6{}§a点耐久".format(realCost), "a")
-            if cost > realCost:
-                CF.CreateMsg(levelId).NotifyOneMessage(playerId,
-                                                       "良好的坚固属性为你节约了{}点耐久".format(cost - realCost))
-        else:
+        if realDurabilityCost == 0:
             self.SendTip(playerId, "无人机已回收，未消耗耐久", "a")
+        else:
+            self.SendTip(playerId, "无人机已回收，使用了§6{}§a点耐久".format(realDurabilityCost), "a")
+            if durabilityCost > realDurabilityCost:
+                CF.CreateMsg(levelId).NotifyOneMessage(playerId,
+                                                       "良好的坚固属性为你节约了{}点耐久".format(
+                                                           durabilityCost - realDurabilityCost))
         self.CallClient(playerId, "functionsScreen.RefreshButtonVisibility")
 
     switchControlCdDict = {}
 
-    def Control(self, playerId,isForce=False):
+    def Control(self, playerId, isForce=False):
         if playerId not in self.droneDict:
             return
         if not isForce and time.time() < self.switchControlCdDict.get(playerId, 0):
@@ -269,7 +295,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         droneData = self.droneDict[playerId]
         rideComp = CF.CreateRide(playerId)
         if rideComp.GetEntityRider() == droneData['entityId']:
-            rideComp.StopEntityRiding()
+            result = rideComp.StopEntityRiding()
+            if not result:
+                self.SendTip(playerId, "信号异常，尝试重新断开控制..", "e")
+                GC.AddTimer(2, self.Control, playerId, True)
         else:
             droneId = droneData['entityId']
             SetEntityData(droneId, "shootPos", CF.CreatePos(playerId).GetFootPos())
@@ -288,7 +317,12 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             GC.AddTimer(0.1, self.CallClients, serverApi.GetPlayerList(), "SetAlwaysShowName", fakePlayerId)
             self.CallClient(playerId, "AppendFrame", fakePlayerId, "fake_player", -1, {"height": 0.8, "scale": 0.8})
             CF.CreatePos(playerId).SetFootPos(droneData['pos'])
-            rideComp.SetRiderRideEntity(playerId, droneData['entityId'])
+            result = rideComp.SetRiderRideEntity(playerId, droneData['entityId'])
+            if not result:
+                CF.CreateMsg(levelId).NotifyOneMessage(playerId,"§e距离过远有信号中断风险，正在自动收回...")
+                CF.CreateEffect(fakePlayerId).AddEffectToEntity("invisibility",999,1,False)
+                CF.CreatePos(playerId).SetFootPos(GetEntityData(droneId, "shootPos"))
+                GC.AddTimer(0.5, self.Recover, playerId)
 
     # 禁止交互，只允许通过按钮上下
     @Listen
@@ -349,7 +383,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 if effect["effectName"] == "night_vision" and effect["duration"] <= 11:
                     CF.CreateEffect(shooterId).RemoveEffectFromEntity("night_vision")
         CF.CreateActorMotion(droneId).SetMotion((0, 0, 0))
-        self.CallClient(playerId, "PlaySound", "quit_control")
+        self.CallClient(shooterId, "PlaySound", "quit_control")
 
     def Function(self, playerId, extraData):
         if playerId not in self.droneDict:
@@ -373,6 +407,13 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             else:
                 CF.CreateActorMotion(targetId).SetMotion(motion)
             self.SendTip(playerId, "引力生成！", "a")
+        elif loadType == 2:
+            if droneData.get("light", False):
+                droneData['light'] = False
+                self.SendTip(playerId, "探照灯已关闭", "7")
+            else:
+                droneData['light'] = True
+                self.SendTip(playerId, "探照灯已打开！", "a")
         elif loadType == 3:
             cost = DataManager.Get(playerId, "load1_cost")
             nowBattery = GetEntityData(droneData['entityId'], "battery")
@@ -470,13 +511,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         self.droneDict[playerId]['durability'] -= cost
         pos = CF.CreatePos(droneId).GetPos()
-        if playerId in self.lightBlockPosesDict:
-            lightBlockPoses = self.lightBlockPosesDict[playerId]
-            blockInfoComp = CF.CreateBlockInfo(levelId)
-            dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
-            for lightBlockPos in lightBlockPoses:
-                blockInfoComp.SetBlockNew(lightBlockPos, AIR_BLOCK, 0, dimId)
-            del self.lightBlockPosesDict[playerId]
+        self.ClearLightBlock(playerId)
         self.explosionData = {"shooter": playerId, "pos": pos}
         CF.CreateExplosion(levelId).CreateExplosion(pos,
                                                     DataManager.Get(playerId, "explode_radius"),
@@ -499,6 +534,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.SendTip(playerId, "放大器：{}".format(sightName), "f", 1)
         else:
             sightValue = 1
+            self.SendTip(playerId, "恢复视野", "7", 1)
         self.droneDict[playerId]['sight'] = sightValue
         self.CallClient(playerId, "UpdateDroneData", {"sight": sightValue})
         self.CallClient(playerId, "PlaySound", "aim")
@@ -527,41 +563,30 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.SendTip(playerId, "加速！", "a")
         self.CallClient(playerId, "PlaySound", "speed_up{}".format(random.randint(0, 1)))
 
-    lightBlockPosesDict = {}
-
-    @Listen
-    def DelServerPlayerEvent(self, event):
-        playerId = event['id']
-        if playerId in self.lightBlockPosesDict:
-            lightBlockPoses = self.lightBlockPosesDict[playerId]
+    def ClearLightBlock(self, playerId):
+        droneData = self.droneDict[playerId]
+        if "light_poses" in droneData:
             blockInfoComp = CF.CreateBlockInfo(levelId)
             dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
-            for lightBlockPos in lightBlockPoses:
-                blockInfoComp.SetBlockNew(lightBlockPos, AIR_BLOCK, 0, dimId)
-            del self.lightBlockPosesDict[playerId]
+            for lightBlockPos in droneData['light_poses']:
+                if blockInfoComp.GetBlockNew(lightBlockPos, dimId)['name'] == "minecraft:light_block":
+                    blockInfoComp.SetBlockNew(lightBlockPos, AIR_BLOCK, 0, dimId)
+            del self.droneDict[playerId]['light_poses']
 
     @Listen("OnScriptTickServer")
     def Torch(self):
-        for playerId in serverApi.GetPlayerList():
-            dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
+        for playerId, droneData in self.droneDict.items():
+            self.ClearLightBlock(playerId)
+            if DeployHelper.Get(droneData['extraId'], "load") != 2 or not droneData.get('light', False):
+                continue
             blockInfoComp = CF.CreateBlockInfo(levelId)
-            if playerId in self.lightBlockPosesDict:
-                lightBlockPoses = self.lightBlockPosesDict[playerId]
-                for lightBlockPos in lightBlockPoses:
-                    blockInfoComp.SetBlockNew(lightBlockPos, AIR_BLOCK, 0, dimId)
-                del self.lightBlockPosesDict[playerId]
-            if playerId not in self.droneDict:
-                continue
-            droneData = self.droneDict[playerId]
-            if CF.CreateRide(playerId).GetEntityRider() != droneData['entityId']:
-                continue
-            if DeployHelper.Get(self.droneDict[playerId]['extraId'], "load") != 2:
-                continue
-            playerPos = Vector3(CF.CreatePos(playerId).GetPos())
-            playerDir = Vector3(serverApi.GetDirFromRot(CF.CreateRot(droneData['entityId']).GetRot()))
+            dimId = CF.CreateDimension(playerId).GetEntityDimensionId()
+            droneId = droneData['entityId']
+            dronePos = Vector3(CF.CreatePos(droneId).GetPos())
+            droneDir = Vector3(serverApi.GetDirFromRot(CF.CreateRot(droneId).GetRot()))
             lightPoses = []
-            for i in range(30):
-                blockPos = (playerPos + playerDir * i).ToTuple()
+            for i in range(20):
+                blockPos = (dronePos + droneDir * i * 1.4).ToTuple()
                 blockPos = (int(math.floor(blockPos[0])), int(math.floor(blockPos[1])), int(math.floor(blockPos[2])))
                 if blockInfoComp.GetBlockNew(blockPos, dimId)['name'] == "minecraft:air":
                     lightPoses.append(blockPos)
@@ -571,10 +596,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 if i == lightPosNum - 1:
                     brightness = maxBrightness
                 else:
-                    brightness = int(i / float(lightPosNum) * maxBrightness * 0.3)
+                    brightness = int(i / float(lightPosNum) * maxBrightness * 0.9)
                 blockInfoComp.SetBlockNew(lightPos, {"name": "light_block", 'aux': brightness}, 0,
                                           dimId)
-            self.lightBlockPosesDict[playerId] = lightPoses
+            self.droneDict[playerId]['light_poses'] = lightPoses
 
     explosionData = None
 
@@ -609,7 +634,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 event['damage'] = 0
                 event['knock'] = False
                 return
-            self.Control(shooterId,True)
+            self.Control(shooterId, True)
             self.SendTip(shooterId, "本体受到伤害，控制中断", "c")
             CF.CreateHurt(shooterId).Hurt(event['damage'], event['cause'], event['srcId'], None)
             event['damage'] = 1
@@ -632,15 +657,77 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         droneId = event['id']
         if CF.CreateEngineType(droneId).GetEngineTypeStr() in DRONE_TYPE:
             shooterId = GetEntityData(droneId, "shooter")
+            print event
             self.Recover(shooterId)
             self.SendTip(shooterId, "无人机被击落，已自动回收", "c")
 
     @Listen("DamageEvent")
     def BaitDamaged(self, event):
         baitId = event['entityId']
-        if CF.CreateEngineType(baitId).GetEngineTypeStr() != "orchiella:scout_drone_bait":
+        if CF.CreateEngineType(baitId).GetEngineTypeStr() == "orchiella:scout_drone_bait":
+            event['knock'] = False
+
+    @Listen
+    def PlayerInteractServerEvent(self, event):
+        playerId = event['playerId']
+        if playerId in self.droneDict and CF.CreateRide(playerId).GetEntityRider() == self.droneDict[playerId][
+            'entityId']:
+            event['cancel'] = True
+
+    @Listen("PlayerDropItemServerEvent")
+    def DropModel(self, event):
+        itemEntityId = event['itemEntityId']
+        itemDict = CF.CreateItem(levelId).GetDroppedItem(itemEntityId)
+        if itemDict['newItemName'] not in DRONE_LAUNCHER_TYPE:
             return
-        event['knock'] = False
+        dropEntity = self.CreateEngineEntityByTypeStr(itemDict['newItemName'].replace("_launcher", "_drop"),
+                                                      CF.CreatePos(itemEntityId).GetFootPos(),
+                                                      (0, 0), CF.CreateDimension(itemEntityId).GetEntityDimensionId())
+        self.DestroyEntity(itemEntityId)
+        SetEntityData(dropEntity, "extraId", itemDict['extraId'])
+        SetEntityData(dropEntity, "customTips", itemDict['customTips'])
+        SetEntityData(dropEntity, "durability", itemDict['durability'])
+        playerId = event['playerId']
+        rot = CF.CreateRot(playerId).GetRot()
+        CF.CreateActorMotion(dropEntity).SetMotion(serverApi.GetDirFromRot(rot))
+        varDict = {"drop_yaw": rot[1] - 180}
+        for deployment in DEPLOYMENT:
+            varDict['deployment_' + deployment] = DeployHelper.Get(itemDict['extraId'], deployment)
+        self.SyncVarDictToClients(dropEntity, varDict, False)
+
+    @Listen("PlayerDoInteractServerEvent")
+    def PickUpModel(self, event):
+        entityId = event['interactEntityId']
+        if CF.CreateEngineType(entityId).GetEngineTypeStr() in DRONE_DROP_TYPE:
+            playerId = event["playerId"]
+            itemDict = INCOMPLETE_ITEM_DICT
+            itemDict['newItemName'] = itemDict['itemName'] = CF.CreateEngineType(entityId).GetEngineTypeStr().replace(
+                "_drop", "_launcher")
+            itemDict['durability'] = GetEntityData(entityId, 'durability')
+            itemDict['extraId'] = GetEntityData(entityId, 'extraId')
+            itemDict['customTips'] = GetEntityData(entityId, 'customTips')
+            self.DestroyEntity(entityId)
+            CF.CreateItem(levelId).SpawnItemToPlayerInv(itemDict, playerId)
+
+    @Listen("DamageEvent")
+    def DropModelDamaged(self, event):
+        dropModel = event['entityId']
+        if CF.CreateEngineType(dropModel).GetEngineTypeStr() in DRONE_DROP_TYPE:
+            event['damage'] = 0
+            event['knock'] = False
+
+    @Listen
+    def ItemUseAfterServerEvent(self, event):
+        playerId = event['entityId']
+        itemDict = event['itemDict']
+        if itemDict['newItemName'].startswith("orchiella:scout_drone_coupon"):
+            index = int(itemDict['newItemName'][-1])
+            CF.CreateItem(playerId).SetInvItemNum(CF.CreateItem(playerId).GetSelectSlotId(), 0)
+            item = COUPONS[index - 1]
+            item['customTips'] = self.GetCustomTips(item)
+            item['extraId'] = DeployHelper.Set(item['extraId'], "uuid", uuid.uuid4())
+            CF.CreateItem(playerId).SpawnItemToPlayerInv(item, playerId)
+            self.SendTip(playerId, "成功兑换！", "a")
 
     @Listen
     def EntityRemoveEvent(self, event):
@@ -673,6 +760,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
 
     def UpdateDeploy(self, playerId, equipment, key, value):
         newExtraId = DeployHelper.Set(equipment['extraId'], key, value)
+        if not DeployHelper.Get(newExtraId, "uuid"):
+            newExtraId = DeployHelper.Set(newExtraId, "uuid", str(uuid.uuid4()))
         CF.CreateItem(playerId).ChangePlayerItemTipsAndExtraId(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
                                                                CF.CreateItem(playerId).GetSelectSlotId(),
                                                                self.GetCustomTips(equipment),
@@ -732,8 +821,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                          key, value, playerId)
 
     def SyncVarDictToClients(self, playerId, varDict, exceptSelf=True):
-        self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId] if exceptSelf else None),
-                         "UpdateVarDict", varDict, playerId)
+        players = serverApi.GetPlayerList()
+        if exceptSelf and playerId in players: players.remove(playerId)
+        self.CallClients(players, "UpdateVarDict", varDict, playerId)
 
     def SyncSoundToClients(self, playerId, soundName):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId]), "PlaySound", soundName)

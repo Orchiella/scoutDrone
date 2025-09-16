@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="12">
+    <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="13">
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/entities/scout_drone_drop.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/netease_items_beh/scout_drone_coupon1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/netease_items_beh/scout_drone_coupon2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/netease_items_beh/scout_drone_coupon3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_bp/netease_items_beh/scout_drone_coupon4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone_drop.entity.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/netease_items_res/scout_drone_coupon1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/netease_items_res/scout_drone_coupon2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/netease_items_res/scout_drone_coupon3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/netease_items_res/scout_drone_coupon4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/charge.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scout_drone_rp/textures/items/scout_drone_coupon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/mathUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/mathUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/idle.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/scout_drone/idle.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/sounds/sound_definitions.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/sounds/sound_definitions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/texts/zh_CN.lang" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/texts/zh_CN.lang" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/textures/item_texture.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/textures/item_texture.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,21 +55,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/textures/ui/scout_drone/deploy&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/netease_items_res"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\textures\ui\scout_drone\deploy" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\sounds\scout_drone" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\models\entity" />
-      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\animations" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\netease_items_res" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_bp\netease_items_beh" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\textures\items" />
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\entity" />
+      <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_bp\entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\textures\ui\scout_drone\deploy" />
@@ -161,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757924849791</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="13">
+      <option name="closed" value="true" />
+      <created>1757938124779</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757938124779</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -177,6 +204,7 @@
     <MESSAGE value="10" />
     <MESSAGE value="11" />
     <MESSAGE value="12" />
-    <option name="LAST_COMMIT_MESSAGE" value="12" />
+    <MESSAGE value="13" />
+    <option name="LAST_COMMIT_MESSAGE" value="13" />
   </component>
 </project>
