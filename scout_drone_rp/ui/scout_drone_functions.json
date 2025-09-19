@@ -1709,6 +1709,35 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "visible@common_toggles.switch_toggle_collection": {
+                                "type": "panel",
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_on",
+                                "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
+                                "$pressed_texture": "textures/ui/toggle_off_hover",
+                                "$toggle_name": "#netease_editor_template_namespace.toggle_name",
+                                "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    65.0,
+                                    -5.0
+                                ],
+                                "size": [
+                                    30.0,
+                                    20.0
+                                ],
+                                "layer": 1,
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }

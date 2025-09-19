@@ -120,7 +120,7 @@ class ScoutDroneFunctions(ScreenNode):
         for functionName, functionDef in self.functions.items():
             self.GetBaseUIControl("/" + functionName).SetVisible(functionDef.get("condition", lambda: True)())
 
-    touchX, touchY, editProgressValue = 0, 0, -1
+    touchX, touchY, editProgressValue, editToggle = 0, 0, -1, False
 
     def Update(self):
         if not self.initialized or not self.displaying:
@@ -158,6 +158,10 @@ class ScoutDroneFunctions(ScreenNode):
                     editProgressValue)
                 ctrl.SetSize((size, size), True)
                 self.editCache["func_{}_size".format(self.functionEditing)] = size
+            editToggle = self.editVisibleToggle.GetToggleState()
+            if editToggle != self.editToggle:
+                self.editToggle = editToggle
+                self.editCache["func_{}_visible".format(self.functionEditing)] = editToggle
             self.SendTip("当前选中§6[{}]".format(self.functions[self.functionEditing]['name']), "e", 0.2, False)
 
     def IsInCtrl(self, pos, ctrl):
@@ -304,19 +308,22 @@ class ScoutDroneFunctions(ScreenNode):
 
     def SelectButtonWhileEditing(self, function):
         self.functionEditing = function
+        self.editVisibleToggle.SetVisible(True)
+        self.editVisibleToggle.SetToggleState(
+            self.editCache.get("func_{}_visible".format(function), self.GetData("func_{}_visible".format(function))))
         if self.functionEditing == "deploy":
             self.editSizeSlider.SetVisible(False)
             return
-        self.editSizeSlider.SetVisible(True)
-        self.editSizeSlider.SetSliderValue(
-            mathUtil.GetSliderValueFromSize(
-                self.editCache.get("func_{}_size".format(function), self.GetData("func_{}_size".format(function))),
-                DEFAULT_PLAYER_DATA['func_{}_size'.format(function)]))
+        else:
+            self.editSizeSlider.SetVisible(True)
+            self.editVisibleToggle.SetVisible(True)
+            self.editSizeSlider.SetSliderValue(
+                mathUtil.GetSliderValueFromSize(
+                    self.editCache.get("func_{}_size".format(function), self.GetData("func_{}_size".format(function))),
+                    DEFAULT_PLAYER_DATA['func_{}_size'.format(function)]))
 
     def ClickButton(self, args):
         func = args['AddTouchEventParams']['func']
-        if not self.GetBaseUIControl("/" + func).GetVisible():
-            return
         if self.client.nowState == "edit_button":
             self.SelectButtonWhileEditing(func)
             return
@@ -381,6 +388,7 @@ class ScoutDroneFunctions(ScreenNode):
     tipDisabledTime = 0
 
     editSizeSlider = None
+    editVisibleToggle = None
 
     droneInfoCtrl = None
     droneInfoNameCtrl = None
@@ -421,6 +429,7 @@ class ScoutDroneFunctions(ScreenNode):
                 self.deployTipCtrl = self.GetBaseUIControl("/deploy/tip").asLabel()
 
                 self.editSizeSlider = self.GetBaseUIControl("/edit/size").asSlider()
+                self.editVisibleToggle = self.GetBaseUIControl("/edit/visible").asSwitchToggle()
 
                 self.GetBaseUIControl("/edit").SetVisible(False)
 
@@ -467,6 +476,7 @@ class ScoutDroneFunctions(ScreenNode):
             ctrl = self.GetBaseUIControl('/' + function)
             ctrl.SetVisible(True)
         self.editSizeSlider.SetVisible(False)
+        self.editVisibleToggle.SetVisible(False)
 
     def EndEditing(self):
         self.client.SwitchControl(False)
@@ -500,8 +510,6 @@ class ScoutDroneFunctions(ScreenNode):
 
     def LoadButtons(self):
         for function in self.functions:
-            if "/{}/button_label".format(function) not in self.GetAllChildrenPath("/{}".format(function)):
-                continue
             ctrl = self.GetBaseUIControl('/' + function)
             relativeX, relativeY = self.GetData('func_{}_pos'.format(function))
             screenX, screenY = CF.CreateGame(clientApi.GetLocalPlayerId()).GetScreenSize()
@@ -512,11 +520,13 @@ class ScoutDroneFunctions(ScreenNode):
                 parentX, parentY = screenX - size, screenY / 2.0
             ctrl.SetPosition((parentX + relativeX, parentY + relativeY))
             ctrl.SetSize((size, size), True)
-            labelCtrl = self.GetBaseUIControl('/' + function + "/button_label").asLabel()
-            if self.functions[function].get("name_changeable", False):
-                labelCtrl.SetText("")
-            else:
-                labelCtrl.SetText(self.functions[function]['name'])
+            labelCtrl = self.GetBaseUIControl('/' + function + "/button_label")
+            if labelCtrl:
+                if self.functions[function].get("name_changeable", False):
+                    labelCtrl.asLabel().SetText("")
+                else:
+                    labelCtrl.asLabel().SetText(self.functions[function]['name'])
+            ctrl.SetVisible(self.GetData('func_{}_visible'.format(function)))
 
     def SendTip(self, tip, color, duration=2.0, cover=True):
         if not cover and self.tipLabelCtrl.GetText() and tip[:3] != self.tipLabelCtrl.GetText()[3:6]:

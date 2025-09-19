@@ -130,7 +130,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - batteryTaken})
                 SetEntityData(entityId, "battery", battery - batteryTaken)
                 self.droneDict[shooterId]['durability'] -= 0.01
-            if CF.CreateRide(shooterId).GetEntityRider() == entityId:
+            if CF.CreateRide(shooterId).GetEntityRider() == entityId and DataManager.Get(shooterId, "night_vision_enabled"):
                 CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
             lastPos = self.droneDict[shooterId]['pos']
             nowPos = CF.CreatePos(entityId).GetFootPos()
@@ -588,8 +588,9 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             for i in range(20):
                 blockPos = (dronePos + droneDir * i * 1.4).ToTuple()
                 blockPos = (int(math.floor(blockPos[0])), int(math.floor(blockPos[1])), int(math.floor(blockPos[2])))
-                if blockInfoComp.GetBlockNew(blockPos, dimId)['name'] == "minecraft:air":
-                    lightPoses.append(blockPos)
+                if blockInfoComp.GetBlockNew(blockPos, dimId)['name'] != "minecraft:air":
+                    break
+                lightPoses.append(blockPos)
             maxBrightness = 15
             lightPosNum = len(lightPoses)
             for i, lightPos in enumerate(lightPoses):

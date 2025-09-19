@@ -248,7 +248,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 AC.StopCustomMusicById(self.droneIdleMusicId, 1)
                 self.droneIdleMusicId = None
             return
-        self.functionsScreen.droneInfoCtrl.SetVisible(True)
         for key, value in droneData.items():
             self.droneData[key] = value
         if "entityId" in droneData:
@@ -256,6 +255,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
             self.functionsScreen.droneInfoHealthCtrl.SetValue(1)
             self.functionsScreen.droneInfoBatteryCtrl.SetValue(1)
             self.functionsScreen.droneInfoNameCtrl.SetText("{}的侦查无人机".format(CF.CreateName(PID).GetName()))
+            self.functionsScreen.droneInfoCtrl.SetVisible(True)
         if "health" in droneData:
             self.functionsScreen.droneInfoHealthCtrl.SetValue(
                 droneData['health'] / CF.CreateAttr(self.droneData['entityId']).GetAttrMaxValue(
@@ -306,7 +306,6 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 PPC.SetColorAdjustmentTint(self.GetData("green_intense") / 100.0, (0, 255, 0))
                 self.UpdateVar("controlling", 1, self.droneData['entityId'])
                 self.SyncVarToServer("controlling", 1)
-                self.functionsScreen.controlPanelCtrl.SetVisible(True)
                 self.functionsScreen.controlPanelLeftCtrl.SetText("")
                 self.functionsScreen.controlPanelRightCtrl.SetText("")
                 if self.GetData("sound_enabled"):
@@ -319,6 +318,10 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                             "orchiella:" + DB.mod_name + "_idle", (0, 0, 0), 1, 1, True, self.droneData['entityId'])
 
                     GC.AddTimer(0.2, play)
+                if self.GetData("ui_enabled"):
+                    self.functionsScreen.controlPanelCtrl.SetVisible(True)
+                else:
+                    self.functionsScreen.droneInfoCtrl.SetVisible(False)
             else:
                 OC.SetCanAll(False)
                 clientApi.HideMoveGui(True)
@@ -337,7 +340,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
                 PPC.SetColorAdjustmentTint(0, (0, 255, 0))
                 self.UpdateVar("controlling", 0, self.droneData['entityId'])
                 self.SyncVarToServer("controlling", 0)
-                self.functionsScreen.controlPanelCtrl.SetVisible(False)
+                self.functionsScreen.droneInfoCtrl.SetVisible(True)
+                if self.GetData("ui_enabled"):
+                    self.functionsScreen.controlPanelCtrl.SetVisible(False)
             else:
                 OC.SetCanAll(True)
                 clientApi.HideMoveGui(False)
