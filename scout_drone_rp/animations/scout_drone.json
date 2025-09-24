@@ -27,7 +27,7 @@
 							"lerp_mode": "catmullrom"
 						},
 						"1.0": {
-							"post": [0, 2, 0],
+							"post": [0, 4, 0],
 							"lerp_mode": "catmullrom"
 						},
 						"2.0": [0, 0, 0]
@@ -56,11 +56,11 @@
 					"scale": 0
 				},
 				"root": {
-                  "scale": 0
-                },
+					"scale": 0
+				},
 				"head": {
-                  "scale": 0
-                }
+					"scale": 0
+				}
 			}
 		},
 		"animation.scout_drone.deployment": {
@@ -90,6 +90,54 @@
 				},
 				"load3_unlit": {
 					"rotation": [39.2, "14.5 + (query.life_time * -60.0 + variable.time_offset)", -39.2]
+				}
+			}
+		},
+		"animation.scout_drone.rotor": {
+			"loop": true,
+			"animation_length": 0.08,
+			"bones": {
+				"bone133": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
+				},
+				"bone134": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
+				},
+				"bone135": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
+				},
+				"bone136": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
+				},
+				"bone137": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
+				},
+				"bone138": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.04": [180, 0, 0],
+						"0.08": [360, 0, 0]
+					}
 				}
 			}
 		}

@@ -22,7 +22,7 @@ DEPLOYMENT = OrderedDict(
      "rotor": {"name": "风扇",
                "deployment": [
                    {"name": "原装款"},
-                   {"name": "高功率款", "defense": 0.3, "speed": 0.25, "firm": -0.3},
+                   {"name": "高功率款", "defense": 0.3, "speed": 0.4, "firm": -0.3},
                    {"name": "加固款", "defense": 0.4, "speed": -0.25, "firm": 0.4}]},
      "load": {"name": "下挂",
               "deployment": [
@@ -88,7 +88,7 @@ class ScoutDroneFunctions(ScreenNode):
                 'name': "下挂功能",
                 "condition": lambda: self.client.nowState == "edit_button" or
                                      self.client.isControlling and DeployHelper.Get(
-                    self.client.droneData.get('extraId',''), "load") > 0},
+                    self.client.droneData.get('extraId', ''), "load") > 0},
             'scan': {
                 'name': "扫描",
                 "condition": lambda: self.client.nowState == "edit_button" or
@@ -118,7 +118,8 @@ class ScoutDroneFunctions(ScreenNode):
 
     def RefreshButtonVisibility(self):
         for functionName, functionDef in self.functions.items():
-            self.GetBaseUIControl("/" + functionName).SetVisible(functionDef.get("condition", lambda: True)())
+            self.GetBaseUIControl("/" + functionName).SetVisible(
+                self.GetData("func_{}_visible".format(functionName)) and functionDef.get("condition", lambda: True)())
 
     touchX, touchY, editProgressValue, editToggle = 0, 0, -1, False
 
@@ -335,7 +336,7 @@ class ScoutDroneFunctions(ScreenNode):
             self.SelectButtonWhileEditing('settings')
             return
         self.updateTip.SetVisible(False)
-        self.SetData("update_tip_{}".format(0), True)
+        self.SetData("update_tip_{}".format(2), True)
         self.client.CallServer("TryToOpenSettings", clientApi.GetLocalPlayerId())
 
     def ClickDownDeploy(self, args):
@@ -449,7 +450,7 @@ class ScoutDroneFunctions(ScreenNode):
                 self.RefreshButtonVisibility()
 
                 self.updateTip = self.GetBaseUIControl("/settings/update_tip")
-                self.updateTip.SetVisible(not self.GetData("update_tip_{}".format(0)))
+                self.updateTip.SetVisible(not self.GetData("update_tip_{}".format(2)))
 
                 self.droneInfoCtrl = self.GetBaseUIControl("/drone_info")
                 self.droneInfoCtrl.SetVisible(False)
@@ -526,10 +527,12 @@ class ScoutDroneFunctions(ScreenNode):
                     labelCtrl.asLabel().SetText("")
                 else:
                     labelCtrl.asLabel().SetText(self.functions[function]['name'])
-            ctrl.SetVisible(self.GetData('func_{}_visible'.format(function)))
+        self.RefreshButtonVisibility()
 
     def SendTip(self, tip, color, duration=2.0, cover=True):
         if not cover and self.tipLabelCtrl.GetText() and tip[:3] != self.tipLabelCtrl.GetText()[3:6]:
+            return
+        if self.client.isControlling and not self.GetData("ui_enabled"):
             return
         self.tipLabelCtrl.SetText("§" + color + tip)
         self.tipLabelCtrl.SetVisible(True)

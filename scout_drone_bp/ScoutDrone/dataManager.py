@@ -9,9 +9,10 @@ levelId = serverApi.GetLevelId()
 DEFAULT_PLAYER_SETTINGS = [
     ("sound_enabled", {"description": "§f音效", "type": "bool", "default": True}),
     ("shake", {"description": "§f镜头左右摇晃§7(觉得晕可以关掉)", "type": "bool", "default": True}),
-    ("ui_enabled", {"description": "§f操控时显示UI(按钮可见性需另管理)", "type": "bool", "default": True}),
+    ("ui_enabled", {"description": "§f操控时显示UI§7(按钮可见性需另管理)", "type": "bool", "default": True}),
     ("night_vision_enabled", {"description": "§f夜视效果", "type": "bool", "default": True}),
     ("green_intense", {"description": "§f滤镜强度百分比", "type": "int", "range": (0, 100), "default": 30}),
+    ("deploy_enabled", {"description": "§f改装功能", "type": "bool", "default": True}),
     ("charge_no_consume", {"description": "§f生存模式下充电不消耗红石粉", "type": "bool", "default": False}),
     ("infinite_durability", {"description": "§f生存模式下也无限耐久", "type": "bool", "default": False}),
     ("infinite_battery", {"description": "§f生存模式下也不需充电", "type": "bool", "default": False}),
@@ -48,7 +49,9 @@ DEFAULT_PLAYER_DATA = {
     "func_explode_pos": (-20, -95), "func_explode_size": 40, "func_explode_visible": True,
     "func_charge_pos": (-130, 30), "func_charge_size": 40, "func_charge_visible": True,
     "usage_informed": False,
-    "update_tip_0": False
+    "update_tip_0": False,
+    "update_tip_1": False,
+    "update_tip_2": False
 }
 
 

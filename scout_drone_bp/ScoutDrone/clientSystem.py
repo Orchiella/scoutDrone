@@ -130,7 +130,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     # 主手物品变化
     def OnCarriedNewItemChangedClientEvent(self, event):
-        if not self.functionsScreen or not self.functionsScreen.initialized:
+        if not self.functionsScreen:
             return
         oldItem = event['oldItemDict']
         newItem = event['newItemDict']
@@ -186,8 +186,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         elif action == clientApi.GetMinecraftEnum().PlayerActionType.StartSneaking:
             self.SwitchState("sneak")
         elif action == clientApi.GetMinecraftEnum().PlayerActionType.StopSprinting or action == clientApi.GetMinecraftEnum().PlayerActionType.StopSneaking:
-            if self.nowState != "aim":
-                self.BackIdle(True)
+            self.BackIdle(True)
 
     nowState = "idle"
     beforeState = "idle"
@@ -796,7 +795,8 @@ class ClientSystem(clientApi.GetClientSystemCls()):
     def PlaySound(self, soundName):
         if not self.GetData("sound_enabled"):
             return
-        AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
+        #AC.PlayCustomMusic("orchiella:" + DB.mod_name + "_" + soundName, (0, 0, 0), 1, 1, False, PID)
+        AC.PlayCustomUIMusic("orchiella:" + DB.mod_name + "_" + soundName, 1, 1, False)
 
     def PlayParticle(self, particleName, poses, varDict=None):
         if not self.GetData("particle_enabled"):

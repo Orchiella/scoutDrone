@@ -81,7 +81,11 @@
                                 "$label_text|default": "快射",
                                 "anchor_from": "bottom_middle",
                                 "anchor_to": "top_middle",
-                                "font_scale_factor": 0.8
+                                "font_scale_factor": 0.8,
+                                "max_size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ]
                             }
                         },
                         {

@@ -166,6 +166,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         equipment = self.GetEquipment(playerId)
         if not equipment:
             return
+        if not DataManager.Get(playerId, "deploy_enabled"):
+            self.SendTip(playerId, "改装功能被禁用", "c")
+            self.CallClient(playerId, "RefreshDeployment", equipment['extraId'])
+            return
         self.UpdateDeploy(playerId, equipment, key, value)
 
     def Shoot(self, playerId):
@@ -415,7 +419,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 droneData['light'] = True
                 self.SendTip(playerId, "探照灯已打开！", "a")
         elif loadType == 3:
-            cost = DataManager.Get(playerId, "load1_cost")
+            cost = DataManager.Get(playerId, "load3_cost")
             nowBattery = GetEntityData(droneData['entityId'], "battery")
             if nowBattery < cost:
                 self.SendTip(playerId, "电量值不足以释放诱饵", "c")

@@ -13,6 +13,7 @@
       "animations": {
         "idle": "animation.scout_drone.idle",
         "move": "animation.scout_drone.move",
+        "rotor": "animation.scout_drone.rotor",
         "invisibility": "animation.scout_drone.invisibility",
         "deployment": "animation.scout_drone.deployment",
         "controller.scout_drone.general": "controller.animation.scout_drone.general"
@@ -27,6 +28,7 @@
         "animate": [
           "controller.scout_drone.general",
           "deployment",
+          "rotor",
           {
             "invisibility": "q.mod.scout_drone_controlling"
           }

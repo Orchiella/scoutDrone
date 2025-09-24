@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="125e9db6-096c-4a53-befe-c7ff4b3b56a6" name="Changes" comment="14">
-      <change beforePath="$PROJECT_DIR$/.idea/ScoutDrone.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ScoutDrone.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/clientSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/dataManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/serverSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_bp/ScoutDrone/ui/scoutDroneFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scout_drone_rp/ui/_ui_defs.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/_ui_defs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/animations/scout_drone_launcher.animation_1st.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone.entity.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/entity/scout_drone.entity.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/models/entity/scout_drone.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" beforeDir="false" afterPath="$PROJECT_DIR$/scout_drone_rp/ui/scout_drone_functions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world_behavior_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_behavior_packs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world_resource_packs.json" beforeDir="false" afterPath="$PROJECT_DIR$/world_resource_packs.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,22 +54,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/netease_items_res",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/MCStudioDownload/work/valorin233@163.com/Cpp/AddOn/ScoutDrone/scout_drone_rp/netease_items_res&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\MCStudioDownload\work\valorin233@163.com\Cpp\AddOn\ScoutDrone\scout_drone_rp\netease_items_res" />
@@ -104,7 +103,26 @@
       <workItem from="1758283291948" duration="541000" />
       <workItem from="1758285941443" duration="17000" />
       <workItem from="1758286549090" duration="11000" />
-      <workItem from="1758286987136" duration="3266000" />
+      <workItem from="1758286987136" duration="3300000" />
+      <workItem from="1758344764100" duration="29000" />
+      <workItem from="1758362587148" duration="3106000" />
+      <workItem from="1758367676698" duration="125000" />
+      <workItem from="1758369104227" duration="628000" />
+      <workItem from="1758372981268" duration="244000" />
+      <workItem from="1758373244330" duration="703000" />
+      <workItem from="1758375152194" duration="1193000" />
+      <workItem from="1758385395908" duration="582000" />
+      <workItem from="1758386818217" duration="1328000" />
+      <workItem from="1758413496172" duration="33000" />
+      <workItem from="1758413781004" duration="202000" />
+      <workItem from="1758451318525" duration="226000" />
+      <workItem from="1758453751041" duration="20000" />
+      <workItem from="1758517659781" duration="495000" />
+      <workItem from="1758526677824" duration="67000" />
+      <workItem from="1758536470092" duration="615000" />
+      <workItem from="1758550072102" duration="12000" />
+      <workItem from="1758550168729" duration="1274000" />
+      <workItem from="1758616154219" duration="611000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -210,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757938124779</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="14">
+      <option name="closed" value="true" />
+      <created>1758290286976</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1758290286976</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
