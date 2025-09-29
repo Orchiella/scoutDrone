@@ -71,7 +71,7 @@ class ScoutDroneFunctions(ScreenNode):
             'shoot': {
                 'name': "启动",
                 "condition": lambda: self.client.nowState == "edit_button" or
-                                     self.client.GetEquipment()},
+                                     self.client.GetEquipment() and not self.client.isControlling},
             'recover': {
                 'name': "回收",
                 "condition": lambda: self.client.nowState == "edit_button" or
@@ -109,7 +109,7 @@ class ScoutDroneFunctions(ScreenNode):
                 'name': "充电",
                 'name_changeable': True,
                 "condition": lambda: self.client.nowState == "edit_button" or
-                                     self.client.GetEquipment()},
+                                     self.client.GetEquipment() and not self.client.isControlling},
             'settings': {
                 'name': "设置",
                 'name_changeable': True,

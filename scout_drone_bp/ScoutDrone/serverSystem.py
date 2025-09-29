@@ -130,7 +130,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                 self.CallClient(shooterId, "UpdateDroneData", {"battery": battery - batteryTaken})
                 SetEntityData(entityId, "battery", battery - batteryTaken)
                 self.droneDict[shooterId]['durability'] -= 0.01
-            if CF.CreateRide(shooterId).GetEntityRider() == entityId and DataManager.Get(shooterId, "night_vision_enabled"):
+            if CF.CreateRide(shooterId).GetEntityRider() == entityId and DataManager.Get(shooterId,
+                                                                                         "night_vision_enabled"):
                 CF.CreateEffect(shooterId).AddEffectToEntity("night_vision", 11, 0, False)
             lastPos = self.droneDict[shooterId]['pos']
             nowPos = CF.CreatePos(entityId).GetFootPos()
@@ -178,6 +179,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         if playerId in self.droneDict:
             return
+        if GetEntitySharedData(playerId, "drone"):
+            self.SendTip(playerId, "你已经在控制其他种类的无人机了", "c")
+            self.CallClient(playerId, "BackIdle", True)
+            return
         if launcherItem['durability'] <= 0:
             return
         batteryValue = DeployHelper.Get(launcherItem['extraId'], "batteryValue") if self.ShouldTakeBattery(
@@ -219,6 +224,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         SetEntityData(droneId, "shootTime", time.time())
         SetEntityData(droneId, "battery", batteryValue)
         SetEntityData(droneId, "consumeTime", time.time())
+        SetEntitySharedData(playerId, "drone", DB.mod_name)
         CF.CreateName(droneId).SetName("侦查无人机")
         GC.AddTimer(0.1, self.SyncVarDictToClients, droneId,
                     {"deployment_" + deployType: DeployHelper.Get(launcherItem['extraId'], deployType) for
@@ -262,6 +268,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         self.DestroyEntity(droneId)
         self.ClearLightBlock(playerId)
         del self.droneDict[playerId]
+        RemoveEntitySharedData(playerId, "drone")
         self.CallClient(playerId, "UpdateDroneData", None)
         battery = int(GetEntityData(droneId, "battery"))
         durability = int(droneData['durability']) if self.ShouldTakeDurability(playerId) else droneData[
@@ -323,8 +330,8 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             CF.CreatePos(playerId).SetFootPos(droneData['pos'])
             result = rideComp.SetRiderRideEntity(playerId, droneData['entityId'])
             if not result:
-                CF.CreateMsg(levelId).NotifyOneMessage(playerId,"§e距离过远有信号中断风险，正在自动收回...")
-                CF.CreateEffect(fakePlayerId).AddEffectToEntity("invisibility",999,1,False)
+                CF.CreateMsg(levelId).NotifyOneMessage(playerId, "§e距离过远有信号中断风险，正在自动收回...")
+                CF.CreateEffect(fakePlayerId).AddEffectToEntity("invisibility", 999, 1, False)
                 CF.CreatePos(playerId).SetFootPos(GetEntityData(droneId, "shootPos"))
                 GC.AddTimer(0.5, self.Recover, playerId)
 
@@ -843,6 +850,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
         if DataManager.Get(None, "auto_gain_permission") and playerId not in permittedPlayers:
             permittedPlayers.append(playerId)
             DataManager.Set(None, "permitted_players", permittedPlayers)
+        RemoveEntitySharedData(playerId, "drone")
 
     def SendTip(self, playerId, tip, color, duration=2.0, cover=True):
         self.CallClient(playerId, "functionsScreen.SendTip", tip, color, duration, cover)
@@ -938,3 +946,16 @@ def RemoveEntityData(entityId, key):
 
 def SetEntityData(entityId, key, value):
     CF.CreateExtraData(entityId).SetExtraData(DB.mod_name + "_" + key, value)
+
+
+def GetEntitySharedData(entityId, key, default=None):
+    result = CF.CreateExtraData(entityId).GetExtraData("orchiella_" + key)
+    return result if result is not None else default
+
+def RemoveEntitySharedData(entityId, key):
+    if GetEntitySharedData(entityId, key):
+        del CF.CreateExtraData(entityId).GetWholeExtraData()["orchiella_" + key]
+
+
+def SetEntitySharedData(entityId, key, value):
+    CF.CreateExtraData(entityId).SetExtraData("orchiella_" + key, value)
