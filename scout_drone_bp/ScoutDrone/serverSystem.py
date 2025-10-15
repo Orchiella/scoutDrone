@@ -259,13 +259,14 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             return
         self.SendTip(playerId, "正在充电{}".format("..." if time.time() % 1 > 0.5 else ".."), "7", 1)
 
-    def Recover(self, playerId):
+    def Recover(self, playerId,stopRiding=True):
         if playerId not in self.droneDict:
             return
         droneData = self.droneDict[playerId]
-        CF.CreateRide(playerId).StopEntityRiding()
         droneId = droneData['entityId']
-        self.DestroyEntity(droneId)
+        if stopRiding and CF.CreateRide(playerId).GetEntityRider() == droneId:
+            CF.CreateRide(playerId).StopEntityRiding()
+            self.DestroyEntity(droneId)
         self.ClearLightBlock(playerId)
         del self.droneDict[playerId]
         RemoveEntitySharedData(playerId, "drone")
@@ -324,7 +325,7 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             self.droneDict[playerId]['fakePlayerId'] = fakePlayerId
             GC.AddTimer(0.1, self.CallClient, playerId, "UpdateDroneData", {"fakePlayerId": fakePlayerId})
             SetEntityData(fakePlayerId, "shooter", playerId)
-            CF.CreateName(fakePlayerId).SetName("{}§a(正在操控无人机)".format(CF.CreateName(playerId).GetName()))
+            CF.CreateName(fakePlayerId).SetName("{}§a(正在操控侦查无人机)".format(CF.CreateName(playerId).GetName()))
             GC.AddTimer(0.1, self.CallClients, serverApi.GetPlayerList(), "SetAlwaysShowName", fakePlayerId)
             self.CallClient(playerId, "AppendFrame", fakePlayerId, "fake_player", -1, {"height": 0.8, "scale": 0.8})
             CF.CreatePos(playerId).SetFootPos(droneData['pos'])
@@ -381,9 +382,10 @@ class ServerSystem(serverApi.GetServerSystemCls()):
             GC.AddTimer(0.15, CF.CreateFly(shooterId).ChangePlayerFlyState, True, True)
         GC.AddTimer(0.15, CF.CreateAttr(shooterId).SetEntityOnFire, 0)
         if event['entityIsBeingDestroyed']:
-            del self.droneDict[shooterId]
-            self.CallClient(shooterId, "UpdateDroneData", None)
-            self.SendTip(shooterId, "无人机被击毁", "c")
+            # 这里意味着被其他原因击毁
+            self.CallClient(shooterId, "SwitchControl", False)
+            self.Recover(shooterId, False)
+            self.SendTip(shooterId, "穿越机因其他原因被销毁", "c")
         else:
             self.SendTip(shooterId, "退出控制状态", "7")
         self.CallClient(shooterId, "SwitchControl", False)
@@ -823,10 +825,6 @@ class ServerSystem(serverApi.GetServerSystemCls()):
                                    itemComp.GetPlayerItem(serverApi.GetMinecraftEnum().ItemPosType.INVENTORY,
                                                           slot)["count"] - count)
         return takenNum
-
-    def SyncRebuild(self, playerId, otherPlayerId):
-        self.CallClient(otherPlayerId, "Rebuild", playerId)
-        self.CallClient(playerId, "Rebuild", otherPlayerId)
 
     def SyncVarToClients(self, playerId, key, value, exceptSelf=True):
         self.CallClients(CF.CreatePlayer(playerId).GetRelevantPlayer([playerId] if exceptSelf else None), "UpdateVar",

@@ -125,8 +125,9 @@ class ClientSystem(clientApi.GetClientSystemCls()):
 
     @Listen
     def AddPlayerCreatedClientEvent(self, event):
-        if event['playerId'] == PID: return
-        self.CallServer("SyncRebuild", PID, event['playerId'])
+        otherPlayerId = event['playerId']
+        if otherPlayerId != PID:
+            self.Rebuild(otherPlayerId)
 
     # 主手物品变化
     def OnCarriedNewItemChangedClientEvent(self, event):
@@ -609,8 +610,7 @@ class ClientSystem(clientApi.GetClientSystemCls()):
         actorComp.AddPlayerScriptAnimate(prefix + "deployment", itemCondition)
         actorComp.AddPlayerAnimation(prefix + "invisibility", "animation." + DB.mod_name + ".invisibility")
         actorComp.AddPlayerScriptAnimate(prefix + "invisibility", "q.mod." + prefix + "controlling")
-        if CF.CreateEngineType(CF.CreateRide(playerId).GetEntityRider()).GetEngineTypeStr() in DRONE_TYPE:
-            self.UpdateVar("controlling", 1, playerId)
+        self.UpdateVar("controlling", CF.CreateEngineType(CF.CreateRide(playerId).GetEntityRider()).GetEngineTypeStr() in DRONE_TYPE, playerId)
         actorComp.RebuildPlayerRender()
 
         if state:
